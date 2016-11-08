@@ -41,7 +41,6 @@ namespace AvalonAssets.Algorithm
                 current = from[current];
                 path.Add(current);
             }
-            path.Add(start);
             path.Reverse();
             return path;
         }
@@ -66,7 +65,7 @@ namespace AvalonAssets.Algorithm
         }
 
         /// <summary>
-        ///     Using Dijkstra's Algorithm to find path with given <see cref="IWeightedGraphNode" />
+        ///     Using Dijkstra's Algorithm to find path with given <see cref="IWeightedGraphNode{T}" />
         ///     from <paramref name="start" /> tp <see cref="goal" />.
         /// </summary>
         /// <param name="start">Start of the path.</param>
@@ -75,8 +74,7 @@ namespace AvalonAssets.Algorithm
         ///     Path from <paramref name="start" /> to <see cref="goal" />.
         ///     Empty if no path can be found.
         /// </returns>
-        public static IEnumerable<IWeightedGraphNode> DijkstraAlgorithm(IWeightedGraphNode start,
-            IWeightedGraphNode goal)
+        public static IEnumerable<T> DijkstraAlgorithm<T>(T start, T goal) where T : IWeightedGraphNode<T>
         {
             return DijkstraAlgorithm(start, goal, n => n.GetNeighbors(), (f, t) => f.GetWeight(t));
         }
@@ -99,7 +97,7 @@ namespace AvalonAssets.Algorithm
                     if (weights.ContainsKey(neighbor) && newCost >= weights[neighbor]) continue;
                     weights[neighbor] = newCost;
                     frontiers.Enqueue(newCost, neighbor);
-                    from.Add(neighbor, frontier);
+                    from[neighbor] = frontier;
                 }
             }
             return CreatePath(from, start, goal);
@@ -125,7 +123,7 @@ namespace AvalonAssets.Algorithm
         }
 
         /// <summary>
-        ///     Using A* Algorithm to find path with given <see cref="IWeightedGraphNode" />
+        ///     Using A* Algorithm to find path with given <see cref="IWeightedGraphNode{T}" />
         ///     from <paramref name="start" /> tp <see cref="goal" />.
         /// </summary>
         /// <param name="start">Start of the path.</param>
@@ -136,8 +134,8 @@ namespace AvalonAssets.Algorithm
         ///     Empty if no path can be found.
         /// </returns>
         /// <seealso cref="Heuristic{T}" />
-        public static IEnumerable<IWeightedGraphNode> AStarAlgorithm(IWeightedGraphNode start,
-            IWeightedGraphNode goal, Heuristic<IWeightedGraphNode> heuristic)
+        public static IEnumerable<T> AStarAlgorithm<T>(T start, T goal, Heuristic<T> heuristic)
+            where T : IWeightedGraphNode<T>
         {
             return AStarAlgorithm(start, goal, n => n.GetNeighbors(), (f, t) => f.GetWeight(t), heuristic);
         }
@@ -160,7 +158,7 @@ namespace AvalonAssets.Algorithm
                     if (weights.ContainsKey(neighbor) && newCost >= weights[neighbor]) continue;
                     weights[neighbor] = newCost;
                     frontiers.Enqueue(newCost + heuristic(goal, neighbor), neighbor);
-                    from.Add(neighbor, frontier);
+                    from[neighbor] = frontier;
                 }
             }
             return CreatePath(from, start, goal);
@@ -171,7 +169,7 @@ namespace AvalonAssets.Algorithm
         #region Non-weight
 
         /// <summary>
-        ///     Using Breadth First Search to find path with given <see cref="IGraphNode" />
+        ///     Using Breadth First Search to find path with given <see cref="IGraphNode{T}" />
         ///     from <paramref name="start" /> tp <see cref="goal" />.
         /// </summary>
         /// <param name="start">Start of the path.</param>
@@ -180,7 +178,7 @@ namespace AvalonAssets.Algorithm
         ///     Path from <paramref name="start" /> to <see cref="goal" />.
         ///     Empty if no path can be found.
         /// </returns>
-        public static IEnumerable<IGraphNode> BreadthFirstSearch(IGraphNode start, IGraphNode goal)
+        public static IEnumerable<T> BreadthFirstSearch<T>(T start, T goal) where T : IGraphNode<T>
         {
             return BreadthFirstSearch(start, goal, n => n.GetNeighbors());
         }
@@ -224,7 +222,7 @@ namespace AvalonAssets.Algorithm
         }
 
         /// <summary>
-        ///     Using Heuristic Search to find path with given <see cref="IGraphNode" />
+        ///     Using Heuristic Search to find path with given <see cref="IGraphNode{T}" />
         ///     from <paramref name="start" /> tp <see cref="goal" />.
         /// </summary>
         /// <param name="start">Start of the path.</param>
@@ -235,8 +233,7 @@ namespace AvalonAssets.Algorithm
         ///     Empty if no path can be found.
         /// </returns>
         /// <seealso cref="Heuristic{T}" />
-        public static IEnumerable<IGraphNode> HeuristicSearch(IGraphNode start, IGraphNode goal,
-            Heuristic<IGraphNode> heuristic)
+        public static IEnumerable<T> HeuristicSearch<T>(T start, T goal, Heuristic<T> heuristic) where T : IGraphNode<T>
         {
             return HeuristicSearch(start, goal, n => n.GetNeighbors(), heuristic);
         }

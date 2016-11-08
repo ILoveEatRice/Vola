@@ -5,12 +5,12 @@ namespace AvalonAssets.DataStructure.Graph
     /// <summary>
     ///     Simple graph node.
     /// </summary>
-    public interface IGraphNode
+    public interface IGraphNode<out T> where T : IGraphNode<T>
     {
         /// <summary>
         ///     Get the neighbor of current node.
         /// </summary>
         /// <returns>Neighbor of this node.</returns>
-        IEnumerable<IGraphNode> GetNeighbors();
+        IEnumerable<T> GetNeighbors();
     }
 }

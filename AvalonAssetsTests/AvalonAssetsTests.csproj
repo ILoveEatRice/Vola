@@ -51,6 +51,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Algorithm\PathFindingTests.cs" />
     <Compile Include="DataStructure\Heap\BinaryHeapTests.cs" />
     <Compile Include="DataStructure\Heap\BinomialHeapTests.cs" />
     <Compile Include="DataStructure\Heap\FibonacciHeapTests.cs" />
@@ -63,9 +64,7 @@
       <Name>AvalonAssets</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Test\" />
-  </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
