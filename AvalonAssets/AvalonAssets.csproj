@@ -50,10 +50,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithm\PathFinding.cs" />
+    <Compile Include="DataStructure\Graph\Hex\HexCoordinate.cs" />
+    <Compile Include="DataStructure\Graph\Hex\Region.cs" />
+    <Compile Include="DataStructure\Graph\Hex\RingCoordinate.cs" />
     <Compile Include="DataStructure\Graph\IGraph.cs" />
     <Compile Include="DataStructure\Graph\IGraphNode.cs" />
     <Compile Include="DataStructure\Graph\IWeightedGraphNode.cs" />
     <Compile Include="DataStructure\Graph\IWeightGraph.cs" />
+    <Compile Include="DataStructure\Graph\ShadowCast.cs" />
     <Compile Include="DataStructure\Heap\BinaryHeap.cs" />
     <Compile Include="DataStructure\Heap\BinomialHeap.cs" />
     <Compile Include="DataStructure\Heap\FibonacciHeap.cs" />
@@ -64,6 +68,8 @@
     <Compile Include="DataStructure\Queue\PriorityObject.cs" />
     <Compile Include="DataStructure\Queue\PriorityComparer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\DoubleUtils.cs" />
+    <Compile Include="Utility\EnumUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

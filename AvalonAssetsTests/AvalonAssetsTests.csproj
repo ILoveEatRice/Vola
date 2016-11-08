@@ -60,6 +60,7 @@
     <Compile Include="DataStructure\Heap\BinomialHeapTests.cs" />
     <Compile Include="DataStructure\Heap\FibonacciHeapTests.cs" />
     <Compile Include="DataStructure\Heap\HeapTest.cs" />
+    <Compile Include="DataStructure\Heap\Hex\HexCoordinateTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
