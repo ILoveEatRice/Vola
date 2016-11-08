@@ -6,8 +6,8 @@
     /// <typeparam name="T">Type of the Object.</typeparam>
     public class PriorityObject<T> : IPriority<T>
     {
-        private readonly int _priority;
         private readonly T _object;
+        private readonly int _priority;
 
         /// <summary>
         ///     Create a new <see cref="PriorityObject{T}" />.

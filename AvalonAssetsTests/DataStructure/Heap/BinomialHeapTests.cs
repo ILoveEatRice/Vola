@@ -2,23 +2,16 @@
 using System.Collections.Generic;
 using System.Linq;
 using AvalonAssets.DataStructure.Heap;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace AvalonAssetsTests.DataStructure.Heap
 {
-    [TestClass]
+    [TestFixture]
     public class BinomialHeapTests : HeapTest
     {
         public override IHeap<int> CreateHeap(bool isMin)
         {
             return new BinomialHeap<int>(GetComparer(isMin));
-        }
-
-        [TestMethod]
-        public void MergeTest()
-        {
-            MergeTest(MinHeap, true);
-            MergeTest(MaxHeap, false);
         }
 
         public void MergeTest(IHeap<int> heap, bool isMin)
@@ -40,6 +33,13 @@ namespace AvalonAssetsTests.DataStructure.Heap
             Console.WriteLine("Expect:" + string.Join(", ", tmpLst));
             Console.WriteLine("Result:" + string.Join(", ", heapList));
             Assert.IsTrue(tmpLst.SequenceEqual(heapList));
+        }
+
+        [Test]
+        public void MergeTest()
+        {
+            MergeTest(MinHeap, true);
+            MergeTest(MaxHeap, false);
         }
     }
 }

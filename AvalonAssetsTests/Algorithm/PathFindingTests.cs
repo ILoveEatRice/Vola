@@ -3,42 +3,71 @@ using System.Collections.Generic;
 using System.Linq;
 using AvalonAssets.Algorithm;
 using AvalonAssets.DataStructure.Graph;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace AvalonAssetsTests.Algorithm
 {
-    [TestClass]
+    [TestFixture]
     public class PathFindingTests
     {
-        [TestMethod]
-        public void DijkstraAlgorithmTest()
+        public class TestGraphNode : IGraphNode<TestGraphNode>
         {
-            var nodeA = new TestWeightGraphNode(1);
-            var nodeB = new TestWeightGraphNode(2);
-            var nodeC = new TestWeightGraphNode(0);
-            var nodeD = new TestWeightGraphNode(3);
-            var nodeE = new TestWeightGraphNode(4);
-            var nodeF = new TestWeightGraphNode(5);
-            var nodeG = new TestWeightGraphNode(7);
-            /**
-             * D - E - F - G
-             * |       |
-             * B - A - C
-             */
-            nodeA.AddNeighbors(nodeB, nodeC);
-            nodeB.AddNeighbors(nodeA, nodeD);
-            nodeC.AddNeighbors(nodeA, nodeF);
-            nodeD.AddNeighbors(nodeB, nodeE);
-            nodeE.AddNeighbors(nodeD, nodeF);
-            nodeF.AddNeighbors(nodeE, nodeC, nodeG);
-            var path = PathFinding.DijkstraAlgorithm(nodeA, nodeG).Select(n => n.Value).ToList();
-            Console.WriteLine(string.Join(",", path));
-            var result = new List<int> { nodeA.Value, nodeB.Value,nodeD.Value, nodeE.Value, nodeF.Value, nodeG.Value };
-            Console.WriteLine(string.Join(",", result));
-            Assert.IsTrue(result.SequenceEqual(path));
+            private readonly HashSet<TestGraphNode> _graphNodes;
+
+            public TestGraphNode(int value)
+            {
+                _graphNodes = new HashSet<TestGraphNode>();
+                Value = value;
+            }
+
+            public int Value { get; }
+
+            public IEnumerable<TestGraphNode> GetNeighbors()
+            {
+                return _graphNodes;
+            }
+
+            public void AddNeighbors(params TestGraphNode[] nodes)
+            {
+                foreach (var node in nodes)
+                {
+                    _graphNodes.Add(node);
+                }
+            }
         }
 
-        [TestMethod]
+        public class TestWeightGraphNode : IWeightedGraphNode<TestWeightGraphNode>
+        {
+            private readonly HashSet<TestWeightGraphNode> _graphNodes;
+
+            public TestWeightGraphNode(int value)
+            {
+                _graphNodes = new HashSet<TestWeightGraphNode>();
+                Value = value;
+            }
+
+            public int Value { get; }
+
+            public int GetWeight(TestWeightGraphNode neighbor)
+            {
+                return Math.Abs(Value - neighbor.Value);
+            }
+
+            public IEnumerable<TestWeightGraphNode> GetNeighbors()
+            {
+                return _graphNodes;
+            }
+
+            public void AddNeighbors(params TestWeightGraphNode[] nodes)
+            {
+                foreach (var node in nodes)
+                {
+                    _graphNodes.Add(node);
+                }
+            }
+        }
+
+        [Test]
         public void AStarAlgorithmTest()
         {
             var nodeA = new TestWeightGraphNode(1);
@@ -83,13 +112,13 @@ namespace AvalonAssetsTests.Algorithm
             };
             var path = PathFinding.AStarAlgorithm(nodeA, nodeG, method).Select(n => n.Value).ToList();
             Console.WriteLine(string.Join(",", path));
-            var result = new List<int> { nodeA.Value, nodeB.Value, nodeD.Value, nodeE.Value, nodeF.Value, nodeG.Value };
+            var result = new List<int> {nodeA.Value, nodeB.Value, nodeD.Value, nodeE.Value, nodeF.Value, nodeG.Value};
             Console.WriteLine(string.Join(",", result));
             Assert.IsTrue(result.SequenceEqual(path));
         }
 
 
-        [TestMethod]
+        [Test]
         public void BreadthFirstSearchTest()
         {
             var nodeA = new TestGraphNode(1);
@@ -117,7 +146,35 @@ namespace AvalonAssetsTests.Algorithm
             Assert.IsTrue(result.SequenceEqual(path));
         }
 
-        [TestMethod]
+        [Test]
+        public void DijkstraAlgorithmTest()
+        {
+            var nodeA = new TestWeightGraphNode(1);
+            var nodeB = new TestWeightGraphNode(2);
+            var nodeC = new TestWeightGraphNode(0);
+            var nodeD = new TestWeightGraphNode(3);
+            var nodeE = new TestWeightGraphNode(4);
+            var nodeF = new TestWeightGraphNode(5);
+            var nodeG = new TestWeightGraphNode(7);
+            /**
+             * D - E - F - G
+             * |       |
+             * B - A - C
+             */
+            nodeA.AddNeighbors(nodeB, nodeC);
+            nodeB.AddNeighbors(nodeA, nodeD);
+            nodeC.AddNeighbors(nodeA, nodeF);
+            nodeD.AddNeighbors(nodeB, nodeE);
+            nodeE.AddNeighbors(nodeD, nodeF);
+            nodeF.AddNeighbors(nodeE, nodeC, nodeG);
+            var path = PathFinding.DijkstraAlgorithm(nodeA, nodeG).Select(n => n.Value).ToList();
+            Console.WriteLine(string.Join(",", path));
+            var result = new List<int> {nodeA.Value, nodeB.Value, nodeD.Value, nodeE.Value, nodeF.Value, nodeG.Value};
+            Console.WriteLine(string.Join(",", result));
+            Assert.IsTrue(result.SequenceEqual(path));
+        }
+
+        [Test]
         public void HeuristicSearchTest()
         {
             var nodeA = new TestGraphNode(1);
@@ -165,62 +222,6 @@ namespace AvalonAssetsTests.Algorithm
             var result = new List<int> {nodeA.Value, nodeC.Value, nodeF.Value, nodeG.Value};
             Console.WriteLine(string.Join(",", result));
             Assert.IsTrue(result.SequenceEqual(path));
-        }
-
-        public class TestGraphNode : IGraphNode<TestGraphNode>
-        {
-            private readonly HashSet<TestGraphNode> _graphNodes;
-
-            public TestGraphNode(int value)
-            {
-                _graphNodes = new HashSet<TestGraphNode>();
-                Value = value;
-            }
-
-            public int Value { get; }
-
-            public IEnumerable<TestGraphNode> GetNeighbors()
-            {
-                return _graphNodes;
-            }
-
-            public void AddNeighbors(params TestGraphNode[] nodes)
-            {
-                foreach (var node in nodes)
-                {
-                    _graphNodes.Add(node);
-                }
-            }
-        }
-        public class TestWeightGraphNode : IWeightedGraphNode<TestWeightGraphNode>
-        {
-            private readonly HashSet<TestWeightGraphNode> _graphNodes;
-
-            public TestWeightGraphNode(int value)
-            {
-                _graphNodes = new HashSet<TestWeightGraphNode>();
-                Value = value;
-            }
-
-            public int Value { get; }
-
-            public int GetWeight(TestWeightGraphNode neighbor)
-            {
-                return Math.Abs(Value - neighbor.Value);
-            }
-
-            public IEnumerable<TestWeightGraphNode> GetNeighbors()
-            {
-                return _graphNodes;
-            }
-
-            public void AddNeighbors(params TestWeightGraphNode[] nodes)
-            {
-                foreach (var node in nodes)
-                {
-                    _graphNodes.Add(node);
-                }
-            }
         }
     }
 }

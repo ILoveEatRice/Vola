@@ -1,9 +1,9 @@
 ﻿using AvalonAssets.DataStructure.Heap;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace AvalonAssetsTests.DataStructure.Heap
 {
-    [TestClass]
+    [TestFixture]
     public class FibonacciHeapTests : HeapTest
     {
         public override IHeap<int> CreateHeap(bool isMin)

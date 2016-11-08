@@ -67,16 +67,6 @@ namespace AvalonAssets.DataStructure.Heap
             return _minNode;
         }
 
-        /// <summary>
-        ///     Combine the heap with another to form a valid Fibonacci heap.
-        /// </summary>
-        /// <param name="heap">Another Fibonacci heap.</param>
-        public void Merge(FibonacciHeap<T> heap)
-        {
-            _minNode = MergeLists(_minNode, heap._minNode);
-            _size += heap.Size();
-        }
-
         public void DecreaseKey(IHeapNode<T> element)
         {
             var node = element as Node<T>;
@@ -105,6 +95,16 @@ namespace AvalonAssets.DataStructure.Heap
             }
             _minNode = node;
             ExtractMin();
+        }
+
+        /// <summary>
+        ///     Combine the heap with another to form a valid Fibonacci heap.
+        /// </summary>
+        /// <param name="heap">Another Fibonacci heap.</param>
+        public void Merge(FibonacciHeap<T> heap)
+        {
+            _minNode = MergeLists(_minNode, heap._minNode);
+            _size += heap.Size();
         }
 
         private void CascadingCut(Node<T> node)

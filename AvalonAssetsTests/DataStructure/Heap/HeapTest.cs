@@ -2,13 +2,32 @@
 using System.Collections.Generic;
 using System.Linq;
 using AvalonAssets.DataStructure.Heap;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+using NUnit.Framework;
 
 namespace AvalonAssetsTests.DataStructure.Heap
 {
-    [TestClass]
+    [TestFixture]
     public abstract class HeapTest
     {
+        [SetUp]
+        public void Initialize()
+        {
+            foreach (var num in RandomList())
+                TestList.Add(num);
+            MinHeap = CreateHeap(true);
+            foreach (var element in TestList)
+                MinHeap.Insert(element);
+            MaxHeap = CreateHeap(false);
+            foreach (var element in TestList)
+                MaxHeap.Insert(element);
+        }
+
+        [TearDown]
+        public void ClearUp()
+        {
+            TestList.Clear();
+        }
+
         public const int Range = 100;
         private readonly Random _random = new Random();
         protected readonly List<int> TestList = new List<int>();
@@ -27,68 +46,6 @@ namespace AvalonAssetsTests.DataStructure.Heap
             var total = _random.Next(5, 20);
             for (var i = 0; i < total; i++)
                 yield return RandomNumber();
-        }
-
-        [TestInitialize]
-        public void Initialize()
-        {
-            foreach (var num in RandomList())
-                TestList.Add(num);
-            MinHeap = CreateHeap(true);
-            foreach (var element in TestList)
-                MinHeap.Insert(element);
-            MaxHeap = CreateHeap(false);
-            foreach (var element in TestList)
-                MaxHeap.Insert(element);
-        }
-
-        [TestCleanup]
-        public void ClearUp()
-        {
-            TestList.Clear();
-        }
-
-        [TestMethod]
-        public void InsertTest()
-        {
-            InsertTest(MinHeap, true);
-            InsertTest(MaxHeap, false);
-        }
-
-
-        [TestMethod]
-        public void ExtractMinTest()
-        {
-            ExtractMinTest(MinHeap, true);
-            ExtractMinTest(MaxHeap, false);
-        }
-
-        [TestMethod]
-        public void GetMinTest()
-        {
-            GetMinTest(MinHeap, true);
-            GetMinTest(MaxHeap, false);
-        }
-
-        [TestMethod]
-        public void SizeTest()
-        {
-            SizeTest(MinHeap);
-            SizeTest(MaxHeap);
-        }
-
-        [TestMethod]
-        public void DecreaseKeyTest()
-        {
-            DecreaseKeyTest(MinHeap, true);
-            DecreaseKeyTest(MaxHeap, false);
-        }
-
-        [TestMethod]
-        public void DeleteTest()
-        {
-            DeleteTest(MinHeap, true);
-            DeleteTest(MaxHeap, false);
         }
 
 
@@ -210,6 +167,49 @@ namespace AvalonAssetsTests.DataStructure.Heap
             {
                 return _compareFunc(x, y);
             }
+        }
+
+        [Test]
+        public void DecreaseKeyTest()
+        {
+            DecreaseKeyTest(MinHeap, true);
+            DecreaseKeyTest(MaxHeap, false);
+        }
+
+        [Test]
+        public void DeleteTest()
+        {
+            DeleteTest(MinHeap, true);
+            DeleteTest(MaxHeap, false);
+        }
+
+
+        [Test]
+        public void ExtractMinTest()
+        {
+            ExtractMinTest(MinHeap, true);
+            ExtractMinTest(MaxHeap, false);
+        }
+
+        [Test]
+        public void GetMinTest()
+        {
+            GetMinTest(MinHeap, true);
+            GetMinTest(MaxHeap, false);
+        }
+
+        [Test]
+        public void InsertTest()
+        {
+            InsertTest(MinHeap, true);
+            InsertTest(MaxHeap, false);
+        }
+
+        [Test]
+        public void SizeTest()
+        {
+            SizeTest(MinHeap);
+            SizeTest(MaxHeap);
         }
     }
 }
