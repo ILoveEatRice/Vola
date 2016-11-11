@@ -134,12 +134,20 @@ namespace AvalonAssets.DataStructure.Graph.Hex
         public override bool Equals(object obj)
         {
             var coord = obj as HexCoordinate;
-            return coord != null && Equals(coord);
+            if (coord != null)
+                return Equals(coord);
+            var ring = obj as RingCoordinate;
+            return ring != null && Equals(ring);
         }
 
         public bool Equals(HexCoordinate obj)
         {
             return obj.Q == Q && obj.R == R;
+        }
+
+        public bool Equals(RingCoordinate obj)
+        {
+            return Equals(obj.ToHex());
         }
 
         /// <summary>
@@ -151,6 +159,10 @@ namespace AvalonAssets.DataStructure.Graph.Hex
         /// <seealso cref="Direction" />
         public HexCoordinate Neighbor(Direction direction, int radius = 1)
         {
+            if (radius == 0)
+                return this;
+            if (radius < 0)
+                throw new ArgumentOutOfRangeException("radius");
             var qOffset = 0;
             var rOffset = 0;
             switch (direction)
@@ -272,7 +284,7 @@ namespace AvalonAssets.DataStructure.Graph.Hex
             // Direction start from E
             var direction = EnumUtils.Values<Direction>().Shift(-2).ToList();
             // Find the counter-clockwise corner tile.
-            var corner = Distance(direction[directionIndex], radius);
+            var corner = this + Distance(direction[directionIndex], radius);
 
             different = coordinate - corner;
             xOffset = Math.Abs(different.X);
@@ -308,7 +320,7 @@ namespace AvalonAssets.DataStructure.Graph.Hex
                 throw new ArgumentOutOfRangeException();
             for (var dx = -radius; dx <= radius; dx++)
                 for (var dy = Math.Max(-radius, -dx - radius); dy <= Math.Min(radius, -dx + radius); dy++)
-                    yield return new HexCoordinate(dx, dy, -dx - dy);
+                    yield return new HexCoordinate(dx, dy, -dx - dy) + this;
         }
 
         /// <summary>
@@ -324,6 +336,7 @@ namespace AvalonAssets.DataStructure.Graph.Hex
 
         /// <summary>
         ///     Returns a <see cref="HexCoordinate" /> with given <paramref name="direction" /> and <paramref name="distance" />.
+        ///     Start from (0, 0, 0).
         /// </summary>
         /// <param name="direction"></param>
         /// <param name="distance"></param>
@@ -375,7 +388,7 @@ namespace AvalonAssets.DataStructure.Graph.Hex
                 yield return this;
                 yield break;
             }
-            var coordinate = this + Neighbor(Direction.A)*radius;
+            var coordinate = this + Distance(Direction.E, radius);
             var directions = EnumUtils.Values<Direction>().ToList();
             foreach (var direction in directions)
                 for (var i = 0; i < radius; i++)
@@ -458,23 +471,6 @@ namespace AvalonAssets.DataStructure.Graph.Hex
             var shadowCast = new ShadowCast();
             for (var ringIndex = 1; ringIndex <= radius; ringIndex++)
             {
-                /*
-                var isEven = ringIndex%2 == 0;
-                var slide = (double) 360/(6*ringIndex);
-                var ring = Ring(ringIndex, Direction.F).Shift(-(ringIndex/2)).ToList();
-                for (var hexIndex = 0; hexIndex < ringIndex*6; hexIndex++)
-                {
-                    var minAngle = hexIndex*slide;
-                    if (isEven)
-                        minAngle -= slide/2;
-                    var maxAngle = minAngle + slide;
-                    var center = (maxAngle + minAngle)/2.0;
-                    if (shadowCast.Hide(center))
-                        continue;
-                    yield return ring[hexIndex];
-                    if (isBlock(ring[hexIndex]))
-                        shadowCast.AddShadow(minAngle, maxAngle);
-                }*/
                 var isEven = ringIndex%2 == 0;
                 var slide = (double) 360/(6*ringIndex);
                 for (var hexIndex = 0; hexIndex < ringIndex*6; hexIndex++)
@@ -500,7 +496,7 @@ namespace AvalonAssets.DataStructure.Graph.Hex
         /// <returns></returns>
         public IEnumerable<HexCoordinate> AllNeighbors()
         {
-            return EnumUtils.Values<Direction>().Select(Neighbor);
+            return EnumUtils.Values<Direction>().Select(direction => Neighbor(direction));
         }
 
         /// <summary>
@@ -561,6 +557,11 @@ namespace AvalonAssets.DataStructure.Graph.Hex
         public static HexCoordinate operator /(HexCoordinate left, int right)
         {
             return new HexCoordinate(left.Q/right, left.R/right);
+        }
+
+        public override string ToString()
+        {
+            return string.Format("X, Y, Z: {0}, {1}, {2}", X, Y, Z);
         }
     }
 }
