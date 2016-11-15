@@ -4,11 +4,21 @@ using AvalonAssets.Utility;
 
 namespace AvalonAssets.DataStructure.Geometry
 {
+    /// <summary>
+    ///     Represents an angle range. Use to check if a angle is within the range.
+    /// </summary>
     public class AngleInterval
     {
         private readonly double _from, _to;
         private readonly bool _full;
 
+        /// <summary>
+        ///     Initialize an <see cref="AngleInterval" /> with any given angle.
+        ///     The angles should should be small to have better performance.
+        ///     Angle between -360 and 360 are the best.
+        /// </summary>
+        /// <param name="from">Starting angle.</param>
+        /// <param name="to">Ending angle.</param>
         public AngleInterval(double from, double to)
         {
             _from = DoubleUtils.NormalizeAngle(from);
@@ -16,6 +26,10 @@ namespace AvalonAssets.DataStructure.Geometry
             _full = false;
         }
 
+        /// <summary>
+        ///     Initialize an <see cref="AngleInterval" /> with full or no interval.
+        /// </summary>
+        /// <param name="full">True if full interval.</param>
         public AngleInterval(bool full)
         {
             _from = 0;
@@ -23,6 +37,11 @@ namespace AvalonAssets.DataStructure.Geometry
             _full = full;
         }
 
+        /// <summary>
+        ///     Checks if <paramref name="target" /> is inside the interval.
+        /// </summary>
+        /// <param name="target">Angle to be checked.</param>
+        /// <returns>True if <paramref name="target" /> is inside the interval.</returns>
         public bool Inside(double target)
         {
             if (_full)
@@ -32,24 +51,30 @@ namespace AvalonAssets.DataStructure.Geometry
             return _from.AboutLesserThanOrEqual(target) || target.AboutLesserThanOrEqual(_to);
         }
 
-        public bool TryMerge(AngleInterval newShadow, out AngleInterval resultShadow)
+        /// <summary>
+        ///     Tries to merge two <see cref="AngleInterval" />.
+        /// </summary>
+        /// <param name="newInterval"><see cref="AngleInterval" /> to be merged.</param>
+        /// <param name="resultInterval">Result <see cref="AngleInterval" /> if merge is success.</param>
+        /// <returns>True if merge is success.</returns>
+        public bool TryMerge(AngleInterval newInterval, out AngleInterval resultInterval)
         {
-            if (newShadow._full)
+            if (newInterval._full)
             {
-                resultShadow = newShadow;
+                resultInterval = newInterval;
                 return true;
             }
 
-            if (_full || Equals(newShadow))
+            if (_full || Equals(newInterval))
             {
-                resultShadow = this;
+                resultInterval = this;
                 return true;
             }
 
             var aStart = _from;
             var aEnd = aStart > _to ? _to + 360 : _to;
-            var bStart = newShadow._from;
-            var bEnd = bStart > newShadow._to ? newShadow._to + 360 : newShadow._to;
+            var bStart = newInterval._from;
+            var bEnd = bStart > newInterval._to ? newInterval._to + 360 : newInterval._to;
 
             var diffA = (aEnd - aStart)/2;
             var diffB = (bEnd - bStart)/2;
@@ -69,37 +94,36 @@ namespace AvalonAssets.DataStructure.Geometry
             if (Math.Cos((avgB - aEnd).ToRadians()).AboutGreaterThanOrEqual(cosDiffB))
                 resultFlag |= MergeFlag.AEndInsideB;
 
-
             if (NotHasFlags(resultFlag, MergeFlag.BStartInsideA, MergeFlag.BEndInsideA,
                 MergeFlag.AEndInsideB, MergeFlag.AStartInsideB))
             {
-                resultShadow = null;
+                resultInterval = null;
                 return false;
             }
 
             if (HasFlags(resultFlag, MergeFlag.BStartInsideA, MergeFlag.BEndInsideA,
                 MergeFlag.AEndInsideB, MergeFlag.AStartInsideB))
             {
-                resultShadow = new AngleInterval(true);
+                resultInterval = new AngleInterval(true);
                 return true;
             }
 
             if (HasFlags(resultFlag, MergeFlag.BStartInsideA, MergeFlag.BEndInsideA))
             {
-                resultShadow = this;
+                resultInterval = this;
                 return true;
             }
 
             if (HasFlags(resultFlag, MergeFlag.AEndInsideB, MergeFlag.AStartInsideB))
             {
-                resultShadow = newShadow;
+                resultInterval = newInterval;
                 return true;
             }
 
             if (HasFlags(resultFlag, MergeFlag.AEndInsideB, MergeFlag.BStartInsideA) &&
                 NotHasFlags(resultFlag, MergeFlag.AStartInsideB, MergeFlag.BEndInsideA))
             {
-                resultShadow = new AngleInterval(aStart, bEnd);
+                resultInterval = new AngleInterval(aStart, bEnd);
                 return true;
             }
 
@@ -108,7 +132,7 @@ namespace AvalonAssets.DataStructure.Geometry
                 !NotHasFlags(resultFlag, MergeFlag.AEndInsideB, MergeFlag.BStartInsideA))
                 throw new InvalidOperationException("This should never happen.");
 
-            resultShadow = new AngleInterval(bStart, aEnd);
+            resultInterval = new AngleInterval(bStart, aEnd);
             return true;
         }
 

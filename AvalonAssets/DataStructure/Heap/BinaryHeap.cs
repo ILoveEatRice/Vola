@@ -3,6 +3,11 @@ using System.Collections.Generic;
 
 namespace AvalonAssets.DataStructure.Heap
 {
+    /// <summary>
+    ///     Binary Heap implemenation of <see cref="IHeap{T}" />.
+    ///     <seealso cref="IHeap{T}" />
+    /// </summary>
+    /// <typeparam name="T">Type.</typeparam>
     public class BinaryHeap<T> : IHeap<T>
     {
         private readonly IComparer<T> _comparer;

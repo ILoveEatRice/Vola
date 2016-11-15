@@ -3,6 +3,12 @@ using System.Collections.Generic;
 
 namespace AvalonAssets.DataStructure.Heap
 {
+{
+    /// <summary>
+    ///     Fibonacci Heap implemenation of <see cref="IHeap{T}" />.
+    ///     <seealso cref="IHeap{T}" />
+    /// </summary>
+    /// <typeparam name="T">Type.</typeparam>
     public class FibonacciHeap<T> : IHeap<T>
     {
         private readonly IComparer<T> _comparer;

@@ -9,7 +9,12 @@ namespace AvalonAssetsTests.DataStructure.Geometry
         [Test]
         public void InsideTest()
         {
-            Assert.Fail();
+            var shadow1 = new AngleInterval(0, 30);
+            var shadow2 = new AngleInterval(30, -20);
+            Assert.True(shadow1.Inside(15));
+            Assert.False(shadow1.Inside(31));
+            Assert.True(shadow2.Inside(40));
+            Assert.False(shadow2.Inside(0));
         }
 
         [Test]

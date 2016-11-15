@@ -508,9 +508,11 @@ namespace AvalonAssets.DataStructure.Graph.Hex
                         minAngle -= slide/2;
                     var maxAngle = minAngle + slide;
                     var center = (maxAngle + minAngle)/2.0;
+                    // Ignore if the center of the hex cannot be seen
                     if (shadowCast.Hide(center))
                         continue;
                     yield return coordinate;
+                    // Add to shadow if the hex is opaque
                     if (isOpaque(coordinate))
                         shadowCast.AddShadow(minAngle, maxAngle);
                 }
