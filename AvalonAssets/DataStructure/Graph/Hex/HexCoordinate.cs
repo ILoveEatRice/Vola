@@ -1,10 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AvalonAssets.Algorithm;
 using AvalonAssets.Utility;
 
 namespace AvalonAssets.DataStructure.Graph.Hex
 {
+    /// <summary>
+    ///     Represents coordinate on hex map.
+    /// </summary>
     public class HexCoordinate
     {
         #region Direction
@@ -103,9 +107,9 @@ namespace AvalonAssets.DataStructure.Graph.Hex
         /// <summary>
         ///     Create from cube coordinates.
         /// </summary>
-        /// <param name="x"></param>
-        /// <param name="y"></param>
-        /// <param name="z"></param>
+        /// <param name="x">X coordinate.</param>
+        /// <param name="y">Y coordinate.</param>
+        /// <param name="z">Z coordinate.</param>
         public static HexCoordinate FromCube(int x, int y, int z)
         {
             return new HexCoordinate(x, y, z);
@@ -114,8 +118,8 @@ namespace AvalonAssets.DataStructure.Graph.Hex
         /// <summary>
         ///     Create from axial coordinates.
         /// </summary>
-        /// <param name="q"></param>
-        /// <param name="r"></param>
+        /// <param name="q">Q coordinate.</param>
+        /// <param name="r">R coordinate.</param>
         public static HexCoordinate FromAxial(int q, int r)
         {
             return new HexCoordinate(q, r);
@@ -157,7 +161,7 @@ namespace AvalonAssets.DataStructure.Graph.Hex
         ///     Create a new <see cref="HexCoordinate" /> from current position with given <paramref name="direction" />.
         /// </summary>
         /// <param name="direction">Direction of the new <see cref="HexCoordinate" /> from current position.</param>
-        /// <param name="radius"></param>
+        /// <param name="radius">Radius. 0 returns itself.</param>
         /// <returns>New <see cref="HexCoordinate" /></returns>
         /// <seealso cref="Direction" />
         public HexCoordinate Neighbor(Direction direction, int radius = 1)
@@ -242,12 +246,24 @@ namespace AvalonAssets.DataStructure.Graph.Hex
             return new HexCoordinate(_q + qOffset, _r + rOffset);
         }
 
-
+        /// <summary>
+        ///     Converts from a relative ring coordinate to absloute <see cref="HexCoordinate" />.
+        /// </summary>
+        /// <param name="radius">Radius. 0 returns itself.</param>
+        /// <param name="index">
+        ///     Starting from the top node or the right on the top node if there is two top nodes.
+        ///     Start from 0.
+        /// </param>
+        /// <returns>Absloute <see cref="HexCoordinate" />.</returns>
         // http://gamedev.stackexchange.com/a/131567/92601
         public HexCoordinate FromRing(int radius, int index)
         {
+            if (radius == 0)
+                return this;
+            if (radius < 0)
+                throw new ArgumentOutOfRangeException("radius");
             var ringSize = 6*radius;
-            var tweakedIndex = (index + (radius + 1)/2 - 1)%ringSize;
+            var tweakedIndex = (index + (radius + 1)/2)%ringSize;
             var directionIndex = tweakedIndex/radius;
             var direction = EnumUtils.Values<Direction>().Shift(-2).ToList();
             // Compute the ring index of the corner tile at the end of this spoke:
@@ -298,14 +314,14 @@ namespace AvalonAssets.DataStructure.Graph.Hex
             // Our tile is at the corner's index, plus this excess.
             var index = radius*directionIndex + excess;
             var ringSize = 6*radius;
-            index = (index + ringSize - (radius + 1)/2)%ringSize + 1;
+            index = (index + ringSize - (radius + 1)/2)%ringSize;
             return new RingCoordinate(this, radius, index);
         }
 
         /// <summary>
         ///     Returns distance between two <see cref="HexCoordinate" />.
         /// </summary>
-        /// <param name="hexCoordinate"></param>
+        /// <param name="hexCoordinate">Anthor <see cref="HexCoordinate" />.</param>
         /// <returns>Distance.</returns>
         public int Distance(HexCoordinate hexCoordinate)
         {
@@ -315,12 +331,12 @@ namespace AvalonAssets.DataStructure.Graph.Hex
         /// <summary>
         ///     Returns all <see cref="HexCoordinate" /> within <paramref name="radius" />.
         /// </summary>
-        /// <param name="radius"></param>
-        /// <returns></returns>
+        /// <param name="radius">Radius. 0 returns itself.</param>
+        /// <returns>All <see cref="HexCoordinate" /> within <paramref name="radius" /></returns>
         public IEnumerable<HexCoordinate> Range(int radius)
         {
             if (radius < 0)
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException("radius");
             for (var dx = -radius; dx <= radius; dx++)
                 for (var dy = Math.Max(-radius, -dx - radius); dy <= Math.Min(radius, -dx + radius); dy++)
                     yield return new HexCoordinate(dx, dy, -dx - dy) + this;
@@ -328,22 +344,23 @@ namespace AvalonAssets.DataStructure.Graph.Hex
 
         /// <summary>
         ///     Returns true if there is nothing blocking between two <see cref="HexCoordinate" />.
+        ///     DON'T use this to find the field of view. Use <see cref="FieldOfView"/> to have better performance.
         /// </summary>
         /// <param name="position"><see cref="HexCoordinate" /> to be checked.</param>
-        /// <param name="isBlock"></param>
-        /// <returns></returns>
-        public bool Visible(HexCoordinate position, Func<HexCoordinate, bool> isBlock)
+        /// <param name="isOpaque">Returns if a node is opaque.</param>
+        /// <returns>True if there is nothing blocking between two <see cref="HexCoordinate" />.</returns>
+        public bool Visible(HexCoordinate position, Func<HexCoordinate, bool> isOpaque)
         {
-            return !Line(position).Any(isBlock);
+            return !Line(position).Any(isOpaque);
         }
 
         /// <summary>
         ///     Returns a <see cref="HexCoordinate" /> with given <paramref name="direction" /> and <paramref name="distance" />.
         ///     Start from (0, 0, 0).
         /// </summary>
-        /// <param name="direction"></param>
-        /// <param name="distance"></param>
-        /// <returns></returns>
+        /// <param name="direction">Direction.</param>
+        /// <param name="distance">Distance.</param>
+        /// <returns><see cref="HexCoordinate" />.</returns>
         public static HexCoordinate Distance(Direction direction, int distance)
         {
             return new HexCoordinate(0, 0).Neighbor(direction, distance);
@@ -352,13 +369,18 @@ namespace AvalonAssets.DataStructure.Graph.Hex
         /// <summary>
         ///     Returns all the <see cref="HexCoordinate" /> that can be reached by given <paramref name="steps" />.
         /// </summary>
-        /// <param name="steps"></param>
-        /// <param name="isBlock"></param>
-        /// <returns></returns>
-        public IEnumerable<HexCoordinate> Reachable(int steps, Func<HexCoordinate, bool> isBlock)
+        /// <param name="steps">Maximum steps can be used. 0 returns itself.</param>
+        /// <param name="isOpaque">Returns if a node is opaque.</param>
+        /// <returns>All reachable <see cref="HexCoordinate" />.</returns>
+        public IEnumerable<HexCoordinate> Reachable(int steps, Func<HexCoordinate, bool> isOpaque)
         {
             if (steps < 0)
                 throw new ArgumentOutOfRangeException();
+            if (steps == 0)
+            {
+                yield return this;
+                yield break;
+            }
             var visited = new HashSet<HexCoordinate> {this};
             var fringes = new List<HexCoordinate> {this};
             for (var i = 1; i <= steps; i++)
@@ -368,7 +390,7 @@ namespace AvalonAssets.DataStructure.Graph.Hex
                     foreach (var direction in EnumUtils.Values<Direction>())
                     {
                         var neighbor = coordinate.Neighbor(direction);
-                        if (visited.Contains(neighbor) || isBlock(neighbor)) continue;
+                        if (visited.Contains(neighbor) || isOpaque(neighbor)) continue;
                         visited.Add(neighbor);
                         newFringes.Add(neighbor);
                         yield return neighbor;
@@ -380,8 +402,8 @@ namespace AvalonAssets.DataStructure.Graph.Hex
         /// <summary>
         ///     Returns a ring of <see cref="HexCoordinate" /> with given <paramref name="radius" />.
         /// </summary>
-        /// <param name="radius"></param>
-        /// <returns></returns>
+        /// <param name="radius">Radius. 0 returns itself.</param>
+        /// <returns>A ring of <see cref="HexCoordinate" />.</returns>
         public IEnumerable<HexCoordinate> Ring(int radius)
         {
             if (radius < 0)
@@ -402,10 +424,11 @@ namespace AvalonAssets.DataStructure.Graph.Hex
         }
 
         /// <summary>
-        ///     Returns a spiral ring of <see cref="HexCoordinate" /> with given <paramref name="radius" />.
+        ///     Returns a spiral ring of <see cref="HexCoordinate" /> with given <paramref name="radius" />
+        ///     from inside to outside.
         /// </summary>
-        /// <param name="radius"></param>
-        /// <returns></returns>
+        /// <param name="radius">Radius. 0 returns itself.</param>
+        /// <returns><see cref="HexCoordinate" />.</returns>
         public IEnumerable<HexCoordinate> Spiral(int radius)
         {
             if (radius < 0)
@@ -419,8 +442,8 @@ namespace AvalonAssets.DataStructure.Graph.Hex
         /// <summary>
         ///     Returns a approximate line between two <see cref="HexCoordinate" />.
         /// </summary>
-        /// <param name="dest"></param>
-        /// <returns></returns>
+        /// <param name="dest">Destination.</param>
+        /// <returns>All <see cref="HexCoordinate" /> pass through.</returns>
         public IEnumerable<HexCoordinate> Line(HexCoordinate dest)
         {
             var distance = Distance(dest);
@@ -457,16 +480,17 @@ namespace AvalonAssets.DataStructure.Graph.Hex
         }
 
         /// <summary>
-        ///     Field Of View
+        ///     Field Of View.
+        ///     Returns All visiable <see cref="HexCoordinate" /> within <paramref name="radius" />.
         /// </summary>
-        /// <param name="radius"></param>
-        /// <param name="isBlock"></param>
-        /// <returns></returns>
-        public IEnumerable<HexCoordinate> FieldOfView(int radius, Func<HexCoordinate, bool> isBlock)
+        /// <param name="radius">Radius. 0 returns itself.</param>
+        /// <param name="isOpaque">Returns if a node is opaque.</param>
+        /// <returns>All visiable <see cref="HexCoordinate" />.</returns>
+        public IEnumerable<HexCoordinate> FieldOfView(int radius, Func<HexCoordinate, bool> isOpaque)
         {
             if (radius < 0)
                 throw new ArgumentOutOfRangeException();
-            if (isBlock(this))
+            if (isOpaque(this))
                 yield break;
             yield return this;
             if (radius == 0)
@@ -487,7 +511,7 @@ namespace AvalonAssets.DataStructure.Graph.Hex
                     if (shadowCast.Hide(center))
                         continue;
                     yield return coordinate;
-                    if (isBlock(coordinate))
+                    if (isOpaque(coordinate))
                         shadowCast.AddShadow(minAngle, maxAngle);
                 }
             }

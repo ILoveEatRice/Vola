@@ -17,9 +17,24 @@ namespace AvalonAssets.Utility
             return Math.Abs(left - right) <= Math.Max(Math.Abs(left), Math.Abs(right))*1E-15;
         }
 
+        public static bool AboutGreaterThanOrEqual(this double left, double right)
+        {
+            return left > right || AboutEqual(left, right);
+        }
+
+        public static bool AboutLesserThanOrEqual(this double left, double right)
+        {
+            return left < right || AboutEqual(left, right);
+        }
+
+        public static double ToRadians(this double value)
+        {
+            return Math.PI/180*value;
+        }
+
         public static double NormalizeAngle(double angle)
         {
-            while (angle > 360)
+            while (angle >= 360)
                 angle -= 360;
             while (angle < 0)
                 angle += 360;

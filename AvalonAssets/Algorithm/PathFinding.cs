@@ -13,7 +13,7 @@ namespace AvalonAssets.Algorithm
         /// <summary>
         ///     Returns the distance between <paramref name="node" /> and <paramref name="goal" />.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">Graph node.</typeparam>
         /// <param name="goal">Goal node.</param>
         /// <param name="node">Current node.</param>
         /// <returns>Distance between <paramref name="node" /> and <paramref name="goal" /></returns>
@@ -22,7 +22,7 @@ namespace AvalonAssets.Algorithm
         /// <summary>
         ///     Creates path from visit history.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">Graph node.</typeparam>
         /// <param name="from">History of visit.</param>
         /// <param name="start">Start of the path.</param>
         /// <param name="goal">End of the path.</param>
@@ -49,9 +49,9 @@ namespace AvalonAssets.Algorithm
 
         /// <summary>
         ///     Using Dijkstra's Algorithm to find path with given <see cref="IWeightGraph{T}" />
-        ///     from <paramref name="start" /> tp <paramref cref="goal" />.
+        ///     from <paramref name="start" /> to <paramref cref="goal" />.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">Graph node.</typeparam>
         /// <param name="graph">Weighted graph</param>
         /// <param name="start">Start of the path.</param>
         /// <param name="goal">End of the path.</param>
@@ -66,7 +66,7 @@ namespace AvalonAssets.Algorithm
 
         /// <summary>
         ///     Using Dijkstra's Algorithm to find path with given <see cref="IWeightedGraphNode{T}" />
-        ///     from <paramref name="start" /> tp <paramref cref="goal" />.
+        ///     from <paramref name="start" /> to <paramref cref="goal" />.
         /// </summary>
         /// <param name="start">Start of the path.</param>
         /// <param name="goal">End of the path.</param>
@@ -105,9 +105,9 @@ namespace AvalonAssets.Algorithm
 
         /// <summary>
         ///     Using A* Algorithm to find path with given <see cref="IWeightGraph{T}" />
-        ///     from <paramref name="start" /> tp <paramref cref="goal" />.
+        ///     from <paramref name="start" /> to <paramref cref="goal" />.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">Graph node.</typeparam>
         /// <param name="graph">Weighted graph</param>
         /// <param name="start">Start of the path.</param>
         /// <param name="goal">End of the path.</param>
@@ -124,7 +124,7 @@ namespace AvalonAssets.Algorithm
 
         /// <summary>
         ///     Using A* Algorithm to find path with given <see cref="IWeightedGraphNode{T}" />
-        ///     from <paramref name="start" /> tp <paramref cref="goal" />.
+        ///     from <paramref name="start" /> to <paramref cref="goal" />.
         /// </summary>
         /// <param name="start">Start of the path.</param>
         /// <param name="goal">End of the path.</param>
@@ -170,7 +170,7 @@ namespace AvalonAssets.Algorithm
 
         /// <summary>
         ///     Using Breadth First Search to find path with given <see cref="IGraphNode{T}" />
-        ///     from <paramref name="start" /> tp <paramref cref="goal" />.
+        ///     from <paramref name="start" /> to <paramref cref="goal" />.
         /// </summary>
         /// <param name="start">Start of the path.</param>
         /// <param name="goal">End of the path.</param>
@@ -185,9 +185,9 @@ namespace AvalonAssets.Algorithm
 
         /// <summary>
         ///     Using Breadth First Search to find path with given <see cref="IGraph{T}" />
-        ///     from <paramref name="start" /> tp <paramref cref="goal" />.
+        ///     from <paramref name="start" /> to <paramref cref="goal" />.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">Graph node.</typeparam>
         /// <param name="graph">Weighted graph</param>
         /// <param name="start">Start of the path.</param>
         /// <param name="goal">End of the path.</param>
@@ -223,7 +223,7 @@ namespace AvalonAssets.Algorithm
 
         /// <summary>
         ///     Using Heuristic Search to find path with given <see cref="IGraphNode{T}" />
-        ///     from <paramref name="start" /> tp <paramref cref="goal" />.
+        ///     from <paramref name="start" /> to <paramref cref="goal" />.
         /// </summary>
         /// <param name="start">Start of the path.</param>
         /// <param name="goal">End of the path.</param>
@@ -240,9 +240,9 @@ namespace AvalonAssets.Algorithm
 
         /// <summary>
         ///     Using Heuristic Search to find path with given <see cref="IGraph{T}" />
-        ///     from <paramref name="start" /> tp <paramref cref="goal" />.
+        ///     from <paramref name="start" /> to <paramref cref="goal" />.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">Graph node.</typeparam>
         /// <param name="graph">Weighted graph</param>
         /// <param name="start">Start of the path.</param>
         /// <param name="goal">End of the path.</param>

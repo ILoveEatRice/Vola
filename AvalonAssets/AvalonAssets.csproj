@@ -57,12 +57,13 @@
     <Compile Include="DataStructure\Graph\IGraphNode.cs" />
     <Compile Include="DataStructure\Graph\IWeightedGraphNode.cs" />
     <Compile Include="DataStructure\Graph\IWeightGraph.cs" />
-    <Compile Include="DataStructure\Graph\ShadowCast.cs" />
+    <Compile Include="Algorithm\ShadowCast.cs" />
     <Compile Include="DataStructure\Heap\BinaryHeap.cs" />
     <Compile Include="DataStructure\Heap\BinomialHeap.cs" />
     <Compile Include="DataStructure\Heap\FibonacciHeap.cs" />
     <Compile Include="DataStructure\Heap\IHeap.cs" />
     <Compile Include="DataStructure\Heap\IHeapNode.cs" />
+    <Compile Include="DataStructure\Geometry\AngleInterval.cs" />
     <Compile Include="DataStructure\Queue\IPriority.cs" />
     <Compile Include="DataStructure\Queue\PriorityQueue.cs" />
     <Compile Include="DataStructure\Queue\PriorityObject.cs" />

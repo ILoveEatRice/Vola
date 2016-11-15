@@ -56,11 +56,12 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Algorithm\PathFindingTests.cs" />
+    <Compile Include="DataStructure\Geometry\AngleIntervalTests.cs" />
     <Compile Include="DataStructure\Heap\BinaryHeapTests.cs" />
     <Compile Include="DataStructure\Heap\BinomialHeapTests.cs" />
     <Compile Include="DataStructure\Heap\FibonacciHeapTests.cs" />
     <Compile Include="DataStructure\Heap\HeapTest.cs" />
-    <Compile Include="DataStructure\Heap\Hex\HexCoordinateTest.cs" />
+    <Compile Include="DataStructure\Graph\Hex\HexCoordinateTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

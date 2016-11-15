@@ -5,7 +5,7 @@ using AvalonAssets.DataStructure.Graph.Hex;
 using AvalonAssets.Utility;
 using NUnit.Framework;
 
-namespace AvalonAssetsTests.DataStructure.Heap.Hex
+namespace AvalonAssetsTests.DataStructure.Graph.Hex
 {
     [TestFixture]
     public class HexCoordinateTest
@@ -42,6 +42,23 @@ namespace AvalonAssetsTests.DataStructure.Heap.Hex
         }
 
         [Test]
+        public void FieldOfViewTest()
+        {
+            Func<HexCoordinate, bool> isBlock = c =>
+                c.Equals(HexCoordinate.FromCube(0, 0, 0)) ||
+                c.Equals(HexCoordinate.FromCube(1, 0, -1)) ||
+                c.Equals(HexCoordinate.FromCube(2, 0, -2)) ||
+                c.Equals(HexCoordinate.FromCube(0, 2, -2));
+            var field = Center.FieldOfView(5, isBlock).ToList();
+            Assert.False(field.Contains(HexCoordinate.FromCube(0, 0, 0)));
+            Assert.False(field.Contains(HexCoordinate.FromCube(-1, -2, 3)));
+            Assert.False(field.Contains(HexCoordinate.FromCube(2, -1, -1)));
+            Assert.False(field.Contains(HexCoordinate.FromCube(3, 0, -3)));
+            Assert.True(field.Contains(HexCoordinate.FromCube(1, 2, -3)));
+            Assert.True(field.Contains(HexCoordinate.FromCube(4, 0, -4)));
+        }
+
+        [Test]
         public void FromCubeTest()
         {
             Assert.Throws<ArgumentException>(() => { HexCoordinate.FromCube(1, 1, 1); });
@@ -50,8 +67,8 @@ namespace AvalonAssetsTests.DataStructure.Heap.Hex
         [Test]
         public void FromRingTest()
         {
-            Assert.AreEqual(HexCoordinate.FromCube(1, -1, 0), Center.FromRing(2, 6));
-            Assert.AreEqual(HexCoordinate.FromCube(4, -2, -2), Center.FromRing(3, 5));
+            Assert.AreEqual(HexCoordinate.FromCube(1, -1, 0), Center.FromRing(2, 5));
+            Assert.AreEqual(HexCoordinate.FromCube(4, -2, -2), Center.FromRing(3, 4));
         }
 
         [Test]
@@ -92,6 +109,7 @@ namespace AvalonAssetsTests.DataStructure.Heap.Hex
             var expected = Center.AllNeighbors().ToList();
             expected.Add(Center);
             CollectionAssert.AreEquivalent(expected, Center.Range(1));
+            CollectionAssert.AreEquivalent(new List<HexCoordinate> {Center}, Center.Range(0));
         }
 
         [Test]
@@ -115,9 +133,9 @@ namespace AvalonAssetsTests.DataStructure.Heap.Hex
         [Test]
         public void RingOfTest()
         {
-            Assert.AreEqual(new RingCoordinate(Center, 3, 10), Center.RingOf(HexCoordinate.FromCube(-1, 0, 1)));
-            Assert.AreEqual(Center.FromRing(3, 10), Center.RingOf(HexCoordinate.FromCube(-1, 0, 1)));
-            Assert.AreEqual(Center.FromRing(2, 4), Center.RingOf(Center.FromRing(2, 4)));
+            Assert.AreEqual(new RingCoordinate(Center, 3, 9), Center.RingOf(HexCoordinate.FromCube(-1, 0, 1)));
+            Assert.AreEqual(Center.FromRing(3, 9), Center.RingOf(HexCoordinate.FromCube(-1, 0, 1)));
+            Assert.AreEqual(Center.FromRing(2, 3), Center.RingOf(Center.FromRing(2, 3)));
         }
 
         [Test]
@@ -156,20 +174,6 @@ namespace AvalonAssetsTests.DataStructure.Heap.Hex
             Func<HexCoordinate, bool> isBlock = c => c.Equals(HexCoordinate.FromCube(0, 0, 0));
             Assert.True(Center.Visible(HexCoordinate.FromCube(1, -1, 0), isBlock));
             Assert.False(Center.Visible(HexCoordinate.FromCube(-1, 0, 1), isBlock));
-        }
-        [Test]
-        public void FieldOfViewTest()
-        {
-            Func<HexCoordinate, bool> isBlock = c =>
-                c.Equals(HexCoordinate.FromCube(0, 0, 0)) ||
-                c.Equals(HexCoordinate.FromCube(1, 0, -1)) ||
-                c.Equals(HexCoordinate.FromCube(2, 0, -2))||
-            c.Equals(HexCoordinate.FromCube(0, 2, -2));
-            var field = Center.FieldOfView(3, isBlock).ToList();
-            Assert.False(field.Contains(HexCoordinate.FromCube(0, 0, 0)));
-            Assert.False(field.Contains(HexCoordinate.FromCube(-1, -2, 3)));
-            Assert.False(field.Contains(HexCoordinate.FromCube(2, -1, -1)));
-            Assert.True(field.Contains(HexCoordinate.FromCube(1, 2, -3)));
         }
     }
 }
