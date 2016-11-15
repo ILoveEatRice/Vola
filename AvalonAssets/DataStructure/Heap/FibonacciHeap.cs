@@ -3,7 +3,6 @@ using System.Collections.Generic;
 
 namespace AvalonAssets.DataStructure.Heap
 {
-{
     /// <summary>
     ///     Fibonacci Heap implemenation of <see cref="IHeap{T}" />.
     ///     <seealso cref="IHeap{T}" />
