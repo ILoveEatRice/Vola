@@ -7,7 +7,7 @@ namespace AvalonAssets.Utility
     public static class EnumUtils
     {
         /// <summary>
-        ///     Get all the values of enum <typeparamref name="T" />.
+        ///     Gets all the values of enum <typeparamref name="T" />.
         /// </summary>
         /// <typeparam name="T">Enum type.</typeparam>
         /// <returns>All enum value of <typeparamref name="T" /></returns>
@@ -17,7 +17,7 @@ namespace AvalonAssets.Utility
         }
 
         /// <summary>
-        ///     Shift the <paramref name="enumerable" /> by <paramref name="offset" />.
+        ///     Shifts the <paramref name="enumerable" /> by <paramref name="offset" />.
         /// </summary>
         /// <typeparam name="T">Type.</typeparam>
         /// <param name="enumerable">Enumerable to be shifted.</param>

@@ -5,7 +5,7 @@ namespace AvalonAssets.Utility
     public static class DoubleUtils
     {
         /// <summary>
-        ///     Return true if two double are about equal.
+        ///     Returns true if two double are about equal.
         ///     Not using Double.Epsilon, read the reference for the reason.
         ///     Reference: http://stackoverflow.com/a/2411661/3673259
         /// </summary>
@@ -18,7 +18,7 @@ namespace AvalonAssets.Utility
         }
 
         /// <summary>
-        ///     Return true if two double are about equal or greater than.
+        ///     Returns true if two double are about equal or greater than.
         /// </summary>
         /// <param name="left">Self.</param>
         /// <param name="right">Double to be compare.</param>
@@ -30,7 +30,7 @@ namespace AvalonAssets.Utility
         }
 
         /// <summary>
-        ///     Return true if two double are about equal or lesser than.
+        ///     Returns true if two double are about equal or lesser than.
         /// </summary>
         /// <param name="left">Self.</param>
         /// <param name="right">Double to be compare.</param>
