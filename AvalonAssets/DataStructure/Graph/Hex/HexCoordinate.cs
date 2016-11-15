@@ -124,18 +124,10 @@ namespace AvalonAssets.DataStructure.Graph.Hex
         {
             return new HexCoordinate(q, r);
         }
-
-        // Reference: http://stackoverflow.com/a/13871379/3673259
-        //            http://szudzik.com/ElegantPairing.pdf
+        
         public override int GetHashCode()
         {
-            unchecked
-            {
-                var a = (ulong) (X >= 0 ? 2*(long) X : -2*(long) X - 1);
-                var b = (ulong) (Y >= 0 ? 2*(long) Y : -2*(long) Y - 1);
-                var c = (long) ((a >= b ? a*a + a + b : a + b*b)/2);
-                return (int) (X < 0 && Y < 0 || X >= 0 && Y >= 0 ? c : -c - 1);
-            }
+            return HashUtils.IntegerHash(X, Y);
         }
 
         public override bool Equals(object obj)

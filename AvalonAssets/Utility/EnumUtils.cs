@@ -9,7 +9,7 @@ namespace AvalonAssets.Utility
         /// <summary>
         ///     Get all the values of enum <typeparamref name="T" />.
         /// </summary>
-        /// <typeparam name="T">Enum type</typeparam>
+        /// <typeparam name="T">Enum type.</typeparam>
         /// <returns>All enum value of <typeparamref name="T" /></returns>
         public static IEnumerable<T> Values<T>() where T : struct
         {
@@ -19,7 +19,7 @@ namespace AvalonAssets.Utility
         /// <summary>
         ///     Shift the <paramref name="enumerable" /> by <paramref name="offset" />.
         /// </summary>
-        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="T">Type.</typeparam>
         /// <param name="enumerable">Enumerable to be shifted.</param>
         /// <param name="offset">Amount of shift.</param>
         /// <returns>Shifted enumerable.</returns>

@@ -13,13 +13,23 @@ namespace AvalonAssets.Algorithm
             _shadowList = new SortedList<double, AngleInterval>();
         }
 
-        public void AddShadow(double minAngle, double maxAngle)
+        /// <summary>
+        ///     Adds a shadow with given angle.
+        /// </summary>
+        /// <param name="startAngle">Starting Angle.</param>
+        /// <param name="endAngle">Ending Angle.</param>
+        public void AddShadow(double startAngle, double endAngle)
         {
-            var shadow = new AngleInterval(minAngle, maxAngle);
-            _shadowList.Add(minAngle, shadow);
+            var shadow = new AngleInterval(startAngle, endAngle);
+            _shadowList.Add(startAngle, shadow);
             MergeShadow();
         }
 
+        /// <summary>
+        ///     Checks if an angle is hidden in shadow.
+        /// </summary>
+        /// <param name="angle"></param>
+        /// <returns></returns>
         public bool Hide(double angle)
         {
             return _shadowList.Values.Any(shadow => shadow.Inside(angle));
@@ -34,7 +44,7 @@ namespace AvalonAssets.Algorithm
                 if (!_shadowList.Values[i].TryMerge(_shadowList.Values[i + 1], out shadow)) continue;
                 _shadowList[i] = shadow;
                 _shadowList.RemoveAt(i + 1);
-               return;
+                return;
             }
         }
     }
