@@ -39,6 +39,10 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="JetBrains.Annotations, Version=10.2.1.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
+      <HintPath>..\packages\JetBrains.Annotations.10.2.1\lib\net\JetBrains.Annotations.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -50,15 +54,24 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithm\PathFinding.cs" />
-    <Compile Include="DataStructure\Graph\Hex\HexCoordinate.cs" />
-    <Compile Include="DataStructure\Graph\Hex\Region.cs" />
-    <Compile Include="DataStructure\Graph\Hex\RingCoordinate.cs" />
+    <Compile Include="DataStructure\Graph\AbstractGraph.cs" />
+    <Compile Include="DataStructure\Graph\AbstractValueGraph.cs" />
+    <Compile Include="DataStructure\Graph\EndPointPair.cs" />
+    <Compile Include="DataStructure\Graph\Graphs.cs" />
+    <Compile Include="DataStructure\Graph\GraphConnection.cs" />
+    <Compile Include="DataStructure\Graph\IMutableGraph.cs" />
+    <Compile Include="DataStructure\Graph\IMutableValueGraph.cs" />
+    <Compile Include="DataStructure\Graph\IValueGraph.cs" />
+    <Compile Include="DataStructure\Graph\OrderEndPointPair.cs" />
+    <Compile Include="Grid\Hex\HexCoordinate.cs" />
+    <Compile Include="Grid\Hex\Region.cs" />
+    <Compile Include="Grid\Hex\RingCoordinate.cs" />
     <Compile Include="DataStructure\Graph\IGraph.cs" />
     <Compile Include="DataStructure\Graph\IGraphNode.cs" />
     <Compile Include="DataStructure\Graph\IWeightedGraphNode.cs" />
     <Compile Include="DataStructure\Graph\IWeightGraph.cs" />
     <Compile Include="Algorithm\ShadowCast.cs" />
-    <Compile Include="DataStructure\Graph\Square\SquareCoordinate.cs" />
+    <Compile Include="Grid\Square\SquareCoordinate.cs" />
     <Compile Include="DataStructure\Heap\BinaryHeap.cs" />
     <Compile Include="DataStructure\Heap\BinomialHeap.cs" />
     <Compile Include="DataStructure\Heap\FibonacciHeap.cs" />
@@ -76,6 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

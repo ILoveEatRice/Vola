@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AvalonAssets.DataStructure.Graph.Hex
+namespace AvalonAssets.Grid.Hex
 {
     public class Region
     {

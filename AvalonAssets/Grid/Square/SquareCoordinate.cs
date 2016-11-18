@@ -2,8 +2,11 @@
 using System.Collections.Generic;
 using AvalonAssets.Utility;
 
-namespace AvalonAssets.DataStructure.Graph.Square
+namespace AvalonAssets.Grid.Square
 {
+    /// <summary>
+    /// TODO: WIP
+    /// </summary>
     public class SquareCoordinate
     {
         #region Direction
@@ -144,12 +147,12 @@ namespace AvalonAssets.DataStructure.Graph.Square
 
         public static SquareCoordinate operator *(SquareCoordinate left, int right)
         {
-            return new SquareCoordinate(left.X * right, left.Y * right);
+            return new SquareCoordinate(left.X*right, left.Y*right);
         }
 
         public static SquareCoordinate operator /(SquareCoordinate left, int right)
         {
-            return new SquareCoordinate(left.X / right, left.Y / right);
+            return new SquareCoordinate(left.X/right, left.Y/right);
         }
     }
 }

@@ -4,7 +4,7 @@ using System.Linq;
 using AvalonAssets.Algorithm;
 using AvalonAssets.Utility;
 
-namespace AvalonAssets.DataStructure.Graph.Hex
+namespace AvalonAssets.Grid.Hex
 {
     /// <summary>
     ///     Represents coordinate on hex map.
