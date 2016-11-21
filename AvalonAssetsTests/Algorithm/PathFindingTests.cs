@@ -10,109 +10,52 @@ namespace AvalonAssetsTests.Algorithm
     [TestFixture]
     public class PathFindingTests
     {
-        public class TestGraphNode : IGraphNode<TestGraphNode>
-        {
-            private readonly HashSet<TestGraphNode> _graphNodes;
-
-            public TestGraphNode(int value)
-            {
-                _graphNodes = new HashSet<TestGraphNode>();
-                Value = value;
-            }
-
-            public int Value { get; }
-
-            public IEnumerable<TestGraphNode> GetNeighbors()
-            {
-                return _graphNodes;
-            }
-
-            public void AddNeighbors(params TestGraphNode[] nodes)
-            {
-                foreach (var node in nodes)
-                {
-                    _graphNodes.Add(node);
-                }
-            }
-        }
-
-        public class TestWeightGraphNode : IWeightedGraphNode<TestWeightGraphNode>
-        {
-            private readonly HashSet<TestWeightGraphNode> _graphNodes;
-
-            public TestWeightGraphNode(int value)
-            {
-                _graphNodes = new HashSet<TestWeightGraphNode>();
-                Value = value;
-            }
-
-            public int Value { get; }
-
-            public int GetWeight(TestWeightGraphNode neighbor)
-            {
-                return Math.Abs(Value - neighbor.Value);
-            }
-
-            public IEnumerable<TestWeightGraphNode> GetNeighbors()
-            {
-                return _graphNodes;
-            }
-
-            public void AddNeighbors(params TestWeightGraphNode[] nodes)
-            {
-                foreach (var node in nodes)
-                {
-                    _graphNodes.Add(node);
-                }
-            }
-        }
-
         [Test]
         public void AStarAlgorithmTest()
         {
-            var nodeA = new TestWeightGraphNode(1);
-            var nodeB = new TestWeightGraphNode(2);
-            var nodeC = new TestWeightGraphNode(0);
-            var nodeD = new TestWeightGraphNode(3);
-            var nodeE = new TestWeightGraphNode(4);
-            var nodeF = new TestWeightGraphNode(5);
-            var nodeG = new TestWeightGraphNode(7);
+            var valueGraph = Graph<int>.Undirected<int>();
+            const int nodeA = 1;
+            const int nodeB = 2;
+            const int nodeC = 0;
+            const int nodeD = 3;
+            const int nodeE = 4;
+            const int nodeF = 5;
+            const int nodeG = 7;
+            valueGraph.AddNode(nodeA);
+            valueGraph.AddNode(nodeB);
+            valueGraph.AddNode(nodeC);
+            valueGraph.AddNode(nodeD);
+            valueGraph.AddNode(nodeE);
+            valueGraph.AddNode(nodeF);
+            valueGraph.AddNode(nodeG);
             /**
              * D - E - F - G
              * |       |
              * B - A - C
              */
-            nodeA.AddNeighbors(nodeB, nodeC);
-            nodeB.AddNeighbors(nodeA, nodeD);
-            nodeC.AddNeighbors(nodeA, nodeF);
-            nodeD.AddNeighbors(nodeB, nodeE);
-            nodeE.AddNeighbors(nodeD, nodeF);
-            nodeF.AddNeighbors(nodeE, nodeC, nodeG);
-            PathFinding.Heuristic<TestWeightGraphNode> method = (a, b) =>
-            {
-                switch (b.Value)
-                {
-                    case 1:
-                        return 1;
-                    case 2:
-                        return 1;
-                    case 3:
-                        return 1;
-                    case 4:
-                        return 1;
-                    case 5:
-                        return 1;
-                    case 6:
-                        return 1;
-                    case 7:
-                        return 1;
-                    default:
-                        return -1;
-                }
-            };
-            var path = PathFinding.AStarAlgorithm(nodeA, nodeG, method).Select(n => n.Value).ToList();
+            valueGraph.PutEdge(nodeA, nodeB, 1);
+            valueGraph.PutEdge(nodeA, nodeC, 1);
+
+            valueGraph.PutEdge(nodeB, nodeA, 1);
+            valueGraph.PutEdge(nodeB, nodeD, 1);
+
+            valueGraph.PutEdge(nodeC, nodeF, 1);
+            valueGraph.PutEdge(nodeC, nodeF, 1);
+
+            valueGraph.PutEdge(nodeD, nodeB, 1);
+            valueGraph.PutEdge(nodeD, nodeE, 1);
+
+            valueGraph.PutEdge(nodeE, nodeD, 1);
+            valueGraph.PutEdge(nodeE, nodeF, 1);
+
+            valueGraph.PutEdge(nodeF, nodeE, 1);
+            valueGraph.PutEdge(nodeF, nodeC, 1);
+            valueGraph.PutEdge(nodeF, nodeG, 1);
+
+            PathFinding.Heuristic<int> method = (a, b) => 1;
+            var path = PathFinding.AStarAlgorithm(valueGraph, nodeA, nodeG, method).ToList();
             Console.WriteLine(string.Join(",", path));
-            var result = new List<int> {nodeA.Value, nodeB.Value, nodeD.Value, nodeE.Value, nodeF.Value, nodeG.Value};
+            var result = new List<int> {nodeA, nodeC, nodeF, nodeG};
             Console.WriteLine(string.Join(",", result));
             Assert.IsTrue(result.SequenceEqual(path));
         }
@@ -121,27 +64,47 @@ namespace AvalonAssetsTests.Algorithm
         [Test]
         public void BreadthFirstSearchTest()
         {
-            var nodeA = new TestGraphNode(1);
-            var nodeB = new TestGraphNode(2);
-            var nodeC = new TestGraphNode(3);
-            var nodeD = new TestGraphNode(4);
-            var nodeE = new TestGraphNode(5);
-            var nodeF = new TestGraphNode(6);
-            var nodeG = new TestGraphNode(7);
+            var graph = Graph<int>.Undirected();
+            const int nodeA = 1;
+            const int nodeB = 2;
+            const int nodeC = 3;
+            const int nodeD = 4;
+            const int nodeE = 5;
+            const int nodeF = 6;
+            const int nodeG = 7;
+            graph.AddNode(nodeA);
+            graph.AddNode(nodeB);
+            graph.AddNode(nodeC);
+            graph.AddNode(nodeD);
+            graph.AddNode(nodeE);
+            graph.AddNode(nodeF);
+            graph.AddNode(nodeG);
             /**
              * D - E - F - G
              * |       |
              * B - A - C
              */
-            nodeA.AddNeighbors(nodeB, nodeC);
-            nodeB.AddNeighbors(nodeA, nodeD);
-            nodeC.AddNeighbors(nodeA, nodeF);
-            nodeD.AddNeighbors(nodeB, nodeE);
-            nodeE.AddNeighbors(nodeD, nodeF);
-            nodeF.AddNeighbors(nodeE, nodeC, nodeG);
-            var path = PathFinding.BreadthFirstSearch(nodeA, nodeG).Select(n => n.Value).ToList();
+            graph.PutEdge(nodeA, nodeB);
+            graph.PutEdge(nodeA, nodeC);
+
+            graph.PutEdge(nodeB, nodeA);
+            graph.PutEdge(nodeB, nodeD);
+
+            graph.PutEdge(nodeC, nodeF);
+            graph.PutEdge(nodeC, nodeF);
+
+            graph.PutEdge(nodeD, nodeB);
+            graph.PutEdge(nodeD, nodeE);
+
+            graph.PutEdge(nodeE, nodeD);
+            graph.PutEdge(nodeE, nodeF);
+
+            graph.PutEdge(nodeF, nodeE);
+            graph.PutEdge(nodeF, nodeC);
+            graph.PutEdge(nodeF, nodeG);
+            var path = PathFinding.BreadthFirstSearch(graph, nodeA, nodeG).ToList();
             Console.WriteLine(string.Join(",", path));
-            var result = new List<int> {nodeA.Value, nodeC.Value, nodeF.Value, nodeG.Value};
+            var result = new List<int> {nodeA, nodeC, nodeF, nodeG};
             Console.WriteLine(string.Join(",", result));
             Assert.IsTrue(result.SequenceEqual(path));
         }
@@ -149,27 +112,47 @@ namespace AvalonAssetsTests.Algorithm
         [Test]
         public void DijkstraAlgorithmTest()
         {
-            var nodeA = new TestWeightGraphNode(1);
-            var nodeB = new TestWeightGraphNode(2);
-            var nodeC = new TestWeightGraphNode(0);
-            var nodeD = new TestWeightGraphNode(3);
-            var nodeE = new TestWeightGraphNode(4);
-            var nodeF = new TestWeightGraphNode(5);
-            var nodeG = new TestWeightGraphNode(7);
+            var valueGraph = Graph<int>.Undirected<int>();
+            const int nodeA = 1;
+            const int nodeB = 2;
+            const int nodeC = 0;
+            const int nodeD = 3;
+            const int nodeE = 4;
+            const int nodeF = 5;
+            const int nodeG = 7;
+            valueGraph.AddNode(nodeA);
+            valueGraph.AddNode(nodeB);
+            valueGraph.AddNode(nodeC);
+            valueGraph.AddNode(nodeD);
+            valueGraph.AddNode(nodeE);
+            valueGraph.AddNode(nodeF);
+            valueGraph.AddNode(nodeG);
             /**
              * D - E - F - G
              * |       |
              * B - A - C
              */
-            nodeA.AddNeighbors(nodeB, nodeC);
-            nodeB.AddNeighbors(nodeA, nodeD);
-            nodeC.AddNeighbors(nodeA, nodeF);
-            nodeD.AddNeighbors(nodeB, nodeE);
-            nodeE.AddNeighbors(nodeD, nodeF);
-            nodeF.AddNeighbors(nodeE, nodeC, nodeG);
-            var path = PathFinding.DijkstraAlgorithm(nodeA, nodeG).Select(n => n.Value).ToList();
+            valueGraph.PutEdge(nodeA, nodeB, 1);
+            valueGraph.PutEdge(nodeA, nodeC, 1);
+
+            valueGraph.PutEdge(nodeB, nodeA, 1);
+            valueGraph.PutEdge(nodeB, nodeD, 1);
+
+            valueGraph.PutEdge(nodeC, nodeF, 1);
+            valueGraph.PutEdge(nodeC, nodeF, 1);
+
+            valueGraph.PutEdge(nodeD, nodeB, 1);
+            valueGraph.PutEdge(nodeD, nodeE, 1);
+
+            valueGraph.PutEdge(nodeE, nodeD, 1);
+            valueGraph.PutEdge(nodeE, nodeF, 1);
+
+            valueGraph.PutEdge(nodeF, nodeE, 1);
+            valueGraph.PutEdge(nodeF, nodeC, 1);
+            valueGraph.PutEdge(nodeF, nodeG, 1);
+            var path = PathFinding.DijkstraAlgorithm(valueGraph, nodeA, nodeG).ToList();
             Console.WriteLine(string.Join(",", path));
-            var result = new List<int> {nodeA.Value, nodeB.Value, nodeD.Value, nodeE.Value, nodeF.Value, nodeG.Value};
+            var result = new List<int> {nodeA, nodeC, nodeF, nodeG};
             Console.WriteLine(string.Join(",", result));
             Assert.IsTrue(result.SequenceEqual(path));
         }
@@ -177,27 +160,48 @@ namespace AvalonAssetsTests.Algorithm
         [Test]
         public void HeuristicSearchTest()
         {
-            var nodeA = new TestGraphNode(1);
-            var nodeB = new TestGraphNode(2);
-            var nodeC = new TestGraphNode(3);
-            var nodeD = new TestGraphNode(4);
-            var nodeE = new TestGraphNode(5);
-            var nodeF = new TestGraphNode(6);
-            var nodeG = new TestGraphNode(7);
+            var graph = Graph<int>.Undirected();
+            const int nodeA = 1;
+            const int nodeB = 2;
+            const int nodeC = 3;
+            const int nodeD = 4;
+            const int nodeE = 5;
+            const int nodeF = 6;
+            const int nodeG = 7;
+            graph.AddNode(nodeA);
+            graph.AddNode(nodeB);
+            graph.AddNode(nodeC);
+            graph.AddNode(nodeD);
+            graph.AddNode(nodeE);
+            graph.AddNode(nodeF);
+            graph.AddNode(nodeG);
             /**
              * D - E - F - G
              * |       |
              * B - A - C
              */
-            nodeA.AddNeighbors(nodeB, nodeC);
-            nodeB.AddNeighbors(nodeA, nodeD);
-            nodeC.AddNeighbors(nodeA, nodeF);
-            nodeD.AddNeighbors(nodeB, nodeE);
-            nodeE.AddNeighbors(nodeD, nodeF);
-            nodeF.AddNeighbors(nodeE, nodeC, nodeG);
-            PathFinding.Heuristic<TestGraphNode> method = (a, b) =>
+            graph.PutEdge(nodeA, nodeB);
+            graph.PutEdge(nodeA, nodeC);
+
+            graph.PutEdge(nodeB, nodeA);
+            graph.PutEdge(nodeB, nodeD);
+
+            graph.PutEdge(nodeC, nodeF);
+            graph.PutEdge(nodeC, nodeF);
+
+            graph.PutEdge(nodeD, nodeB);
+            graph.PutEdge(nodeD, nodeE);
+
+            graph.PutEdge(nodeE, nodeD);
+            graph.PutEdge(nodeE, nodeF);
+
+            graph.PutEdge(nodeF, nodeE);
+            graph.PutEdge(nodeF, nodeC);
+            graph.PutEdge(nodeF, nodeG);
+
+            PathFinding.Heuristic<int> method = (a, b) =>
             {
-                switch (b.Value)
+                switch (b)
                 {
                     case 1:
                         return 3;
@@ -217,9 +221,9 @@ namespace AvalonAssetsTests.Algorithm
                         return -1;
                 }
             };
-            var path = PathFinding.HeuristicSearch(nodeA, nodeG, method).Select(n => n.Value).ToList();
+            var path = PathFinding.HeuristicSearch(graph, nodeA, nodeG, method).ToList();
             Console.WriteLine(string.Join(",", path));
-            var result = new List<int> {nodeA.Value, nodeC.Value, nodeF.Value, nodeG.Value};
+            var result = new List<int> {nodeA, nodeC, nodeF, nodeG};
             Console.WriteLine(string.Join(",", result));
             Assert.IsTrue(result.SequenceEqual(path));
         }

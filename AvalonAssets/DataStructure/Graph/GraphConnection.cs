@@ -1,110 +1,89 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
 
 namespace AvalonAssets.DataStructure.Graph
 {
-    internal class GraphConnection<TNode, TValue>
+    public class GraphConnection<TNode>
     {
-        private readonly IDictionary<TNode, NodeValue<TValue>> _neighbors;
+        private readonly IDictionary<TNode, ConnectionType> _neighbors;
 
-        internal GraphConnection()
+        public GraphConnection()
         {
-            _neighbors = new Dictionary<TNode, NodeValue<TValue>>();
+            _neighbors = new Dictionary<TNode, ConnectionType>();
         }
 
-        internal IEnumerable<TNode> Predecessors()
+        public IEnumerable<TNode> Predecessors()
         {
-            return _neighbors.Where(n => (n.Value.Type & ConnectionType.Predecessor) == ConnectionType.Predecessor)
+            return _neighbors.Where(n => (n.Value & ConnectionType.Predecessor) == ConnectionType.Predecessor)
                 .Select(n => n.Key);
         }
 
 
-        internal bool IsPredecessors(TNode node)
+        public bool IsPredecessors(TNode node)
         {
-            CheckNodeExist(node);
-            return Contains(_neighbors[node].Type, ConnectionType.Predecessor);
+            return _neighbors.ContainsKey(node) && Contains(_neighbors[node], ConnectionType.Predecessor);
         }
 
-        internal IEnumerable<TNode> Successors()
+        public IEnumerable<TNode> Successors()
         {
-            return _neighbors.Where(n => (n.Value.Type & ConnectionType.Successor) == ConnectionType.Predecessor)
+            return _neighbors.Where(n => (n.Value & ConnectionType.Successor) == ConnectionType.Successor)
                 .Select(n => n.Key);
         }
 
-        internal bool IsSuccessors(TNode node)
+        public bool IsSuccessors(TNode node)
         {
-            CheckNodeExist(node);
-            return Contains(_neighbors[node].Type, ConnectionType.Successor);
+            return _neighbors.ContainsKey(node) && Contains(_neighbors[node], ConnectionType.Successor);
         }
 
-        internal IEnumerable<TNode> Neighbors()
+        public IEnumerable<TNode> Neighbors()
         {
             return _neighbors.Keys;
         }
 
-        internal TValue Value(TNode node)
-        {
-            CheckNodeExist(node);
-            return _neighbors[node].Value;
-        }
-
-        internal TValue RemovePredecessor(TNode node)
+        public bool RemovePredecessor(TNode node)
         {
             return RemoveConnection(node, ConnectionType.Predecessor);
         }
 
-        internal TValue RemoveSuccessor(TNode node)
+        public bool RemoveSuccessor(TNode node)
         {
             return RemoveConnection(node, ConnectionType.Successor);
         }
 
-        [AssertionMethod]
-        private void CheckNodeExist(TNode node)
+        private bool RemoveConnection(TNode node, ConnectionType type)
         {
             if (!_neighbors.ContainsKey(node))
-                throw new ArgumentException("The node does not exists.");
-        }
-
-        private TValue RemoveConnection(TNode node, ConnectionType type)
-        {
-            CheckNodeExist(node);
-            var nodeValue = _neighbors[node];
-            if (Contains(nodeValue.Type, type))
-                throw new InvalidOperationException(string.Format("The node is not a {0}.", type));
-            var newType = nodeValue.Type & ~type;
-            if (newType == ConnectionType.None)
+                return false;
+            if (!Contains(_neighbors[node], type))
+                return false;
+            _neighbors[node] &= ~type;
+            if (_neighbors[node] == ConnectionType.None)
                 _neighbors.Remove(node);
-            else
-                _neighbors[node] = new NodeValue<TValue>(newType, nodeValue.Value);
-            return nodeValue.Value;
+            return true;
         }
 
-        internal void AddPredecessor(TNode node, TValue value)
+        public void AddPredecessor(TNode node)
         {
-            AddConnection(node, value, ConnectionType.Predecessor);
+            AddConnection(node, ConnectionType.Predecessor);
         }
 
-        internal void AddSuccessor(TNode node, TValue value)
+        public void AddSuccessor(TNode node)
         {
-            AddConnection(node, value, ConnectionType.Successor);
+            AddConnection(node, ConnectionType.Successor);
         }
 
-        private void AddConnection(TNode node, TValue value, ConnectionType type)
+        private void AddConnection(TNode node, ConnectionType type)
         {
             if (_neighbors.ContainsKey(node))
-            {
-                var nodeValue = _neighbors[node];
-                _neighbors[node] = new NodeValue<TValue>(nodeValue.Type & type, value);
-            }
+                _neighbors[node] |= type;
             else
-                _neighbors[node] = new NodeValue<TValue>(type, value);
+                _neighbors[node] = type;
         }
 
         private static bool Contains(ConnectionType type, ConnectionType checkType)
         {
-            return (type & checkType) != checkType;
+            return (type & checkType) == checkType;
         }
 
         [Flags]
@@ -113,18 +92,6 @@ namespace AvalonAssets.DataStructure.Graph
             None = 0,
             Predecessor = 1 << 0,
             Successor = 1 << 1
-        }
-
-        private class NodeValue<TNodeValue>
-        {
-            public readonly ConnectionType Type;
-            public readonly TNodeValue Value;
-
-            public NodeValue(ConnectionType type, TNodeValue value)
-            {
-                Type = type;
-                Value = value;
-            }
         }
     }
 }

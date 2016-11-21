@@ -4,12 +4,12 @@ using System.Collections.Generic;
 
 namespace AvalonAssets.DataStructure.Graph
 {
-    public class EndPointPair<TNode> : IEnumerable<TNode>
+    public abstract class EndPointPair<TNode> : IEnumerable<TNode>
     {
         protected readonly TNode N;
         protected readonly TNode U;
 
-        public EndPointPair(TNode u, TNode n)
+        protected EndPointPair(TNode u, TNode n)
         {
             U = u;
             N = n;
@@ -42,31 +42,66 @@ namespace AvalonAssets.DataStructure.Graph
             throw new InvalidOperationException("node does not exist in this edge.");
         }
 
-        public override bool Equals(object obj)
+        public static EndPointPair<TNode> Directed(TNode u, TNode n)
         {
-            var pair = obj as EndPointPair<TNode>;
-            return pair != null && Contains(pair.U) && Contains(pair.N) && pair.Contains(U) && pair.Contains(N);
+            return new DirectedPair(u, n);
         }
 
-        protected bool Equals(EndPointPair<TNode> other)
+        public static EndPointPair<TNode> Undirected(TNode u, TNode n)
         {
-            return EqualityComparer<TNode>.Default.Equals(N, other.N) &&
-                   EqualityComparer<TNode>.Default.Equals(U, other.U);
+            return new UndirectedPair(u, n);
         }
 
-        public override int GetHashCode()
-        {
-            unchecked
-            {
-                var hashN = EqualityComparer<TNode>.Default.GetHashCode(N);
-                var hashU = EqualityComparer<TNode>.Default.GetHashCode(U);
-                return hashN*hashU + hashN + hashU;
-            }
-        }
 
         public override string ToString()
         {
             return string.Format("EndPointPair[{0}, {1}]", U, N);
+        }
+
+        private class DirectedPair : EndPointPair<TNode>
+        {
+            public DirectedPair(TNode u, TNode n) : base(u, n)
+            {
+            }
+
+            public override bool Equals(object obj)
+            {
+                var pair = obj as DirectedPair;
+                return pair != null && Equals(U, pair.U) && Equals(N, pair.N);
+            }
+
+            public override int GetHashCode()
+            {
+                unchecked
+                {
+                    var hashN = EqualityComparer<TNode>.Default.GetHashCode(N);
+                    var hashU = EqualityComparer<TNode>.Default.GetHashCode(U);
+                    return hashN*397 ^ hashU;
+                }
+            }
+        }
+
+        private class UndirectedPair : EndPointPair<TNode>
+        {
+            public UndirectedPair(TNode u, TNode n) : base(u, n)
+            {
+            }
+
+            public override bool Equals(object obj)
+            {
+                var pair = obj as EndPointPair<TNode>;
+                return pair != null && Contains(pair.U) && Contains(pair.N) && pair.Contains(U) && pair.Contains(N);
+            }
+
+            public override int GetHashCode()
+            {
+                unchecked
+                {
+                    var hashN = EqualityComparer<TNode>.Default.GetHashCode(N);
+                    var hashU = EqualityComparer<TNode>.Default.GetHashCode(U);
+                    return hashN*hashU + hashN + hashU;
+                }
+            }
         }
     }
 }

@@ -57,6 +57,9 @@
   <ItemGroup>
     <Compile Include="Algorithm\PathFindingTests.cs" />
     <Compile Include="DataStructure\Geometry\AngleIntervalTests.cs" />
+    <Compile Include="DataStructure\Graph\EndPointPairTests.cs" />
+    <Compile Include="DataStructure\Graph\GraphConnectionTests.cs" />
+    <Compile Include="DataStructure\Graph\GraphTests.cs" />
     <Compile Include="DataStructure\Heap\BinaryHeapTests.cs" />
     <Compile Include="DataStructure\Heap\BinomialHeapTests.cs" />
     <Compile Include="DataStructure\Heap\FibonacciHeapTests.cs" />
@@ -73,9 +76,7 @@
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="DataStructure\Graph\" />
-  </ItemGroup>
+  <ItemGroup />
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
       <ItemGroup>
