@@ -4,11 +4,20 @@ using System.Collections.Generic;
 
 namespace AvalonAssets.DataStructure.Graph
 {
+    /// <summary>
+    ///     Represents a connection between two nodes.
+    /// </summary>
+    /// <typeparam name="TNode">Node type.</typeparam>
     public abstract class EndPointPair<TNode> : IEnumerable<TNode>
     {
         protected readonly TNode N;
         protected readonly TNode U;
 
+        /// <summary>
+        ///     Use <see cref="Undirected" /> or <see cref="Directed" /> to initialize instead.
+        /// </summary>
+        /// <param name="u">Node.</param>
+        /// <param name="n">Node.</param>
         protected EndPointPair(TNode u, TNode n)
         {
             U = u;
@@ -26,11 +35,25 @@ namespace AvalonAssets.DataStructure.Graph
             return GetEnumerator();
         }
 
+        /// <summary>
+        ///     Returns true if <paramref name="node" /> is in this connection.
+        /// </summary>
+        /// <param name="node">Node.</param>
+        /// <returns>If <paramref name="node" /> is in this connection.</returns>
         public bool Contains(TNode node)
         {
             return Equals(N, node) || Equals(U, node);
         }
 
+        /// <summary>
+        ///     Returns another node on this connection.
+        /// </summary>
+        /// <param name="node">Node.</param>
+        /// <returns>Another node.</returns>
+        /// <exception cref="InvalidOperationException">
+        ///     <paramref name="node" /> does not exists in this connection.
+        /// </exception>
+        /// <exception cref="ArgumentNullException"><paramref name="node" />  is null.</exception>
         public TNode Neighbor(TNode node)
         {
             if (node == null)
@@ -42,11 +65,23 @@ namespace AvalonAssets.DataStructure.Graph
             throw new InvalidOperationException("node does not exist in this edge.");
         }
 
+        /// <summary>
+        ///     Creates a directed connection where the order matters.
+        /// </summary>
+        /// <param name="u">Start node.</param>
+        /// <param name="n">End node.</param>
+        /// <returns>Directed connection.</returns>
         public static EndPointPair<TNode> Directed(TNode u, TNode n)
         {
             return new DirectedPair(u, n);
         }
 
+        /// <summary>
+        ///     Creates a directed connection where the order does not matter.
+        /// </summary>
+        /// <param name="u">Node.</param>
+        /// <param name="n">Node.</param>
+        /// <returns>Undirected connection.</returns>
         public static EndPointPair<TNode> Undirected(TNode u, TNode n)
         {
             return new UndirectedPair(u, n);

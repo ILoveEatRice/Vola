@@ -33,17 +33,24 @@ namespace AvalonAssets.DataStructure.Graph
             }
         }
 
-        public override bool PutEdge(TNode nodeU, TNode nodeV)
-        {
-            throw new InvalidOperationException();
-        }
-
         public bool PutEdge(TNode nodeU, TNode nodeV, TValue value)
         {
             if (!base.PutEdge(nodeU, nodeV))
                 return false;
             _edgeValues[Pair(nodeU, nodeV)] = value;
             return true;
+        }
+
+        /// <summary>
+        ///     This is a invalid operation in value graph.
+        /// </summary>
+        /// <param name="nodeU"></param>
+        /// <param name="nodeV"></param>
+        /// <returns></returns>
+        /// <exception cref="InvalidOperationException">Always.</exception>
+        public override bool PutEdge(TNode nodeU, TNode nodeV)
+        {
+            throw new InvalidOperationException();
         }
     }
 }
