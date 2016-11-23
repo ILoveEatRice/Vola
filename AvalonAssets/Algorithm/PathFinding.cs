@@ -26,7 +26,7 @@ namespace AvalonAssets.Algorithm
         /// <param name="start">Start of the path.</param>
         /// <param name="goal">End of the path.</param>
         /// <returns>
-        ///     Path from <paramref name="start" /> to <paramref cref="goal" />.
+        ///     Path from <paramref name="start" /> to <paramref name="goal" />.
         ///     Empty if no path can be found.
         /// </returns>
         private static IEnumerable<T> CreatePath<T>(IDictionary<T, T> from, T start, T goal)
@@ -48,14 +48,14 @@ namespace AvalonAssets.Algorithm
 
         /// <summary>
         ///     Using Dijkstra's Algorithm to find path with given <see cref="IValueGraph{TNode,TValue}" />
-        ///     from <paramref name="start" /> to <paramref cref="goal" />.
+        ///     from <paramref name="start" /> to <paramref name="goal" />.
         /// </summary>
         /// <typeparam name="T">Graph node.</typeparam>
         /// <param name="graph">Weighted graph</param>
         /// <param name="start">Start of the path.</param>
         /// <param name="goal">End of the path.</param>
         /// <returns>
-        ///     Path from <paramref name="start" /> to <paramref cref="goal" />.
+        ///     Path from <paramref name="start" /> to <paramref name="goal" />.
         ///     Empty if no path can be found.
         /// </returns>
         public static IEnumerable<T> DijkstraAlgorithm<T>(IValueGraph<T, int> graph, T start, T goal)
@@ -83,7 +83,7 @@ namespace AvalonAssets.Algorithm
 
         /// <summary>
         ///     Using A* Algorithm to find path with given <see cref="IValueGraph{TNode,TValue}" />
-        ///     from <paramref name="start" /> to <paramref cref="goal" />.
+        ///     from <paramref name="start" /> to <paramref name="goal" />.
         /// </summary>
         /// <typeparam name="T">Graph node.</typeparam>
         /// <param name="graph">Weighted graph</param>
@@ -91,7 +91,7 @@ namespace AvalonAssets.Algorithm
         /// <param name="goal">End of the path.</param>
         /// <param name="heuristic">Heuristic function.</param>
         /// <returns>
-        ///     Path from <paramref name="start" /> to <paramref cref="goal" />.
+        ///     Path from <paramref name="start" /> to <paramref name="goal" />.
         ///     Empty if no path can be found.
         /// </returns>
         /// <seealso cref="Heuristic{T}" />
@@ -125,14 +125,14 @@ namespace AvalonAssets.Algorithm
 
         /// <summary>
         ///     Using Breadth First Search to find path with given <see cref="IGraph{T}" />
-        ///     from <paramref name="start" /> to <paramref cref="goal" />.
+        ///     from <paramref name="start" /> to <paramref name="goal" />.
         /// </summary>
         /// <typeparam name="T">Graph node.</typeparam>
-        /// <param name="graph">Weighted graph</param>
+        /// <param name="graph">Graph</param>
         /// <param name="start">Start of the path.</param>
         /// <param name="goal">End of the path.</param>
         /// <returns>
-        ///     Path from <paramref name="start" /> to <paramref cref="goal" />.
+        ///     Path from <paramref name="start" /> to <paramref name="goal" />.
         ///     Empty if no path can be found.
         /// </returns>
         public static IEnumerable<T> BreadthFirstSearch<T>(IGraph<T> graph, T start, T goal)
@@ -158,15 +158,15 @@ namespace AvalonAssets.Algorithm
 
         /// <summary>
         ///     Using Heuristic Search to find path with given <see cref="IGraph{T}" />
-        ///     from <paramref name="start" /> to <paramref cref="goal" />.
+        ///     from <paramref name="start" /> to <paramref name="goal" />.
         /// </summary>
         /// <typeparam name="T">Graph node.</typeparam>
-        /// <param name="graph">Weighted graph</param>
+        /// <param name="graph">Graph</param>
         /// <param name="start">Start of the path.</param>
         /// <param name="goal">End of the path.</param>
         /// <param name="heuristic">Heuristic function.</param>
         /// <returns>
-        ///     Path from <paramref name="start" /> to <paramref cref="goal" />.
+        ///     Path from <paramref name="start" /> to <paramref name="goal" />.
         ///     Empty if no path can be found.
         /// </returns>
         /// <seealso cref="Heuristic{T}" />
