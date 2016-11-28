@@ -26,13 +26,16 @@ namespace AvalonAssets.Algorithm
         /// </summary>
         /// <typeparam name="TRegister">Register type.</typeparam>
         /// <typeparam name="TResolve">Resolve type.</typeparam>
-        public void Register<TRegister, TResolve>()
+        /// <param name="overwrite">Allow overwrite registered type. Default false.</param>
+        /// <returns>Itself.</returns>
+        public IocContainer Register<TRegister, TResolve>(bool overwrite = false)
         {
             var type = typeof(TRegister);
-            if (IsRegistered(type))
+            if (IsRegistered(type) && !overwrite)
                 throw new InvalidOperationException(string.Format("Type {0} already registered.",
                     type.FullName));
-            _iocMap.Add(type, typeof(TResolve));
+            _iocMap[type] = typeof(TResolve);
+            return this;
         }
 
         /// <summary>
@@ -40,13 +43,16 @@ namespace AvalonAssets.Algorithm
         /// </summary>
         /// <typeparam name="TRegister">Register type.</typeparam>
         /// <param name="register">Function returns an instance of <typeparamref name="TRegister" />.</param>
-        public void Register<TRegister>(Func<object> register)
+        /// <param name="overwrite">Allow overwrite registered type. Default false.</param>
+        /// <returns>Itself.</returns>
+        public IocContainer Register<TRegister>(Func<object> register, bool overwrite = false)
         {
             var type = typeof(TRegister);
-            if (IsRegistered(type))
+            if (IsRegistered(type) && !overwrite)
                 throw new InvalidOperationException(string.Format("Type {0} already registered.",
                     type.FullName));
-            _iocFuncs.Add(type, register);
+            _iocFuncs[type] = register;
+            return this;
         }
 
         /// <summary>

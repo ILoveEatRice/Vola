@@ -14,9 +14,9 @@ namespace AvalonAssetsTests.Algorithm
             Assert.DoesNotThrow(() =>
             {
                 var containter = new IocContainer();
-                containter.Register<PriorityQueue<int>, PriorityQueue<int>>();
-                containter.Register<IHeap<IPriority<int>>, BinaryHeap<IPriority<int>>>();
-                var queue = containter.Resolve<PriorityQueue<int>>();
+                var queue = containter.Register<PriorityQueue<int>, PriorityQueue<int>>()
+                    .Register<IHeap<IPriority<int>>, BinaryHeap<IPriority<int>>>()
+                    .Resolve<PriorityQueue<int>>();
             });
         }
     }
