@@ -55,6 +55,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="Algorithm\IocContainerTests.cs" />
     <Compile Include="Algorithm\PathFindingTests.cs" />
     <Compile Include="DataStructure\Geometry\AngleIntervalTests.cs" />
     <Compile Include="DataStructure\Graph\EndPointPairTests.cs" />

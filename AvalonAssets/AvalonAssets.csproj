@@ -53,6 +53,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithm\IocContainer.cs" />
     <Compile Include="Algorithm\PathFinding.cs" />
     <Compile Include="DataStructure\Graph\Graph.cs" />
     <Compile Include="DataStructure\Graph\ValueGraph.cs" />

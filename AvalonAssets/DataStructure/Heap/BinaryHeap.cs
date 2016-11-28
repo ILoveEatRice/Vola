@@ -13,7 +13,7 @@ namespace AvalonAssets.DataStructure.Heap
         private readonly IComparer<T> _comparer;
         private readonly List<Node<T>> _heap;
 
-        public BinaryHeap(IComparer<T> comparer, List<T> elements = null)
+        public BinaryHeap(IComparer<T> comparer, IEnumerable<T> elements = null)
         {
             _heap = new List<Node<T>>();
             _comparer = comparer;
