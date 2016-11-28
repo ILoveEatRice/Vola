@@ -49,6 +49,11 @@ namespace AvalonAssets.Algorithm
             _iocFuncs.Add(type, register);
         }
 
+        /// <summary>
+        ///     Returns if <typeparamref name="TRegister" /> is registered.
+        /// </summary>
+        /// <typeparam name="TRegister">Register type.</typeparam>
+        /// <returns>True if <typeparamref name="TRegister" /> is registered.</returns>
         public bool IsRegistered<TRegister>()
         {
             var type = typeof(TRegister);
@@ -72,18 +77,20 @@ namespace AvalonAssets.Algorithm
 
         private object Resolve(Type typeToResolve)
         {
+            // Uses register delegate if any.
+            // Not needs to resolve further dependencies.
             if (_iocFuncs.ContainsKey(typeToResolve))
                 return _iocFuncs[typeToResolve]();
             if (!_iocMap.ContainsKey(typeToResolve))
                 throw new InvalidOperationException(string.Format("Can't resolve {0}. Type is not registed.",
                     typeToResolve.FullName));
             var resolvedType = _iocMap[typeToResolve];
-            // Gets first constructor 
+            // Gets first constructor. 
             foreach (var constructor in resolvedType.GetConstructors())
             {
                 // Gets constructor parameter(s)
                 var paramsInfo = constructor.GetParameters().ToList();
-                // Resolves constructor parameter(s) if any
+                // Resolves constructor parameter(s) if any.
                 try
                 {
                     var resolvedParams = new List<object>();
@@ -97,7 +104,7 @@ namespace AvalonAssets.Algorithm
                         }
                         catch (InvalidOperationException)
                         {
-                            // fall back to defualt value if any
+                            // fall back to defualt value if any.
                             if (param.HasDefaultValue)
                                 value = param.RawDefaultValue;
                             else
@@ -106,13 +113,13 @@ namespace AvalonAssets.Algorithm
                         resolvedParams.Add(value);
                     }
 
-                    // Step-3: using reflection invoke constructor to create the object
+                    // Using reflection invoke constructor to create the object.
                     var retObject = constructor.Invoke(resolvedParams.ToArray());
                     return retObject;
                 }
                 catch (InvalidOperationException)
                 {
-                    // fall back to next constructor if any
+                    // fall back to next constructor if any.
                 }
             }
             throw new InvalidOperationException(string.Format("Can't resolve {0}. Type is not registed.",
