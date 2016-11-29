@@ -2,17 +2,12 @@
 using System.Collections.Generic;
 using AvalonAssets.DataStructure;
 using NUnit.Framework;
-using CollectionAssert = Microsoft.VisualStudio.TestTools.UnitTesting.CollectionAssert;
 
 namespace AvalonAssetsTests.DataStructure
 {
     [TestFixture]
     public class NullableDictionaryTests
     {
-        [SetUp]
-        public void Initialize()
-        {
-        }
 
         [TearDown]
         public void ClearUp()
