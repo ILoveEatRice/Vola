@@ -55,7 +55,6 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="Algorithm\IocContainerTests.cs" />
     <Compile Include="Algorithm\PathFindingTests.cs" />
     <Compile Include="DataStructure\Geometry\AngleIntervalTests.cs" />
     <Compile Include="DataStructure\Graph\EndPointPairTests.cs" />
@@ -66,6 +65,7 @@
     <Compile Include="DataStructure\Heap\FibonacciHeapTests.cs" />
     <Compile Include="DataStructure\Heap\HeapTest.cs" />
     <Compile Include="DataStructure\Grid\Hex\HexCoordinateTest.cs" />
+    <Compile Include="DataStructure\NullableDictionaryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

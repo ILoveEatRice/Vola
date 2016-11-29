@@ -53,7 +53,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Algorithm\IocContainer.cs" />
+    <Compile Include="Algorithm\Injection\Container.cs" />
+    <Compile Include="Algorithm\Injection\ContainerExtensions.cs" />
+    <Compile Include="Algorithm\Injection\Exception\TypeNotRegisteredException.cs" />
+    <Compile Include="Algorithm\Injection\IContainer.cs" />
+    <Compile Include="Algorithm\Injection\IInjectionConstructor.cs" />
+    <Compile Include="Algorithm\Injection\InjectionConstructor.cs" />
+    <Compile Include="Algorithm\Injection\InstanceConstructor.cs" />
+    <Compile Include="Algorithm\Injection\TypeConstructor.cs" />
     <Compile Include="Algorithm\PathFinding.cs" />
     <Compile Include="DataStructure\Graph\Graph.cs" />
     <Compile Include="DataStructure\Graph\ValueGraph.cs" />
@@ -62,6 +69,7 @@
     <Compile Include="DataStructure\Graph\IMutableGraph.cs" />
     <Compile Include="DataStructure\Graph\IMutableValueGraph.cs" />
     <Compile Include="DataStructure\Graph\IValueGraph.cs" />
+    <Compile Include="DataStructure\NullableDictionary.cs" />
     <Compile Include="Grid\Hex\HexCoordinate.cs" />
     <Compile Include="Grid\Hex\Region.cs" />
     <Compile Include="Grid\Hex\RingCoordinate.cs" />
