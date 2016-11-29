@@ -11,7 +11,6 @@ namespace AvalonAssetsTests.DataStructure.Graph
     [TestFixture]
     public class GraphTests
     {
-        private static readonly Random Random = new Random();
         [SetUp]
         public void Setup()
         {
@@ -31,6 +30,7 @@ namespace AvalonAssetsTests.DataStructure.Graph
             };
         }
 
+        private static readonly Random Random = new Random();
         private const int UnDir = 0, Dir = 1, UnDirAlw = 2, DirAlw = 3;
         private IMutableGraph<int>[] _mutableGraphs;
         private IMutableValueGraph<int, int>[] _mutableValueGraphs;
@@ -71,7 +71,7 @@ namespace AvalonAssetsTests.DataStructure.Graph
             }
             return nodes;
         }
-        
+
         private static void AddNodes<T>(IMutableGraph<T>[] graphs, IEnumerable<T> nodes)
         {
             foreach (var node in nodes)
@@ -196,7 +196,6 @@ namespace AvalonAssetsTests.DataStructure.Graph
             }
         }
 
-
         private static void RemoveNodeTest(IEnumerable<IMutableValueGraph<int, int>> graphs, IList<int> nodesList)
         {
             foreach (var graph in graphs)
@@ -242,7 +241,6 @@ namespace AvalonAssetsTests.DataStructure.Graph
             Assert.AreEqual(4, _mutableGraphs[DirAlw].Degree(nodes[2]));
             _mutableGraphs[UnDirAlw].PutEdge(nodes[3], nodes[3]);
             Assert.AreEqual(3, _mutableGraphs[UnDirAlw].Degree(nodes[3]));
-
             nodes = SetUpEdge(_mutableValueGraphs);
             foreach (var graph in _mutableValueGraphs)
             {
@@ -257,7 +255,6 @@ namespace AvalonAssetsTests.DataStructure.Graph
             Assert.AreEqual(2, _mutableValueGraphs[UnDirAlw].Degree(nodes[2]));
             Assert.AreEqual(1, _mutableValueGraphs[UnDir].Degree(nodes[3]));
             Assert.AreEqual(1, _mutableValueGraphs[UnDirAlw].Degree(nodes[3]));
-
             _mutableValueGraphs[DirAlw].PutEdge(nodes[2], nodes[2], 0);
             Assert.AreEqual(4, _mutableValueGraphs[DirAlw].Degree(nodes[2]));
             _mutableValueGraphs[UnDirAlw].PutEdge(nodes[3], nodes[3], 0);
