@@ -11,6 +11,7 @@ namespace AvalonAssetsTests.DataStructure.Graph
     [TestFixture]
     public class GraphTests
     {
+        private static readonly Random Random = new Random();
         [SetUp]
         public void Setup()
         {
@@ -45,7 +46,7 @@ namespace AvalonAssetsTests.DataStructure.Graph
 
         private static IList<int> SetUpEdge(IMutableGraph<int>[] graphs)
         {
-            var nodes = UniqueNumberList(5);
+            var nodes = Random.UniqueNumberList(5);
             AddNodes(graphs, nodes);
             foreach (var graph in graphs)
             {
@@ -59,7 +60,7 @@ namespace AvalonAssetsTests.DataStructure.Graph
 
         private static IList<int> SetUpEdge(IMutableValueGraph<int, int>[] graphs)
         {
-            var nodes = UniqueNumberList(5);
+            var nodes = Random.UniqueNumberList(5);
             AddNodes(graphs, nodes);
             foreach (var graph in graphs)
             {
@@ -70,21 +71,7 @@ namespace AvalonAssetsTests.DataStructure.Graph
             }
             return nodes;
         }
-
-        private static IList<int> UniqueNumberList(int count = 10)
-        {
-            var rand = new Random();
-            var nodes = new List<int>();
-            for (var i = 0; i < count; i++)
-            {
-                var num = rand.Next();
-                while (nodes.Contains(num))
-                    num = rand.Next();
-                nodes.Add(num);
-            }
-            return nodes;
-        }
-
+        
         private static void AddNodes<T>(IMutableGraph<T>[] graphs, IEnumerable<T> nodes)
         {
             foreach (var node in nodes)
@@ -227,7 +214,7 @@ namespace AvalonAssetsTests.DataStructure.Graph
         [Test]
         public void AddNodeTest()
         {
-            var nodes = UniqueNumberList();
+            var nodes = Random.UniqueNumberList();
             AddNodes(_mutableGraphs, nodes);
             AddNodes(_mutableValueGraphs, nodes);
             NodeTest(nodes, _mutableGraphs);

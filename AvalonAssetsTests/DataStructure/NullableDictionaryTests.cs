@@ -8,8 +8,7 @@ namespace AvalonAssetsTests.DataStructure
     [TestFixture]
     public class NullableDictionaryTests
     {
-
-        [TearDown]
+       [TearDown]
         public void ClearUp()
         {
             _nullableDictionary.Clear();
@@ -28,13 +27,6 @@ namespace AvalonAssetsTests.DataStructure
             _dictionary = new Dictionary<string, int>();
         }
 
-        protected IEnumerable<int> RandomList()
-        {
-            var total = _random.Next(5, 20);
-            for (var i = 0; i < total; i++)
-                yield return RandomNumber();
-        }
-
         protected int RandomNumber()
         {
             return _random.Next(-Range, Range);
@@ -43,7 +35,7 @@ namespace AvalonAssetsTests.DataStructure
         [Test]
         public void AddTest()
         {
-            foreach (var num in RandomList())
+            foreach (var num in _random.UniqueNumberList())
             {
                 _nullableDictionary.Add(num.ToString(), num);
                 _dictionary.Add(num.ToString(), num);
