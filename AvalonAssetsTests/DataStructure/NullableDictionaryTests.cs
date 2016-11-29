@@ -8,7 +8,7 @@ namespace AvalonAssetsTests.DataStructure
     [TestFixture]
     public class NullableDictionaryTests
     {
-       [TearDown]
+        [TearDown]
         public void ClearUp()
         {
             _nullableDictionary.Clear();

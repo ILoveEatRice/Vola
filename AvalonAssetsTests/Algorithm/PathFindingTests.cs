@@ -35,23 +35,17 @@ namespace AvalonAssetsTests.Algorithm
              */
             valueGraph.PutEdge(nodeA, nodeB, 1);
             valueGraph.PutEdge(nodeA, nodeC, 1);
-
             valueGraph.PutEdge(nodeB, nodeA, 1);
             valueGraph.PutEdge(nodeB, nodeD, 1);
-
             valueGraph.PutEdge(nodeC, nodeF, 1);
             valueGraph.PutEdge(nodeC, nodeF, 1);
-
             valueGraph.PutEdge(nodeD, nodeB, 1);
             valueGraph.PutEdge(nodeD, nodeE, 1);
-
             valueGraph.PutEdge(nodeE, nodeD, 1);
             valueGraph.PutEdge(nodeE, nodeF, 1);
-
             valueGraph.PutEdge(nodeF, nodeE, 1);
             valueGraph.PutEdge(nodeF, nodeC, 1);
             valueGraph.PutEdge(nodeF, nodeG, 1);
-
             PathFinding.Heuristic<int> method = (a, b) => 1;
             var path = PathFinding.AStarAlgorithm(valueGraph, nodeA, nodeG, method).ToList();
             Console.WriteLine(string.Join(",", path));
@@ -59,7 +53,6 @@ namespace AvalonAssetsTests.Algorithm
             Console.WriteLine(string.Join(",", result));
             Assert.IsTrue(result.SequenceEqual(path));
         }
-
 
         [Test]
         public void BreadthFirstSearchTest()
@@ -86,19 +79,14 @@ namespace AvalonAssetsTests.Algorithm
              */
             graph.PutEdge(nodeA, nodeB);
             graph.PutEdge(nodeA, nodeC);
-
             graph.PutEdge(nodeB, nodeA);
             graph.PutEdge(nodeB, nodeD);
-
             graph.PutEdge(nodeC, nodeF);
             graph.PutEdge(nodeC, nodeF);
-
             graph.PutEdge(nodeD, nodeB);
             graph.PutEdge(nodeD, nodeE);
-
             graph.PutEdge(nodeE, nodeD);
             graph.PutEdge(nodeE, nodeF);
-
             graph.PutEdge(nodeF, nodeE);
             graph.PutEdge(nodeF, nodeC);
             graph.PutEdge(nodeF, nodeG);
@@ -134,19 +122,14 @@ namespace AvalonAssetsTests.Algorithm
              */
             valueGraph.PutEdge(nodeA, nodeB, 1);
             valueGraph.PutEdge(nodeA, nodeC, 1);
-
             valueGraph.PutEdge(nodeB, nodeA, 1);
             valueGraph.PutEdge(nodeB, nodeD, 1);
-
             valueGraph.PutEdge(nodeC, nodeF, 1);
             valueGraph.PutEdge(nodeC, nodeF, 1);
-
             valueGraph.PutEdge(nodeD, nodeB, 1);
             valueGraph.PutEdge(nodeD, nodeE, 1);
-
             valueGraph.PutEdge(nodeE, nodeD, 1);
             valueGraph.PutEdge(nodeE, nodeF, 1);
-
             valueGraph.PutEdge(nodeF, nodeE, 1);
             valueGraph.PutEdge(nodeF, nodeC, 1);
             valueGraph.PutEdge(nodeF, nodeG, 1);
@@ -182,23 +165,17 @@ namespace AvalonAssetsTests.Algorithm
              */
             graph.PutEdge(nodeA, nodeB);
             graph.PutEdge(nodeA, nodeC);
-
             graph.PutEdge(nodeB, nodeA);
             graph.PutEdge(nodeB, nodeD);
-
             graph.PutEdge(nodeC, nodeF);
             graph.PutEdge(nodeC, nodeF);
-
             graph.PutEdge(nodeD, nodeB);
             graph.PutEdge(nodeD, nodeE);
-
             graph.PutEdge(nodeE, nodeD);
             graph.PutEdge(nodeE, nodeF);
-
             graph.PutEdge(nodeF, nodeE);
             graph.PutEdge(nodeF, nodeC);
             graph.PutEdge(nodeF, nodeG);
-
             PathFinding.Heuristic<int> method = (a, b) =>
             {
                 switch (b)

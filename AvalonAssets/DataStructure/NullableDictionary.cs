@@ -5,6 +5,11 @@ using JetBrains.Annotations;
 
 namespace AvalonAssets.DataStructure
 {
+    /// <summary>
+    ///     Dictionary that accept null as key.
+    /// </summary>
+    /// <typeparam name="TKey">Key type.</typeparam>
+    /// <typeparam name="TValue">Value type.</typeparam>
     public class NullableDictionary<TKey, TValue> : IDictionary<TKey, TValue>, IDictionary where TKey : class
     {
         private readonly Dictionary<TKey, TValue> _dictionary;

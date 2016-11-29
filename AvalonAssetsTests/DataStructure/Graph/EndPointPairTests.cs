@@ -39,16 +39,13 @@ namespace AvalonAssetsTests.DataStructure.Graph
             Assert.True(_undirectedPair.Contains(_testNum1[1]));
             Assert.True(_directedPair.Contains(_testNum2[0]));
             Assert.True(_directedPair.Contains(_testNum2[1]));
-
             var rand = new Random();
             var testNum = rand.Next();
-
             while (_testNum1.Contains(testNum))
             {
                 testNum = rand.Next();
             }
             Assert.False(_undirectedPair.Contains(testNum));
-
             while (_testNum2.Contains(testNum))
             {
                 testNum = rand.Next();

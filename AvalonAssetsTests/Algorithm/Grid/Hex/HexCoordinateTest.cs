@@ -129,7 +129,6 @@ namespace AvalonAssetsTests.Algorithm.Grid.Hex
             CollectionAssert.AreEquivalent(expected, Center.Reachable(1, isBlock));
         }
 
-
         [Test]
         public void RingOfTest()
         {

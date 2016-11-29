@@ -87,7 +87,6 @@ namespace AvalonAssets.DataStructure.Graph
             return new UndirectedPair(u, n);
         }
 
-
         public override string ToString()
         {
             return string.Format("EndPointPair[{0}, {1}]", U, N);

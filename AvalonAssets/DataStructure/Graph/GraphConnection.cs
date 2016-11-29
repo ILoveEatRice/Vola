@@ -19,7 +19,6 @@ namespace AvalonAssets.DataStructure.Graph
                 .Select(n => n.Key);
         }
 
-
         public bool IsPredecessors(TNode node)
         {
             return _neighbors.ContainsKey(node) && Contains(_neighbors[node], ConnectionType.Predecessor);

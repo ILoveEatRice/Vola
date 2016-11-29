@@ -64,27 +64,22 @@ namespace AvalonAssets.DataStructure.Geometry
                 resultInterval = newInterval;
                 return true;
             }
-
             if (_full || Equals(newInterval))
             {
                 resultInterval = this;
                 return true;
             }
-
             var aStart = _from;
             var aEnd = aStart > _to ? _to + 360 : _to;
             var bStart = newInterval._from;
             var bEnd = bStart > newInterval._to ? newInterval._to + 360 : newInterval._to;
-
             var diffA = (aEnd - aStart)/2;
             var diffB = (bEnd - bStart)/2;
             var avgA = (aStart + aEnd)/2;
             var avgB = (bStart + bEnd)/2;
             var cosDiffA = Math.Cos(diffA.ToRadians());
             var cosDiffB = Math.Cos(diffB.ToRadians());
-
             var resultFlag = MergeFlag.None;
-
             if (Math.Cos((avgA - bStart).ToRadians()).AboutGreaterThanOrEqual(cosDiffA))
                 resultFlag |= MergeFlag.BStartInsideA;
             if (Math.Cos((avgA - bEnd).ToRadians()).AboutGreaterThanOrEqual(cosDiffA))
@@ -93,33 +88,28 @@ namespace AvalonAssets.DataStructure.Geometry
                 resultFlag |= MergeFlag.AStartInsideB;
             if (Math.Cos((avgB - aEnd).ToRadians()).AboutGreaterThanOrEqual(cosDiffB))
                 resultFlag |= MergeFlag.AEndInsideB;
-
             if (NotHasFlags(resultFlag, MergeFlag.BStartInsideA, MergeFlag.BEndInsideA,
                 MergeFlag.AEndInsideB, MergeFlag.AStartInsideB))
             {
                 resultInterval = null;
                 return false;
             }
-
             if (HasFlags(resultFlag, MergeFlag.BStartInsideA, MergeFlag.BEndInsideA,
                 MergeFlag.AEndInsideB, MergeFlag.AStartInsideB))
             {
                 resultInterval = new AngleInterval(true);
                 return true;
             }
-
             if (HasFlags(resultFlag, MergeFlag.BStartInsideA, MergeFlag.BEndInsideA))
             {
                 resultInterval = this;
                 return true;
             }
-
             if (HasFlags(resultFlag, MergeFlag.AEndInsideB, MergeFlag.AStartInsideB))
             {
                 resultInterval = newInterval;
                 return true;
             }
-
             if (HasFlags(resultFlag, MergeFlag.AEndInsideB, MergeFlag.BStartInsideA) &&
                 NotHasFlags(resultFlag, MergeFlag.AStartInsideB, MergeFlag.BEndInsideA))
             {
@@ -131,7 +121,6 @@ namespace AvalonAssets.DataStructure.Geometry
             if (!HasFlags(resultFlag, MergeFlag.AStartInsideB, MergeFlag.BEndInsideA) ||
                 !NotHasFlags(resultFlag, MergeFlag.AEndInsideB, MergeFlag.BStartInsideA))
                 throw new InvalidOperationException("This should never happen.");
-
             resultInterval = new AngleInterval(bStart, aEnd);
             return true;
         }
@@ -169,7 +158,6 @@ namespace AvalonAssets.DataStructure.Geometry
         {
             return flags.All(flag => (resultFlag & flag) != flag);
         }
-
 
         [Flags]
         private enum MergeFlag : short

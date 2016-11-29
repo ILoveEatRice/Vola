@@ -137,12 +137,10 @@ namespace AvalonAssets.DataStructure.Heap
                 var left = LeftChild(position);
                 var right = RightChild(position);
                 var smallest = position;
-
                 if (left < Size() && Compare(_heap[left], _heap[smallest]) < 0)
                     smallest = left;
                 if (right < Size() && Compare(_heap[right], _heap[smallest]) < 0)
                     smallest = right;
-
                 if (smallest == position)
                     break;
                 Swap(smallest, position);

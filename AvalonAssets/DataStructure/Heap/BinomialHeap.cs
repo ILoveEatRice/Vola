@@ -165,17 +165,13 @@ namespace AvalonAssets.DataStructure.Heap
         private Node<T> Union(BinomialHeap<T> heap)
         {
             var newHead = Union(this, heap);
-
             _head = null;
             heap._head = null;
-
             if (newHead == null)
                 return null;
-
             Node<T> prev = null;
             var curr = newHead;
             var next = newHead.Sibling;
-
             while (next != null)
             {
                 if (curr.Degree != next.Degree || (next.Sibling != null && next.Sibling.Degree == curr.Degree))
@@ -214,7 +210,6 @@ namespace AvalonAssets.DataStructure.Heap
             Node<T> head;
             var heap1Next = heap1._head;
             var heap2Next = heap2._head;
-
             if (heap1._head.Degree <= heap2._head.Degree)
             {
                 head = heap1._head;
@@ -225,9 +220,7 @@ namespace AvalonAssets.DataStructure.Heap
                 head = heap2._head;
                 heap2Next = heap2Next.Sibling;
             }
-
             var tail = head;
-
             while (heap1Next != null && heap2Next != null)
             {
                 if (heap1Next.Degree <= heap2Next.Degree)
@@ -240,7 +233,6 @@ namespace AvalonAssets.DataStructure.Heap
                     tail.Sibling = heap2Next;
                     heap2Next = heap2Next.Sibling;
                 }
-
                 tail = tail.Sibling;
             }
             tail.Sibling = heap1Next ?? heap2Next;
@@ -259,13 +251,9 @@ namespace AvalonAssets.DataStructure.Heap
             }
 
             public int Degree { get; set; }
-
             public Node<TValue> Parent { get; set; }
-
             public Node<TValue> Child { get; set; }
-
             public Node<TValue> Sibling { get; set; }
-
             public TValue Value { get; set; }
 
             public int Count()

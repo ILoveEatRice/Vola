@@ -33,7 +33,6 @@ namespace AvalonAssetsTests.DataStructure.Heap
         protected readonly List<int> TestList = new List<int>();
         protected IHeap<int> MaxHeap;
         protected IHeap<int> MinHeap;
-
         public abstract IHeap<int> CreateHeap(bool isMin);
 
         protected int RandomNumber()
@@ -47,7 +46,6 @@ namespace AvalonAssetsTests.DataStructure.Heap
             for (var i = 0; i < total; i++)
                 yield return RandomNumber();
         }
-
 
         public void InsertTest(IHeap<int> heap, bool isMin)
         {
@@ -82,7 +80,6 @@ namespace AvalonAssetsTests.DataStructure.Heap
             Assert.AreEqual(expected, result);
         }
 
-
         public void GetMinTest(IHeap<int> heap, bool isMin)
         {
             var tmpLst = new List<int>(TestList);
@@ -93,7 +90,6 @@ namespace AvalonAssetsTests.DataStructure.Heap
             Assert.AreEqual(expected, result);
         }
 
-
         public void SizeTest(IHeap<int> heap)
         {
             var tmpLst = new List<int>(TestList);
@@ -102,7 +98,6 @@ namespace AvalonAssetsTests.DataStructure.Heap
             Console.WriteLine("Expect:" + expected + " Result:" + result);
             Assert.AreEqual(expected, result);
         }
-
 
         public void DecreaseKeyTest(IHeap<int> heap, bool isMin)
         {
@@ -120,7 +115,6 @@ namespace AvalonAssetsTests.DataStructure.Heap
             Console.WriteLine("Result:" + string.Join(", ", heapList));
             Assert.IsTrue(tmpLst.SequenceEqual(heapList));
         }
-
 
         public void DeleteTest(IHeap<int> heap, bool isMin)
         {
@@ -182,7 +176,6 @@ namespace AvalonAssetsTests.DataStructure.Heap
             DeleteTest(MinHeap, true);
             DeleteTest(MaxHeap, false);
         }
-
 
         [Test]
         public void ExtractMinTest()

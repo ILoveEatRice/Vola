@@ -67,7 +67,6 @@ namespace AvalonAssets.Algorithm.Injection
         /// <returns>Itself.</returns>
         public static IContainer RegisterType<TRequest, TReturn>(this IContainer container,
             ConstructorInfo constructor = null, string name = null) where TReturn : TRequest where TRequest : class
-
         {
             return container.RegisterType(typeof(TRequest), typeof(TReturn),
                 constructor != null ? new InjectionConstructor(constructor) : null, name);

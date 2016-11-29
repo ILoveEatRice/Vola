@@ -277,9 +277,7 @@ namespace AvalonAssets.Algorithm.Grid.Hex
             var xOffset = Math.Abs(different.X);
             var yOffset = Math.Abs(different.Y);
             var zOffset = Math.Abs(different.Z);
-
             int directionIndex;
-
             if (yOffset >= xOffset)
                 if (zOffset >= yOffset)
                     directionIndex = different.Z > 0 ? 3 : 0;
@@ -289,13 +287,11 @@ namespace AvalonAssets.Algorithm.Grid.Hex
                 directionIndex = different.X > 0 ? 1 : 4;
             else
                 directionIndex = different.Z > 0 ? 3 : 0;
-
             var radius = (xOffset + yOffset + zOffset)/2;
             // Direction start from E
             var direction = EnumUtils.Values<Direction>().Shift(-2).ToList();
             // Find the counter-clockwise corner tile.
             var corner = this + Distance(direction[directionIndex], radius);
-
             different = coordinate - corner;
             xOffset = Math.Abs(different.X);
             yOffset = Math.Abs(different.Y);
@@ -456,11 +452,9 @@ namespace AvalonAssets.Algorithm.Grid.Hex
             var rX = (int) Math.Round(x);
             var rY = (int) Math.Round(y);
             var rZ = (int) Math.Round(z);
-
             var xDiff = Math.Abs(rX - x);
             var yDiff = Math.Abs(rY - y);
             var zDiff = Math.Abs(rZ - z);
-
             if (xDiff > yDiff && xDiff > yDiff)
                 rX = -rY - rZ;
             else if (yDiff > zDiff)

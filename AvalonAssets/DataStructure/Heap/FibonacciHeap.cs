@@ -43,12 +43,10 @@ namespace AvalonAssets.DataStructure.Heap
                     child = child.Next;
                 } while (child != extractedMin.Child);
             }
-
             var nextInRootList = extractedMin.Next == extractedMin ? null : extractedMin.Next;
             RemoveNodeFromList(extractedMin);
             _size--;
             _minNode = MergeLists(nextInRootList, extractedMin.Child);
-
             if (nextInRootList == null) return extractedMin;
             _minNode = nextInRootList;
             Consolidate();
@@ -144,13 +142,11 @@ namespace AvalonAssets.DataStructure.Heap
                 return;
             var aux = new List<Node<T>>();
             var items = GetRootTrees();
-
             foreach (var current in items)
             {
                 var top = current;
                 while (aux.Count <= top.Degree + 1)
                     aux.Add(null);
-
                 while (aux[top.Degree] != null)
                 {
                     if (Compare(aux[top.Degree], top) < 0)
@@ -163,12 +159,10 @@ namespace AvalonAssets.DataStructure.Heap
                     aux[top.Degree] = null;
                     top.Degree++;
                 }
-
                 while (aux.Count <= top.Degree + 1)
                     aux.Add(null);
                 aux[top.Degree] = top;
             }
-
             _minNode = null;
             foreach (var t in aux)
             {
@@ -227,7 +221,6 @@ namespace AvalonAssets.DataStructure.Heap
             a.Next.Prev = a;
             b.Next = temp;
             b.Next.Prev = b;
-
             return Compare(a, b) < 0 ? a : b;
         }
 

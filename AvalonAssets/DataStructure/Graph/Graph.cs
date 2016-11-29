@@ -60,7 +60,6 @@ namespace AvalonAssets.DataStructure.Graph
             return IsDirected ? Successors(node).Count() : Degree(node);
         }
 
-
         public IEnumerable<TNode> Nodes
         {
             get { return Connections.Keys; }
