@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Reflection;
 
 namespace AvalonAssets.Algorithm.Injection
@@ -68,7 +69,8 @@ namespace AvalonAssets.Algorithm.Injection
             ConstructorInfo constructor = null, string name = null) where TReturn : TRequest where TRequest : class
 
         {
-            return container.RegisterType(typeof(TRequest), typeof(TReturn), new InjectionConstructor(constructor), name);
+            return container.RegisterType(typeof(TRequest), typeof(TReturn),
+                constructor != null ? new InjectionConstructor(constructor) : null, name);
         }
 
         /// <summary>
@@ -109,7 +111,7 @@ namespace AvalonAssets.Algorithm.Injection
         public static IEnumerable<TRequest> ResolveAll<TRequest>(this IContainer container,
             IDictionary<string, object> arguments = null) where TRequest : class
         {
-            return container.ResolveAll(typeof(TRequest), arguments) as IEnumerable<TRequest>;
+            return container.ResolveAll(typeof(TRequest), arguments).Cast<TRequest>();
         }
 
         /// <summary>

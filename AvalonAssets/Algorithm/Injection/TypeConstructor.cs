@@ -21,18 +21,18 @@ namespace AvalonAssets.Algorithm.Injection
             _type = type;
         }
 
-        public object NewInstance(IContainer container, IDictionary<string, object> arguments)
+        public object NewInstance(IContainer container, IDictionary<string, object> parameters)
         {
             foreach (var constructor in _type.GetConstructors())
             {
                 var selfLoop = constructor.GetParameters()
-                    .Any(p => p.ParameterType == _type && !arguments.ContainsKey(p.Name));
-                if(selfLoop)
+                    .Any(p => p.ParameterType == _type && parameters != null && !parameters.ContainsKey(p.Name));
+                if (selfLoop)
                     continue; // Prevents self loop.
                 try
                 {
                     var injectionConstructor = new InjectionConstructor(constructor);
-                    return injectionConstructor.NewInstance(container, arguments);
+                    return injectionConstructor.NewInstance(container, parameters);
                 }
                 catch (TypeNotRegisteredException)
                 {

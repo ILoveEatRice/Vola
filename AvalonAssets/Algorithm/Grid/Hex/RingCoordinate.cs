@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace AvalonAssets.Grid.Hex
+namespace AvalonAssets.Algorithm.Grid.Hex
 {
     public class RingCoordinate
     {

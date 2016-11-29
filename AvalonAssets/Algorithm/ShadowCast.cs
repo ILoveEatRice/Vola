@@ -4,6 +4,9 @@ using AvalonAssets.DataStructure.Geometry;
 
 namespace AvalonAssets.Algorithm
 {
+    /// <summary>
+    ///     Handles shadow casted on different angles.
+    /// </summary>
     public class ShadowCast
     {
         private readonly SortedList<double, AngleInterval> _shadowList;

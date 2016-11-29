@@ -10,7 +10,7 @@ namespace AvalonAssets.Algorithm.Injection
         private readonly Dictionary<Type, NullableDictionary<string, IInjectionConstructor>> _iocMap;
 
         /// <summary>
-        ///     Creates a new <see cref="IocContainer" />
+        ///     Creates a new <see cref="Container" />
         /// </summary>
         public Container()
         {
@@ -25,7 +25,7 @@ namespace AvalonAssets.Algorithm.Injection
 
         public IContainer RegisterType(Type request, Type @return, IInjectionConstructor constructor, string name)
         {
-            if (!_iocMap.ContainsKey(request))
+            if (!IsRegistered(request))
                 _iocMap[request] = new NullableDictionary<string, IInjectionConstructor>();
             if (constructor == null)
                 constructor = new TypeConstructor(@return);
@@ -40,19 +40,24 @@ namespace AvalonAssets.Algorithm.Injection
 
         public object Resolve(Type request, string name, IDictionary<string, object> arguments)
         {
-            if(!_iocMap.ContainsKey(request))
+            if (!IsRegistered(request))
                 throw new TypeNotRegisteredException(request);
-           return _iocMap[request][name].NewInstance(this, arguments);
+            return _iocMap[request][name].NewInstance(this, arguments);
         }
 
         public IEnumerable<object> ResolveAll(Type request, IDictionary<string, object> arguments)
         {
-            if (!_iocMap.ContainsKey(request))
+            if (!IsRegistered(request))
                 throw new TypeNotRegisteredException(request);
             foreach (var constructor in _iocMap[request].Values)
             {
                 yield return constructor.NewInstance(this, arguments);
             }
+        }
+
+        public bool IsRegistered(Type request)
+        {
+            return _iocMap.ContainsKey(request);
         }
 
         protected virtual void Dispose(bool disposing)

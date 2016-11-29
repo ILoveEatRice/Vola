@@ -24,16 +24,16 @@ namespace AvalonAssets.Algorithm.Injection
             _constructor = constructor;
         }
 
-        public object NewInstance(IContainer container, IDictionary<string, object> arguments)
+        public object NewInstance(IContainer container, IDictionary<string, object> parameters)
         {
             var paramsInfoList = _constructor.GetParameters().ToList();
             var resolvedParams = new List<object>();
             foreach (var paramsInfo in paramsInfoList)
             {
                 object value;
-                // Uses given arguments if possible.
-                if (arguments.ContainsKey(paramsInfo.Name))
-                    value = arguments[paramsInfo.Name];
+                // Uses given parameters if possible.
+                if (parameters != null && parameters.ContainsKey(paramsInfo.Name))
+                    value = parameters[paramsInfo.Name];
                 else
                 {
                     try

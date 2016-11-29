@@ -38,8 +38,7 @@ namespace AvalonAssets.DataStructure
         {
             get
             {
-
-                var collection = ((IDictionary)_dictionary).Values;
+                var collection = ((IDictionary) _dictionary).Values;
                 if (!_hasNullValue) return collection;
                 var array = new TKey[collection.Count + 1];
                 array[0] = null;

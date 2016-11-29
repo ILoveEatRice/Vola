@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using AvalonAssets.Algorithm.Injection.Exception;
 
 namespace AvalonAssets.Algorithm.Injection
 {
@@ -34,6 +35,7 @@ namespace AvalonAssets.Algorithm.Injection
         /// <param name="name">Identifier. Null for default.</param>
         /// <param name="arguments">Arguments pass to constructor.</param>
         /// <returns>Resolved request type.</returns>
+        /// <exception cref="TypeNotRegisteredException"><paramref name="request" /> is not registered.</exception>
         object Resolve(Type request, string name, IDictionary<string, object> arguments);
 
         /// <summary>
@@ -42,6 +44,7 @@ namespace AvalonAssets.Algorithm.Injection
         /// <param name="request">Request type.</param>
         /// <param name="arguments">Arguments pass to constructor.</param>
         /// <returns>All resolved request type.</returns>
+        /// <exception cref="TypeNotRegisteredException"><paramref name="request" /> is not registered.</exception>
         IEnumerable<object> ResolveAll(Type request, IDictionary<string, object> arguments);
 
         /// <summary>

@@ -70,9 +70,9 @@
     <Compile Include="DataStructure\Graph\IMutableValueGraph.cs" />
     <Compile Include="DataStructure\Graph\IValueGraph.cs" />
     <Compile Include="DataStructure\NullableDictionary.cs" />
-    <Compile Include="Grid\Hex\HexCoordinate.cs" />
-    <Compile Include="Grid\Hex\Region.cs" />
-    <Compile Include="Grid\Hex\RingCoordinate.cs" />
+    <Compile Include="Algorithm\Grid\Hex\HexCoordinate.cs" />
+    <Compile Include="Algorithm\Grid\Hex\Region.cs" />
+    <Compile Include="Algorithm\Grid\Hex\RingCoordinate.cs" />
     <Compile Include="DataStructure\Graph\IGraph.cs" />
     <Compile Include="Algorithm\ShadowCast.cs" />
     <Compile Include="DataStructure\Heap\BinaryHeap.cs" />

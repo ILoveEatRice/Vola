@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace AvalonAssets.Grid.Hex
+namespace AvalonAssets.Algorithm.Grid.Hex
 {
     public class Region
     {
@@ -68,7 +68,7 @@ namespace AvalonAssets.Grid.Hex
         {
             unchecked
             {
-                return ((Center != null ? Center.GetHashCode() : 0) * 397) ^ Radius;
+                return ((Center != null ? Center.GetHashCode() : 0)*397) ^ Radius;
             }
         }
 

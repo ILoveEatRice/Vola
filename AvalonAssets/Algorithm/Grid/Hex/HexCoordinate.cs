@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using AvalonAssets.Algorithm;
 using AvalonAssets.Utility;
 
-namespace AvalonAssets.Grid.Hex
+namespace AvalonAssets.Algorithm.Grid.Hex
 {
     /// <summary>
     ///     Represents coordinate on hex map.
@@ -124,7 +123,7 @@ namespace AvalonAssets.Grid.Hex
         {
             return new HexCoordinate(q, r);
         }
-        
+
         public override int GetHashCode()
         {
             return HashUtils.IntegerHash(X, Y);
@@ -336,7 +335,7 @@ namespace AvalonAssets.Grid.Hex
 
         /// <summary>
         ///     Returns true if there is nothing blocking between two <see cref="HexCoordinate" />.
-        ///     DON'T use this to find the field of view. Use <see cref="FieldOfView"/> to have better performance.
+        ///     DON'T use this to find the field of view. Use <see cref="FieldOfView" /> to have better performance.
         /// </summary>
         /// <param name="position"><see cref="HexCoordinate" /> to be checked.</param>
         /// <param name="isOpaque">Returns if a node is opaque.</param>

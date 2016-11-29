@@ -18,7 +18,7 @@ namespace AvalonAssets.Algorithm.Injection
             _value = value;
         }
 
-        public object NewInstance(IContainer container, IDictionary<string, object> arguments)
+        public object NewInstance(IContainer container, IDictionary<string, object> parameters)
         {
             return _value;
         }

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using AvalonAssets.Grid.Hex;
+using AvalonAssets.Algorithm.Grid.Hex;
 using AvalonAssets.Utility;
 using NUnit.Framework;
 
-namespace AvalonAssetsTests.DataStructure.Grid.Hex
+namespace AvalonAssetsTests.Algorithm.Grid.Hex
 {
     [TestFixture]
     public class HexCoordinateTest

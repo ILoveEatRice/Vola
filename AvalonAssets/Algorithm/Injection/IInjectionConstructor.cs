@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using AvalonAssets.Algorithm.Injection.Exception;
 
 namespace AvalonAssets.Algorithm.Injection
 {
@@ -11,8 +12,12 @@ namespace AvalonAssets.Algorithm.Injection
         ///     Creates a new instance of object.
         /// </summary>
         /// <param name="container">Container owner.</param>
-        /// <param name="arguments">Avaiable arguements.</param>
-        /// <returns></returns>
-        object NewInstance(IContainer container, IDictionary<string, object> arguments);
+        /// <param name="parameters">Avaiable arguements.</param>
+        /// <returns>New instance.</returns>
+        /// <exception cref="TypeNotRegisteredException">
+        ///     One of the parameter is not registered and defined in
+        ///     <paramref name="parameters" />.
+        /// </exception>
+        object NewInstance(IContainer container, IDictionary<string, object> parameters);
     }
 }
