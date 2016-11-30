@@ -64,6 +64,7 @@
     <Compile Include="Algorithm\Injection\Constructor\Constructors.cs" />
     <Compile Include="Algorithm\Injection\Container.cs" />
     <Compile Include="Algorithm\Injection\ContainerExtensions.cs" />
+    <Compile Include="Algorithm\Injection\Exception\NameNotResolveException.cs" />
     <Compile Include="Algorithm\Injection\Exception\TypeNotRegisteredException.cs" />
     <Compile Include="Algorithm\Injection\IContainer.cs" />
     <Compile Include="Algorithm\Injection\Constructor\IConstructor.cs" />
