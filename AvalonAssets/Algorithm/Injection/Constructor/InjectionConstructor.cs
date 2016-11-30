@@ -4,17 +4,17 @@ using System.Linq;
 using System.Reflection;
 using AvalonAssets.Algorithm.Injection.Exception;
 
-namespace AvalonAssets.Algorithm.Injection
+namespace AvalonAssets.Algorithm.Injection.Constructor
 {
     /// <summary>
-    ///     <see cref="IInjectionConstructor" /> using normal constructor.
+    ///     <see cref="IConstructor" /> using normal constructor.
     /// </summary>
-    public class InjectionConstructor : IInjectionConstructor
+    internal class InjectionConstructor : IConstructor
     {
         private readonly ConstructorInfo _constructor;
 
         /// <summary>
-        ///     Creates a <see cref="IInjectionConstructor" /> using normal constructor.
+        ///     Creates a <see cref="IConstructor" /> using normal constructor.
         /// </summary>
         /// <param name="constructor">Desire constructor.</param>
         public InjectionConstructor(ConstructorInfo constructor)

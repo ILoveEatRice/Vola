@@ -61,14 +61,19 @@
     <Compile Include="Algorithm\Event\ISubscriber.cs" />
     <Compile Include="Algorithm\Event\WeakEventHandler.cs" />
     <Compile Include="Algorithm\Event\WeakEventHandlerFactory.cs" />
+    <Compile Include="Algorithm\Injection\Constructor\Constructors.cs" />
     <Compile Include="Algorithm\Injection\Container.cs" />
     <Compile Include="Algorithm\Injection\ContainerExtensions.cs" />
     <Compile Include="Algorithm\Injection\Exception\TypeNotRegisteredException.cs" />
     <Compile Include="Algorithm\Injection\IContainer.cs" />
-    <Compile Include="Algorithm\Injection\IInjectionConstructor.cs" />
-    <Compile Include="Algorithm\Injection\InjectionConstructor.cs" />
-    <Compile Include="Algorithm\Injection\InstanceConstructor.cs" />
-    <Compile Include="Algorithm\Injection\TypeConstructor.cs" />
+    <Compile Include="Algorithm\Injection\Constructor\IConstructor.cs" />
+    <Compile Include="Algorithm\Injection\Parameter\IParameter.cs" />
+    <Compile Include="Algorithm\Injection\Constructor\InjectionConstructor.cs" />
+    <Compile Include="Algorithm\Injection\Parameter\Parameters.cs" />
+    <Compile Include="Algorithm\Injection\Parameter\ResolveParameter.cs" />
+    <Compile Include="Algorithm\Injection\Constructor\InstanceConstructor.cs" />
+    <Compile Include="Algorithm\Injection\Parameter\ValueParameter.cs" />
+    <Compile Include="Algorithm\Injection\Constructor\TypeConstructor.cs" />
     <Compile Include="Algorithm\PathFinding.cs" />
     <Compile Include="DataStructure\Graph\Graph.cs" />
     <Compile Include="DataStructure\Graph\ValueGraph.cs" />
@@ -100,7 +105,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

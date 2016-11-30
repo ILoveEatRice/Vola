@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using AvalonAssets.Algorithm.Injection.Constructor;
+using AvalonAssets.Algorithm.Injection.Parameter;
 
 namespace AvalonAssets.Algorithm.Injection
 {
@@ -15,12 +17,26 @@ namespace AvalonAssets.Algorithm.Injection
         /// <param name="container">Container.</param>
         /// <param name="request">Request type.</param>
         /// <param name="name">Identifier. Null for default.</param>
-        /// <param name="arguments">Arguments pass to constructor.</param>
+        /// <param name="parameters">Parameters pass to constructor.</param>
         /// <returns>Resolved request type.</returns>
         public static object Resolve(this IContainer container, Type request, string name = null,
-            IDictionary<string, object> arguments = null)
+            IDictionary<string, object> parameters = null)
         {
-            return container.Resolve(request, null, null);
+            return container.Resolve(request, name, parameters);
+        }
+
+        /// <summary>
+        ///     Returns a instance of <paramref name="request" />.
+        /// </summary>
+        /// <param name="container">Container.</param>
+        /// <param name="request">Request type.</param>
+        /// <param name="name">Identifier. Null for default.</param>
+        /// <param name="parameters">Parameters pass to constructor.</param>
+        /// <returns>Resolved request type.</returns>
+        public static object Resolve(this IContainer container, Type request, string name = null,
+            params IParameter[] parameters)
+        {
+            return container.Resolve(request, name, parameters.ToDictionary(container));
         }
 
         /// <summary>
@@ -33,7 +49,7 @@ namespace AvalonAssets.Algorithm.Injection
         /// <param name="name">Identifier. Null for default.</param>
         /// <returns>Itself.</returns>
         public static IContainer RegisterType(this IContainer container, Type request, Type @return,
-            IInjectionConstructor constructor = null, string name = null)
+            IConstructor constructor = null, string name = null)
         {
             return container.RegisterType(request, @return, constructor, name);
         }
@@ -57,19 +73,31 @@ namespace AvalonAssets.Algorithm.Injection
         #region Generics
 
         /// <summary>
+        ///     Registers <paramref name="constructor" /> to <typeparamref name="TRequest" />.
+        /// </summary>
+        /// <typeparam name="TRequest">Request type.</typeparam>
+        /// <param name="container">Container.</param>
+        /// <param name="constructor">Object constructor.</param>
+        /// <param name="name">Identifier. Null for default.</param>
+        /// <returns>Itself.</returns>
+        public static IContainer RegisterType<TRequest>(this IContainer container, ConstructorInfo constructor,
+            string name = null) where TRequest : class
+        {
+            return container.RegisterType(typeof(TRequest), null, Constructors.Injection(constructor), name);
+        }
+
+        /// <summary>
         ///     Registers <typeparamref name="TReturn" /> to <typeparamref name="TRequest" />.
         /// </summary>
         /// <typeparam name="TRequest">Request type.</typeparam>
         /// <typeparam name="TReturn">Return type.</typeparam>
         /// <param name="container">Container.</param>
-        /// <param name="constructor">Object constructor.</param>
         /// <param name="name">Identifier. Null for default.</param>
         /// <returns>Itself.</returns>
-        public static IContainer RegisterType<TRequest, TReturn>(this IContainer container,
-            ConstructorInfo constructor = null, string name = null) where TReturn : TRequest where TRequest : class
+        public static IContainer RegisterType<TRequest, TReturn>(this IContainer container, string name = null)
+            where TReturn : TRequest where TRequest : class
         {
-            return container.RegisterType(typeof(TRequest), typeof(TReturn),
-                constructor != null ? new InjectionConstructor(constructor) : null, name);
+            return container.RegisterType(typeof(TRequest), typeof(TReturn), null, name);
         }
 
         /// <summary>
@@ -91,13 +119,55 @@ namespace AvalonAssets.Algorithm.Injection
         /// </summary>
         /// <typeparam name="TRequest">Request type.</typeparam>
         /// <param name="container">Container.</param>
-        /// <param name="name">Identifier. Null for default.</param>
-        /// <param name="arguments">Arguments pass to constructor.</param>
+        /// <param name="name">Identifier.</param>
+        /// <param name="parameters">Parameters pass to constructor.</param>
         /// <returns>Resolved request type.</returns>
-        public static TRequest Resolve<TRequest>(this IContainer container, string name = null,
-            IDictionary<string, object> arguments = null) where TRequest : class
+        public static TRequest Resolve<TRequest>(this IContainer container, string name,
+            IDictionary<string, object> parameters = null) where TRequest : class
         {
-            return container.Resolve(typeof(TRequest), name, arguments) as TRequest;
+            return container.Resolve(typeof(TRequest), name, parameters) as TRequest;
+        }
+
+        /// <summary>
+        ///     Returns a instance of <typeparamref name="TRequest" />.
+        /// </summary>
+        /// <typeparam name="TRequest">Request type.</typeparam>
+        /// <param name="container">Container.</param>
+        /// <param name="parameters">Parameters pass to constructor.</param>
+        /// <returns>Resolved request type.</returns>
+        public static TRequest Resolve<TRequest>(this IContainer container,
+            IDictionary<string, object> parameters = null) where TRequest : class
+        {
+            return container.Resolve<TRequest>(null, parameters);
+        }
+
+        /// <summary>
+        ///     Returns a instance of <typeparamref name="TRequest" />.
+        /// </summary>
+        /// <typeparam name="TRequest">Request type.</typeparam>
+        /// <param name="container">Container.</param>
+        /// <param name="name">Identifier.</param>
+        /// <param name="parameters">Parameters pass to constructor.</param>
+        /// <returns>Resolved request type.</returns>
+        public static TRequest Resolve<TRequest>(this IContainer container, string name, params IParameter[] parameters)
+            where TRequest : class
+        {
+            if (parameters == null || parameters.Length == 0)
+                return container.Resolve<TRequest>(name);
+            return container.Resolve<TRequest>(name, parameters.ToDictionary(container));
+        }
+
+        /// <summary>
+        ///     Returns a instance of <typeparamref name="TRequest" />.
+        /// </summary>
+        /// <typeparam name="TRequest">Request type.</typeparam>
+        /// <param name="container">Container.</param>
+        /// <param name="parameters">Parameters pass to constructor.</param>
+        /// <returns>Resolved request type.</returns>
+        public static TRequest Resolve<TRequest>(this IContainer container, params IParameter[] parameters)
+            where TRequest : class
+        {
+            return container.Resolve<TRequest>(null, parameters);
         }
 
         /// <summary>
@@ -105,12 +175,12 @@ namespace AvalonAssets.Algorithm.Injection
         /// </summary>
         /// <typeparam name="TRequest">Request type.</typeparam>
         /// <param name="container">Container.</param>
-        /// <param name="arguments">Arguments pass to constructor.</param>
+        /// <param name="parameters">Parameters pass to constructor.</param>
         /// <returns>All resolved request type.</returns>
         public static IEnumerable<TRequest> ResolveAll<TRequest>(this IContainer container,
-            IDictionary<string, object> arguments = null) where TRequest : class
+            IDictionary<string, object> parameters = null) where TRequest : class
         {
-            return container.ResolveAll(typeof(TRequest), arguments).Cast<TRequest>();
+            return container.ResolveAll(typeof(TRequest), parameters).Cast<TRequest>();
         }
 
         /// <summary>

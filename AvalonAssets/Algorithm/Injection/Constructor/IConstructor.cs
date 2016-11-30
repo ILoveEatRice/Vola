@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using AvalonAssets.Algorithm.Injection.Exception;
 
-namespace AvalonAssets.Algorithm.Injection
+namespace AvalonAssets.Algorithm.Injection.Constructor
 {
     /// <summary>
     ///     Constructors used for injection.
     /// </summary>
-    public interface IInjectionConstructor
+    public interface IConstructor
     {
         /// <summary>
         ///     Creates a new instance of object.

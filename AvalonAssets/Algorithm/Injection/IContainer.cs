@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using AvalonAssets.Algorithm.Injection.Constructor;
 using AvalonAssets.Algorithm.Injection.Exception;
 
 namespace AvalonAssets.Algorithm.Injection
@@ -17,7 +18,7 @@ namespace AvalonAssets.Algorithm.Injection
         /// <param name="constructor">Object constructor.</param>
         /// <param name="name">Identifier. Null for default.</param>
         /// <returns>Itself.</returns>
-        IContainer RegisterType(Type request, Type @return, IInjectionConstructor constructor, string name);
+        IContainer RegisterType(Type request, Type @return, IConstructor constructor, string name);
 
         /// <summary>
         ///     Registers <paramref name="instance" /> to <paramref name="request" />.

@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AvalonAssets.Algorithm.Injection;
+using AvalonAssets.Algorithm.Injection.Parameter;
 using AvalonAssets.DataStructure.Heap;
 using NUnit.Framework;
 
@@ -10,7 +12,7 @@ namespace AvalonAssetsTests.DataStructure.Heap
     public abstract class HeapTest
     {
         [SetUp]
-        public void Initialize()
+        public void SetUp()
         {
             foreach (var num in RandomList())
                 TestList.Add(num);
@@ -28,12 +30,27 @@ namespace AvalonAssetsTests.DataStructure.Heap
             TestList.Clear();
         }
 
+        [OneTimeSetUp]
+        public virtual void Initialize()
+        {
+            Container = new Container();
+            Container.RegisterInstance<IComparer<int>>(new Comparer((x, y) => x - y), Min)
+                .RegisterInstance<IComparer<int>>(new Comparer((x, y) => y - x), Max);
+        }
+
         public const int Range = 100;
-        private readonly Random _random = new Random();
         protected readonly List<int> TestList = new List<int>();
         protected IHeap<int> MaxHeap;
         protected IHeap<int> MinHeap;
-        public abstract IHeap<int> CreateHeap(bool isMin);
+
+        public IHeap<int> CreateHeap(bool isMin)
+        {
+            return Container.Resolve<IHeap<int>>(GetComparer(isMin));
+        }
+
+        private readonly Random _random = new Random();
+        protected IContainer Container;
+        protected const string Min = "min", Max = "max";
 
         protected int RandomNumber()
         {
@@ -143,9 +160,9 @@ namespace AvalonAssetsTests.DataStructure.Heap
                     yield return MaxHeap.ExtractMin().Value;
         }
 
-        protected IComparer<int> GetComparer(bool isMin)
+        protected IParameter GetComparer(bool isMin)
         {
-            return isMin ? new Comparer((x, y) => x - y) : new Comparer((x, y) => y - x);
+            return Parameters.Resolve<IComparer<int>>("comparer", isMin ? Min : Max);
         }
 
         private class Comparer : IComparer<int>

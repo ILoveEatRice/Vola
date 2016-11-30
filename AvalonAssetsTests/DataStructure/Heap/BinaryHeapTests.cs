@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AvalonAssets.Algorithm.Injection;
+using AvalonAssets.Algorithm.Injection.Parameter;
 using AvalonAssets.DataStructure.Heap;
 using NUnit.Framework;
 
@@ -9,11 +11,13 @@ namespace AvalonAssetsTests.DataStructure.Heap
     [TestFixture]
     public class BinaryHeapTests : HeapTest
     {
-        public override IHeap<int> CreateHeap(bool isMin)
+        [OneTimeSetUp]
+        public override void Initialize()
         {
-            return new BinaryHeap<int>(GetComparer(isMin));
+            base.Initialize();
+            Container.RegisterType<IHeap<int>, BinaryHeap<int>>();
         }
-
+        
         public void MergeTest(IHeap<int> heap, bool isMin)
         {
             var newList = RandomList().ToList();
@@ -22,7 +26,8 @@ namespace AvalonAssetsTests.DataStructure.Heap
             tmpLst.Sort();
             if (!isMin)
                 tmpLst.Reverse();
-            var newHeap = new BinaryHeap<int>(GetComparer(isMin));
+            var newHeap = CreateHeap(isMin) as BinaryHeap<int>;
+            Assert.NotNull(newHeap);
             foreach (var num in newList)
                 newHeap.Insert(num);
             var binaryHeap = heap as BinaryHeap<int>;
@@ -41,7 +46,8 @@ namespace AvalonAssetsTests.DataStructure.Heap
             tmpLst.Sort();
             if (!isMin)
                 tmpLst.Reverse();
-            var newHeap = new BinaryHeap<int>(GetComparer(isMin), TestList);
+            var newHeap = Container.Resolve<IHeap<int>>(GetComparer(isMin),
+                Parameters.Value<IEnumerable<int>>(TestList, "elements"));
             var heapList = new List<int>();
             while (!newHeap.IsEmpty())
                 heapList.Add(newHeap.ExtractMin().Value);

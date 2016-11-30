@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
 
-namespace AvalonAssets.Algorithm.Injection
+namespace AvalonAssets.Algorithm.Injection.Constructor
 {
     /// <summary>
-    ///     <see cref="IInjectionConstructor" /> using object instance.
+    ///     <see cref="IConstructor" /> using object instance.
     /// </summary>
-    public class InstanceConstructor : IInjectionConstructor
+    internal class InstanceConstructor : IConstructor
     {
         private readonly object _value;
 
         /// <summary>
-        ///     Creates a <see cref="IInjectionConstructor" /> using object instance.
+        ///     Creates a <see cref="IConstructor" /> using object instance.
         /// </summary>
         /// <param name="value">Object instance.</param>
         public InstanceConstructor(object value)

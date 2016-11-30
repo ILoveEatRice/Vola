@@ -9,13 +9,19 @@ namespace AvalonAssetsTests.Algorithm.Event
     {
         private IContainer _container;
         private int _value;
+
         [OneTimeSetUp]
         public void Initialize()
         {
             _container = new Container();
-            _container.RegisterType<IEventAggregator, EventAggregator>();
-            _container.RegisterType<IEventHandlerFactory, WeakEventHandlerFactory>();
+            _container.RegisterType<IEventAggregator, EventAggregator>()
+                .RegisterType<IEventHandlerFactory, WeakEventHandlerFactory>();
             _value = 0;
+        }
+
+        public void Receive(int message)
+        {
+            _value = message;
         }
 
         [Test]
@@ -30,11 +36,6 @@ namespace AvalonAssetsTests.Algorithm.Event
             aggregator.Unsubscribe(this);
             aggregator.Publish(3);
             Assert.AreEqual(2, _value);
-        }
-
-        public void Receive(int message)
-        {
-            _value = message;
         }
     }
 }

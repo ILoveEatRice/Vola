@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AvalonAssets.Algorithm.Injection;
 using AvalonAssets.DataStructure.Heap;
 using NUnit.Framework;
 
@@ -9,9 +10,11 @@ namespace AvalonAssetsTests.DataStructure.Heap
     [TestFixture]
     public class BinomialHeapTests : HeapTest
     {
-        public override IHeap<int> CreateHeap(bool isMin)
+        [OneTimeSetUp]
+        public override void Initialize()
         {
-            return new BinomialHeap<int>(GetComparer(isMin));
+            base.Initialize();
+            Container.RegisterType<IHeap<int>, BinomialHeap<int>>();
         }
 
         public void MergeTest(IHeap<int> heap, bool isMin)
@@ -22,7 +25,8 @@ namespace AvalonAssetsTests.DataStructure.Heap
             tmpLst.Sort();
             if (!isMin)
                 tmpLst.Reverse();
-            var newHeap = new BinomialHeap<int>(GetComparer(isMin));
+            var newHeap = CreateHeap(isMin) as BinomialHeap<int>;
+            Assert.NotNull(newHeap);
             foreach (var num in newList)
                 newHeap.Insert(num);
             var binaryHeap = heap as BinomialHeap<int>;
