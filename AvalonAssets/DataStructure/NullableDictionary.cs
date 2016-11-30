@@ -54,7 +54,7 @@ namespace AvalonAssets.DataStructure
 
         public void Remove(object key)
         {
-            throw new NotImplementedException();
+            Remove((TKey) key);
         }
 
         object IDictionary.this[object key]
@@ -63,19 +63,19 @@ namespace AvalonAssets.DataStructure
             set { this[(TKey) key] = (TValue) value; }
         }
 
-        public bool Contains(object key)
+        bool IDictionary.Contains(object key)
         {
-            throw new NotImplementedException();
+            return ContainsKey((TKey) key);
         }
 
-        public void Add(object key, object value)
+        void IDictionary.Add(object key, object value)
         {
-            throw new NotImplementedException();
+            Add((TKey) key, (TValue) value);
         }
 
         IDictionaryEnumerator IDictionary.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return _dictionary.GetEnumerator();
         }
 
         void ICollection.CopyTo(Array array, int index)
