@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace AvalonAssets.DataStructure
 {
@@ -128,7 +128,10 @@ namespace AvalonAssets.DataStructure
             return true;
         }
 
-        public bool TryGetValue([CanBeNull] TKey key, out TValue value)
+        // Key can be null
+        [SuppressMessage("ReSharper", "HeuristicUnreachableCode")]
+        [SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalse")]
+        public bool TryGetValue(TKey key, out TValue value)
         {
             if (key != null) return _dictionary.TryGetValue(key, out value);
             if (_hasNullValue)
