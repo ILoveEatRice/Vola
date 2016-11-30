@@ -8,7 +8,7 @@ namespace AvalonAssets.Algorithm.Injection
     /// <summary>
     ///     <see cref="IInjectionConstructor" /> using given type.
     /// </summary>
-    public class TypeConstructor : IInjectionConstructor
+    internal class TypeConstructor : IInjectionConstructor
     {
         private readonly Type _type;
 
