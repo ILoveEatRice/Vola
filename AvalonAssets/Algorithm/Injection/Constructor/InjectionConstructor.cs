@@ -15,6 +15,7 @@ namespace AvalonAssets.Algorithm.Injection.Constructor
 
         /// <summary>
         ///     Creates a <see cref="IConstructor" /> using normal constructor.
+        ///     Uses <see cref="Constructors.Injection" /> instead.
         /// </summary>
         /// <param name="constructor">Desire constructor.</param>
         public InjectionConstructor(ConstructorInfo constructor)

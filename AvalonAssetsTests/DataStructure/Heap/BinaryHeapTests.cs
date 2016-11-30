@@ -47,7 +47,7 @@ namespace AvalonAssetsTests.DataStructure.Heap
             if (!isMin)
                 tmpLst.Reverse();
             var newHeap = Container.Resolve<IHeap<int>>(GetComparer(isMin),
-                Parameters.Value<IEnumerable<int>>(TestList, "elements"));
+                Parameters.Value(TestList, "elements"));
             var heapList = new List<int>();
             while (!newHeap.IsEmpty())
                 heapList.Add(newHeap.ExtractMin().Value);

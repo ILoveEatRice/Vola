@@ -14,6 +14,7 @@ namespace AvalonAssets.Algorithm.Injection.Constructor
 
         /// <summary>
         ///     Creates a <see cref="IConstructor" /> using given type.
+        ///     Uses <see cref="Constructors.Type{T}" /> instead.
         /// </summary>
         /// <param name="type">Type.</param>
         public TypeConstructor(Type type)

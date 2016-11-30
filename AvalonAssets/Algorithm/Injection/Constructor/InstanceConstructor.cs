@@ -11,6 +11,7 @@ namespace AvalonAssets.Algorithm.Injection.Constructor
 
         /// <summary>
         ///     Creates a <see cref="IConstructor" /> using object instance.
+        ///     Uses <see cref="Constructors.Instance" /> instead.
         /// </summary>
         /// <param name="value">Object instance.</param>
         public InstanceConstructor(object value)

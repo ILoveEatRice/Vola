@@ -11,7 +11,7 @@ namespace AvalonAssets.Algorithm.Injection
         private readonly Dictionary<Type, NullableDictionary<string, IConstructor>> _iocMap;
 
         /// <summary>
-        ///     Creates a new <see cref="Container" />
+        ///     Creates a new <see cref="Container" />.
         /// </summary>
         public Container()
         {
