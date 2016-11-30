@@ -5,7 +5,10 @@ using System.Reflection;
 
 namespace AvalonAssets.Algorithm.Event
 {
-    internal class WeakEventHandler : IEventHandler
+    /// <summary>
+    ///     <see cref="IEventHandler" /> using weak reference.
+    /// </summary>
+    public class WeakEventHandler : IEventHandler
     {
         private readonly Dictionary<Type, MethodInfo> _supportedHandlers;
         private readonly WeakReference _weakReference;
@@ -30,6 +33,11 @@ namespace AvalonAssets.Algorithm.Event
             get { return _weakReference.Target != null; }
         }
 
+        public IEnumerable<Type> Types
+        {
+            get { return _supportedHandlers.Keys; }
+        }
+
         public bool Matches(object instance)
         {
             return _weakReference.Target == instance;
@@ -47,11 +55,6 @@ namespace AvalonAssets.Algorithm.Event
                 pair.Value.Invoke(_weakReference.Target, new[] {message});
             }
             return true;
-        }
-
-        public bool CanHandle(Type messageType)
-        {
-            return _supportedHandlers.Any(pair => pair.Key.IsAssignableFrom(messageType));
         }
     }
 }

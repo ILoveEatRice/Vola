@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace AvalonAssets.Algorithm.Event
 {
@@ -8,6 +9,11 @@ namespace AvalonAssets.Algorithm.Event
         ///     Returns true if object is not GC.
         /// </summary>
         bool Alive { get; }
+
+        /// <summary>
+        ///     Returns all type the handler that can handle.
+        /// </summary>
+        IEnumerable<Type> Types { get; }
 
         /// <summary>
         ///     Returns true if this handler is wraping <paramref name="instance" />.
@@ -23,12 +29,5 @@ namespace AvalonAssets.Algorithm.Event
         /// <param name="message">Message to be handle.</param>
         /// <returns>True if the object is alive.</returns>
         bool Handle(Type messageType, object message);
-
-        /// <summary>
-        ///     Returns true if it can handle <paramref name="messageType" />.
-        /// </summary>
-        /// <param name="messageType">Message type.</param>
-        /// <returns>True if it can handle <paramref name="messageType" />.</returns>
-        bool CanHandle(Type messageType);
     }
 }

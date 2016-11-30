@@ -53,10 +53,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithm\Event\EventAggregator.cs" />
     <Compile Include="Algorithm\Event\EventHandlerExtensions.cs" />
+    <Compile Include="Algorithm\Event\IEventAggregator.cs" />
     <Compile Include="Algorithm\Event\IEventHandler.cs" />
+    <Compile Include="Algorithm\Event\IEventHandlerFactory.cs" />
     <Compile Include="Algorithm\Event\ISubscriber.cs" />
     <Compile Include="Algorithm\Event\WeakEventHandler.cs" />
+    <Compile Include="Algorithm\Event\WeakEventHandlerFactory.cs" />
     <Compile Include="Algorithm\Injection\Container.cs" />
     <Compile Include="Algorithm\Injection\ContainerExtensions.cs" />
     <Compile Include="Algorithm\Injection\Exception\TypeNotRegisteredException.cs" />
