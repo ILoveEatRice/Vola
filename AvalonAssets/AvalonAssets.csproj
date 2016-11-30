@@ -88,6 +88,7 @@
     <Compile Include="Algorithm\Grid\Hex\Region.cs" />
     <Compile Include="Algorithm\Grid\Hex\RingCoordinate.cs" />
     <Compile Include="DataStructure\Graph\IGraph.cs" />
+    <Compile Include="Algorithm\Geometry\ShadowCast.cs" />
     <Compile Include="DataStructure\Heap\BinaryHeap.cs" />
     <Compile Include="DataStructure\Heap\BinomialHeap.cs" />
     <Compile Include="DataStructure\Heap\FibonacciHeap.cs" />
