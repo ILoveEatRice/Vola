@@ -2,7 +2,7 @@
 using AvalonAssets.DataStructure.Graph;
 using AvalonAssets.DataStructure.Queue;
 
-namespace AvalonAssets.Algorithm
+namespace AvalonAssets.Algorithm.Graph
 {
     /// <summary>
     ///     Path finding algorithm implementaion.

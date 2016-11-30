@@ -2,7 +2,7 @@
 using System.Linq;
 using AvalonAssets.DataStructure.Geometry;
 
-namespace AvalonAssets.Algorithm
+namespace AvalonAssets.Algorithm.Geometry
 {
     /// <summary>
     ///     Handles shadow casted on different angles.

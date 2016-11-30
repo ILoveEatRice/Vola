@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using AvalonAssets.Algorithm.Geometry;
+using AvalonAssets.DataStructure.Geometry;
 using AvalonAssets.Utility;
 
 namespace AvalonAssets.Algorithm.Grid.Hex

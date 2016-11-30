@@ -75,7 +75,7 @@
     <Compile Include="Algorithm\Injection\Constructor\InstanceConstructor.cs" />
     <Compile Include="Algorithm\Injection\Parameter\ValueParameter.cs" />
     <Compile Include="Algorithm\Injection\Constructor\TypeConstructor.cs" />
-    <Compile Include="Algorithm\PathFinding.cs" />
+    <Compile Include="Algorithm\Graph\PathFinding.cs" />
     <Compile Include="DataStructure\Graph\Graph.cs" />
     <Compile Include="DataStructure\Graph\ValueGraph.cs" />
     <Compile Include="DataStructure\Graph\EndPointPair.cs" />
@@ -88,7 +88,6 @@
     <Compile Include="Algorithm\Grid\Hex\Region.cs" />
     <Compile Include="Algorithm\Grid\Hex\RingCoordinate.cs" />
     <Compile Include="DataStructure\Graph\IGraph.cs" />
-    <Compile Include="Algorithm\ShadowCast.cs" />
     <Compile Include="DataStructure\Heap\BinaryHeap.cs" />
     <Compile Include="DataStructure\Heap\BinomialHeap.cs" />
     <Compile Include="DataStructure\Heap\FibonacciHeap.cs" />

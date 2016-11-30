@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using AvalonAssets.Algorithm;
+using AvalonAssets.Algorithm.Graph;
 using AvalonAssets.DataStructure.Graph;
 using NUnit.Framework;
 
-namespace AvalonAssetsTests.Algorithm
+namespace AvalonAssetsTests.Algorithm.Graph
 {
     [TestFixture]
     public class PathFindingTests

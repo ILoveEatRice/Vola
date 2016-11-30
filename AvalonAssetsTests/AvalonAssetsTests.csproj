@@ -57,7 +57,7 @@
   <ItemGroup>
     <Compile Include="Algorithm\Event\EventAggregatorTests.cs" />
     <Compile Include="Algorithm\Injection\ContainerTests.cs" />
-    <Compile Include="Algorithm\PathFindingTests.cs" />
+    <Compile Include="Algorithm\Graph\PathFindingTests.cs" />
     <Compile Include="DataStructure\Geometry\AngleIntervalTests.cs" />
     <Compile Include="DataStructure\Graph\EndPointPairTests.cs" />
     <Compile Include="DataStructure\Graph\GraphConnectionTests.cs" />
