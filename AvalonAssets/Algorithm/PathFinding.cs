@@ -58,7 +58,7 @@ namespace AvalonAssets.Algorithm
         ///     Path from <paramref name="start" /> to <paramref name="goal" />.
         ///     Empty if no path can be found.
         /// </returns>
-        public static IEnumerable<T> DijkstraAlgorithm<T>(IValueGraph<T, int> graph, T start, T goal)
+        public static IEnumerable<T> DijkstraAlgorithm<T>(this IValueGraph<T, int> graph, T start, T goal)
         {
             var frontiers = new PriorityQueue<T>();
             frontiers.Enqueue(0, start);
@@ -95,7 +95,7 @@ namespace AvalonAssets.Algorithm
         ///     Empty if no path can be found.
         /// </returns>
         /// <seealso cref="Heuristic{T}" />
-        public static IEnumerable<T> AStarAlgorithm<T>(IValueGraph<T, int> graph, T start, T goal,
+        public static IEnumerable<T> AStarAlgorithm<T>(this IValueGraph<T, int> graph, T start, T goal,
             Heuristic<T> heuristic)
         {
             var frontiers = new PriorityQueue<T>();
@@ -135,7 +135,7 @@ namespace AvalonAssets.Algorithm
         ///     Path from <paramref name="start" /> to <paramref name="goal" />.
         ///     Empty if no path can be found.
         /// </returns>
-        public static IEnumerable<T> BreadthFirstSearch<T>(IGraph<T> graph, T start, T goal)
+        public static IEnumerable<T> BreadthFirstSearch<T>(this IGraph<T> graph, T start, T goal)
         {
             var frontiers = new Queue<T>();
             frontiers.Enqueue(start);
@@ -170,7 +170,7 @@ namespace AvalonAssets.Algorithm
         ///     Empty if no path can be found.
         /// </returns>
         /// <seealso cref="Heuristic{T}" />
-        public static IEnumerable<T> HeuristicSearch<T>(IGraph<T> graph, T start, T goal, Heuristic<T> heuristic)
+        public static IEnumerable<T> HeuristicSearch<T>(this IGraph<T> graph, T start, T goal, Heuristic<T> heuristic)
         {
             var frontiers = new PriorityQueue<T>();
             frontiers.Enqueue(0, start);
