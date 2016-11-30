@@ -3,7 +3,7 @@ using System.Linq;
 
 namespace AvalonAssets.Algorithm.Event
 {
-    public static class EventHandlerExtensions
+    internal static class EventHandlerExtensions
     {
         /// <summary>
         ///     Handles <paramref name="message" /> of type <typeparamref name="T" />.

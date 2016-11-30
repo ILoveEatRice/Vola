@@ -3,6 +3,7 @@
     /// <summary>
     ///     Parameters used for injection.
     /// </summary>
+    /// <seealso cref="Parameters"/>
     public interface IParameter
     {
         /// <summary>

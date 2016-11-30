@@ -69,6 +69,7 @@
     <Compile Include="Algorithm\Grid\Hex\HexCoordinateTest.cs" />
     <Compile Include="DataStructure\NullableDictionaryTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Utility\MethodUtilsTests.cs" />
     <Compile Include="Utils.cs" />
   </ItemGroup>
   <ItemGroup>

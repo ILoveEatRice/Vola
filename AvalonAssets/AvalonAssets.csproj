@@ -54,6 +54,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithm\Event\EventAggregator.cs" />
+    <Compile Include="Algorithm\Event\EventAggregators.cs" />
     <Compile Include="Algorithm\Event\EventHandlerExtensions.cs" />
     <Compile Include="Algorithm\Event\IEventAggregator.cs" />
     <Compile Include="Algorithm\Event\IEventHandler.cs" />
@@ -69,7 +70,7 @@
     <Compile Include="Algorithm\Injection\IContainer.cs" />
     <Compile Include="Algorithm\Injection\Constructor\IConstructor.cs" />
     <Compile Include="Algorithm\Injection\Parameter\IParameter.cs" />
-    <Compile Include="Algorithm\Injection\Constructor\InjectionConstructor.cs" />
+    <Compile Include="Algorithm\Injection\Constructor\MethodConstructor.cs" />
     <Compile Include="Algorithm\Injection\Parameter\Parameters.cs" />
     <Compile Include="Algorithm\Injection\Parameter\ResolveParameter.cs" />
     <Compile Include="Algorithm\Injection\Constructor\InstanceConstructor.cs" />
@@ -103,6 +104,7 @@
     <Compile Include="Utility\DoubleUtils.cs" />
     <Compile Include="Utility\EnumUtils.cs" />
     <Compile Include="Utility\HashUtils.cs" />
+    <Compile Include="Utility\MethodUtils.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

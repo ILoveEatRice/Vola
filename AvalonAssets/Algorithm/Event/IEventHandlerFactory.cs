@@ -1,6 +1,6 @@
 ﻿namespace AvalonAssets.Algorithm.Event
 {
-    public interface IEventHandlerFactory
+    internal interface IEventHandlerFactory
     {
         IEventHandler Create(ISubscriber subscriber);
     }

@@ -4,7 +4,11 @@ using System.Linq;
 
 namespace AvalonAssets.Algorithm.Event
 {
-    public class EventAggregator : IEventAggregator
+    /// <summary>
+    ///     Implementation of <see cref="IEventAggregator" />.
+    /// </summary>
+    /// <seealso cref="EventAggregators.Default" />
+    internal class EventAggregator : IEventAggregator
     {
         private readonly List<IEventHandler> _eventHandlers;
         private readonly IEventHandlerFactory _handlerFactory;

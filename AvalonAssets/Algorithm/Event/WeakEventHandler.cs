@@ -8,7 +8,7 @@ namespace AvalonAssets.Algorithm.Event
     /// <summary>
     ///     <see cref="IEventHandler" /> using weak reference.
     /// </summary>
-    public class WeakEventHandler : IEventHandler
+    internal class WeakEventHandler : IEventHandler
     {
         private readonly Dictionary<Type, MethodInfo> _supportedHandlers;
         private readonly WeakReference _weakReference;

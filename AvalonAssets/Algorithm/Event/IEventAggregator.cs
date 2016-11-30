@@ -22,7 +22,7 @@ namespace AvalonAssets.Algorithm.Event
         void Unsubscribe(ISubscriber subscriber);
 
         /// <summary>
-        ///     Publishs <paramref name="message" /> to all the subscribers to that type.
+        ///     Publishs <paramref name="message" /> to all <see cref="ISubscriber{T}" /> of that type.
         /// </summary>
         /// <param name="message">Message</param>
         /// <exception cref="ArgumentNullException"><paramref name="message" /> is null.</exception>

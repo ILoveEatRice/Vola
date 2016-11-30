@@ -1,0 +1,3 @@
+apiRules:
+- exclude:
+    uidRegex: ^AvalonAssets\.Algorithm\.Event\.ISubscriber$

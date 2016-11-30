@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace AvalonAssets.Algorithm.Event
 {
-    public interface IEventHandler
+    internal interface IEventHandler
     {
         /// <summary>
         ///     Returns true if object is not GC.

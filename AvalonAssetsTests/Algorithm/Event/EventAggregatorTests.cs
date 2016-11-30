@@ -1,5 +1,7 @@
 ﻿using AvalonAssets.Algorithm.Event;
 using AvalonAssets.Algorithm.Injection;
+using AvalonAssets.Algorithm.Injection.Constructor;
+using AvalonAssets.Utility;
 using NUnit.Framework;
 
 namespace AvalonAssetsTests.Algorithm.Event
@@ -14,8 +16,8 @@ namespace AvalonAssetsTests.Algorithm.Event
         public void Initialize()
         {
             _container = new Container();
-            _container.RegisterType<IEventAggregator, EventAggregator>()
-                .RegisterType<IEventHandlerFactory, WeakEventHandlerFactory>();
+            var factoryMethod = MethodUtils.GetMethodInfo(() => EventAggregators.Default());
+            _container.RegisterType<IEventAggregator>(Constructors.StaticFactory(factoryMethod));
             _value = 0;
         }
 

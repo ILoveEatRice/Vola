@@ -6,6 +6,7 @@ namespace AvalonAssets.Algorithm.Injection.Constructor
     /// <summary>
     ///     Constructors used for injection.
     /// </summary>
+    /// <seealso cref="Constructors"/>
     public interface IConstructor
     {
         /// <summary>

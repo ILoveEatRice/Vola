@@ -36,6 +36,8 @@ namespace AvalonAssets.Algorithm.Injection
         public static object Resolve(this IContainer container, Type request, string name = null,
             params IParameter[] parameters)
         {
+            if (parameters == null || parameters.Length == 0)
+                return container.Resolve(request, name, null);
             return container.Resolve(request, name, parameters.ToDictionary(container));
         }
 
@@ -80,10 +82,10 @@ namespace AvalonAssets.Algorithm.Injection
         /// <param name="constructor">Object constructor.</param>
         /// <param name="name">Identifier. Null for default.</param>
         /// <returns>Itself.</returns>
-        public static IContainer RegisterType<TRequest>(this IContainer container, ConstructorInfo constructor,
+        public static IContainer RegisterType<TRequest>(this IContainer container, IConstructor constructor,
             string name = null) where TRequest : class
         {
-            return container.RegisterType(typeof(TRequest), null, Constructors.Injection(constructor), name);
+            return container.RegisterType(typeof(TRequest), null, constructor, name);
         }
 
         /// <summary>

@@ -14,7 +14,8 @@
 		  "src": "../"
         }
       ],
-      "dest": "api"
+      "dest": "api",
+      "filter": "filterConfig.yml"
     }
   ],
   "build": {
