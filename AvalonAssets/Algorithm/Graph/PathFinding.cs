@@ -5,7 +5,7 @@ using AvalonAssets.DataStructure.Queue;
 namespace AvalonAssets.Algorithm.Graph
 {
     /// <summary>
-    ///     Path finding algorithm implementaion.
+    ///     Path finding algorithm for <see cref="IGraph{TNode}"/> and <see cref="IValueGraph{TNode,TValue}"/>.
     /// </summary>
     public static class PathFinding
     {

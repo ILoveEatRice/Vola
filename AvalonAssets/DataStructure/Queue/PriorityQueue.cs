@@ -20,7 +20,7 @@ namespace AvalonAssets.DataStructure.Queue
         public PriorityQueue(IHeap<IPriority<T>> heap = null)
         {
             if (heap == null)
-                heap = new BinaryHeap<IPriority<T>>(new PriorityComparer<T>());
+                heap = Heaps.Default(new PriorityComparer<T>());
             _heap = heap;
         }
 

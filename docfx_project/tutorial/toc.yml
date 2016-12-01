@@ -4,3 +4,11 @@
   items:
   - name: Event Aggregator
     href: event/event_aggregator.md
+- name: Graphic
+  items:
+  - name: Path Finding
+    href: graphic/path_finding.md
+- name: Injection
+  items:
+  - name: IoC Container
+    href: injection/container.md

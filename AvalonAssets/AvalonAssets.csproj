@@ -55,6 +55,7 @@
     <Compile Include="Algorithm\Injection\Constructor\Constructors.cs" />
     <Compile Include="Algorithm\Injection\Container.cs" />
     <Compile Include="Algorithm\Injection\ContainerExtensions.cs" />
+    <Compile Include="Algorithm\Injection\Containers.cs" />
     <Compile Include="Algorithm\Injection\Exception\NameNotResolveException.cs" />
     <Compile Include="Algorithm\Injection\Exception\TypeNotRegisteredException.cs" />
     <Compile Include="Algorithm\Injection\IContainer.cs" />
@@ -81,6 +82,8 @@
     <Compile Include="DataStructure\Graph\IMutableGraph.cs" />
     <Compile Include="DataStructure\Graph\IMutableValueGraph.cs" />
     <Compile Include="DataStructure\Graph\IValueGraph.cs" />
+    <Compile Include="DataStructure\Grid\HexGrid.cs" />
+    <Compile Include="DataStructure\Heap\Heaps.cs" />
     <Compile Include="DataStructure\NullableDictionary.cs" />
     <Compile Include="Algorithm\Grid\Hex\HexCoordinate.cs" />
     <Compile Include="Algorithm\Grid\Hex\Region.cs" />

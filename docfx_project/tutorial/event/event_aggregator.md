@@ -1,5 +1,5 @@
-#Event Aggregator
-##Introduction
+# Event Aggregator
+## Introduction
 Event aggregator is used for event boardcasting and decoupling of publishers and subscribers so they do not need to know each other. 
 Consider observer pattern, subscribers need to know who they are subscribing to. For example, if *A* wants to observe changes of *B*, *A* must know *B*. 
 This leads to some problems. Increasing number of observers and observees scales up complexity quickly.
@@ -10,7 +10,7 @@ This can be solve by letting *Citizen* reports to *Police Station* intead and *P
 
 Event aggregator centralizes the event publishing. Publishers and subscribers never know each other. Thus, even one of them changes, it will not affect the other one.
 
-##Getting Started
+## Getting Started
 After understanding the reasons to use event aggregator, let's get started. 
 
 
@@ -27,7 +27,7 @@ public class CustomSubscriber : ISubscriber<int>
     }
 }
 ```
-###Initialization
+### Initialization
 Then, you have to create a `IEventAggregator`. You can create it several ways.
 If you are using `IContainer`, please refer to [injection](#injection).
 
@@ -38,7 +38,7 @@ var eventAggregator = EventAggregators.Default();
 var eventAggregator = new EventAggregator(new WeakEventHandlerFactory());
 ```
 
-###Subscribe
+### Subscribe
 Add your `ISubscriber<T>` to `IEventAggregator`.
 
 ```csharp
@@ -46,22 +46,22 @@ var subscriber = new CustomSubscriber();
 eventAggregator.Subscribe(subscriber);
 ```
 
-###Publish
+### Publish
 After that whenever the `eventAggregator` is called by `void Publish(int)`, `subscriber` will receive the event. To publish a event,
 
 ```csharp
 eventAggregator.Publish(3);
 ```
 
-###Unsubscribe
+### Unsubscribe
 You can also unsubscribe when you do not want to receive any events anymore.
 
 ```csharp
 eventAggregator.Unsubscribe(subscriber);
 ```
 
-##Advanced
-###Customization
+## Advanced
+### Customization
 Customizing `EventAggregator` requires `IEventHandlerFactory` and `IEventHandler`. By default, it uses `WeakEventHandlerFactory` and `WeakEventHandler` respectively. You can also implement your `IEventAggregator` instead.
 
 ```csharp
@@ -70,10 +70,10 @@ var eventAggregator = EventAggregators.Default(new CustomEventHandlerFactory());
 
 `WeakEventHandler` has the advantage of use weak reference and will not prevent gadget collection from collection the object. `EventAggregator` also clean up lost references automatically.
 
-###Injection
+### Injection
 This is for people who use `IContainer` only. For more information, please refer to [container](../injection/container.md).
 
-First, you have to register the necessary types.
+First, you have to register the necessary types. If you uses default container, you can skip this step.
 ```csharp
 container.RegisterType<IEventAggregator, EventAggregator>()
         .RegisterType<IEventHandlerFactory, WeakEventHandlerFactory>();

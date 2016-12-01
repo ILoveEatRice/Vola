@@ -5,19 +5,28 @@ using AvalonAssets.DataStructure.Geometry;
 namespace AvalonAssets.Algorithm.Geometry
 {
     /// <summary>
-    ///     Handles shadow casted on different angles.
+    ///     <para>
+    ///         <see cref="ShadowCast" /> handles <see cref="AngleInterval" /> used during shadow casting.
+    ///     </para>
     /// </summary>
     public class ShadowCast
     {
         private readonly SortedList<double, AngleInterval> _shadowList;
 
+        /// <summary>
+        ///     <para>
+        ///         Initializes a new instance of <see cref="ShadowCast" />.
+        ///     </para>
+        /// </summary>
         public ShadowCast()
         {
             _shadowList = new SortedList<double, AngleInterval>();
         }
 
         /// <summary>
-        ///     Adds a shadow with given angle.
+        ///     <para>
+        ///         Adds a shadow with given angle.
+        ///     </para>
         /// </summary>
         /// <param name="startAngle">Starting Angle.</param>
         /// <param name="endAngle">Ending Angle.</param>
@@ -44,6 +53,9 @@ namespace AvalonAssets.Algorithm.Geometry
             {
                 if (i + 1 >= _shadowList.Count) continue;
                 AngleInterval shadow;
+                // Continue if it cannot merge
+                // Although it only check i & i+1, but _shadowList is sorted. 
+                // Thus, it should be fine.
                 if (!_shadowList.Values[i].TryMerge(_shadowList.Values[i + 1], out shadow)) continue;
                 _shadowList[i] = shadow;
                 _shadowList.RemoveAt(i + 1);
