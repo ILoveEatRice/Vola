@@ -77,6 +77,13 @@
     <Compile Include="Algorithm\Injection\Parameter\ValueParameter.cs" />
     <Compile Include="Algorithm\Injection\Constructor\TypeConstructor.cs" />
     <Compile Include="Algorithm\Graph\PathFinding.cs" />
+    <Compile Include="DataStructure\Cache\Pool\ArrayObjectPool.cs" />
+    <Compile Include="DataStructure\Cache\Pool\AbstractObjectFactory.cs" />
+    <Compile Include="DataStructure\Cache\Pool\AbstractObjectPool.cs" />
+    <Compile Include="DataStructure\Cache\Pool\IObjectFactory.cs" />
+    <Compile Include="DataStructure\Cache\Pool\IObjectPool.cs" />
+    <Compile Include="DataStructure\Cache\Pool\PoolExceptionHandleOption.cs" />
+    <Compile Include="DataStructure\Cache\Pool\StackObjectPool.cs" />
     <Compile Include="DataStructure\Graph\Graph.cs" />
     <Compile Include="DataStructure\Graph\ValueGraph.cs" />
     <Compile Include="DataStructure\Graph\EndPointPair.cs" />
