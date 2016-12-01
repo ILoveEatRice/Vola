@@ -17,7 +17,7 @@ namespace AvalonAssetsTests.DataStructure.Heap
             base.Initialize();
             Container.RegisterType<IHeap<int>, BinaryHeap<int>>();
         }
-        
+
         public void MergeTest(IHeap<int> heap, bool isMin)
         {
             var newList = RandomList().ToList();

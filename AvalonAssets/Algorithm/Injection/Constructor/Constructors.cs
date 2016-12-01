@@ -50,7 +50,7 @@ namespace AvalonAssets.Algorithm.Injection.Constructor
 
         /// <summary>
         ///     Creates a <see cref="IConstructor" /> using factory method.
-        ///     Note that <paramref name="object"/> strong reference by the <see cref="IConstructor"/>.
+        ///     Note that <paramref name="object" /> strong reference by the <see cref="IConstructor" />.
         /// </summary>
         /// <param name="method">Factory method.</param>
         /// <param name="object">Factory.</param>

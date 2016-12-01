@@ -172,7 +172,6 @@ namespace AvalonAssets.DataStructure.Cache.Pool
                 CheckExceptionRethrow(deactivateException);
                 shouldDestroy = true; // Destory object that fail to deactivate.
             }
-
             if (shouldDestroy)
                 try
                 {

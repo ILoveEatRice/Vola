@@ -17,6 +17,5 @@ namespace AvalonAssetsTests
             }
             return nodes;
         }
-
     }
 }

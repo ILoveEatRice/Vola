@@ -154,7 +154,7 @@ namespace AvalonAssets.DataStructure.Graph
             return string.Format("Graph[IsDirected:{0}, AllowSelfLoops:{1}, Nodes:{2}, Edges:{3}]",
                 IsDirected, AllowSelfLoops, Nodes, Edges);
         }
-        
+
         // ReSharper disable once UnusedParameter.Local
         private void CheckNodeExists(TNode node)
         {

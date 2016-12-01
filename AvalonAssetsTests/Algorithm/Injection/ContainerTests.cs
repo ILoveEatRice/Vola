@@ -50,7 +50,7 @@ namespace AvalonAssetsTests.Algorithm.Injection
         {
             _container.RegisterInstance<IComparer<int>>(Comparer<int>.Default);
             _container.RegisterType<IHeap<int>, BinomialHeap<int>>();
-            _container.RegisterType<IHeap<int>, BinaryHeap<int>>(name: "2");
+            _container.RegisterType<IHeap<int>, BinaryHeap<int>>("2");
             var excepted = new List<Type>
             {
                 typeof(BinomialHeap<int>),

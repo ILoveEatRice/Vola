@@ -21,7 +21,7 @@ namespace AvalonAssetsTests.Algorithm.Event
             _value = 0;
         }
 
-        public void Receive(int message)
+        void ISubscriber<int>.Receive(int message)
         {
             _value = message;
         }
