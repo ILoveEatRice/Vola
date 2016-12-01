@@ -1,17 +1,24 @@
 ﻿namespace AvalonAssets.Algorithm.Event
 {
     /// <summary>
-    ///     Provides static methods for commonly use <see cref="IEventAggregator" />.
+    ///     <para>
+    ///         <see cref="EventAggregators" /> provides static methods for commonly used <see cref="IEventAggregator" />.
+    ///     </para>
     /// </summary>
     public static class EventAggregators
     {
         /// <summary>
-        ///     Creates a default implementaion of <see cref="IEventAggregator" />.
+        ///     <para>
+        ///         Initializes a new instance of a default implementaion of <see cref="IEventAggregator" />.
+        ///     </para>
         /// </summary>
-        /// <returns><see cref="IEventAggregator" />.</returns>
-        public static IEventAggregator Default()
+        /// <param name="handlerFactory">Initializes new <see cref="IEventHandler" /> for <see cref="IEventAggregator" />.</param>
+        /// <returns>New instance of <see cref="IEventAggregator" />.</returns>
+        public static IEventAggregator Default(IEventHandlerFactory handlerFactory = null)
         {
-            return new EventAggregator(new WeakEventHandlerFactory());
+            if (handlerFactory == null)
+                handlerFactory = new WeakEventHandlerFactory();
+            return new EventAggregator(handlerFactory);
         }
     }
 }

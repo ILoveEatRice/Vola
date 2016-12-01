@@ -6,19 +6,32 @@ using System.Reflection;
 namespace AvalonAssets.Algorithm.Event
 {
     /// <summary>
-    ///     <see cref="IEventHandler" /> using weak reference.
+    ///     <para>
+    ///         Implementation of <see cref="IEventHandler" />. Uses weak reference to hold the reference to subscriber.
+    ///     </para>
     /// </summary>
-    internal class WeakEventHandler : IEventHandler
+    public class WeakEventHandler : IEventHandler
     {
         private readonly Dictionary<Type, MethodInfo> _supportedHandlers;
         private readonly WeakReference _weakReference;
 
-        public WeakEventHandler(object handler)
+        /// <summary>
+        ///     <para>
+        ///         Initializes a new instance of <see cref="EventAggregator" /> with <see cref="IEventHandlerFactory" />.
+        ///     </para>
+        /// </summary>
+        /// <param name="subscriber">Object that want to subscribe.</param>
+        /// <remarks>
+        ///     <para>
+        ///         It is not recommend to use this directly. You should use <see cref="WeakEventHandlerFactory" /> instead.
+        ///     </para>
+        /// </remarks>
+        public WeakEventHandler(object subscriber)
         {
-            _weakReference = new WeakReference(handler);
+            _weakReference = new WeakReference(subscriber);
             _supportedHandlers = new Dictionary<Type, MethodInfo>();
             // Gets all the ISubscriber<T> interface
-            var interfaces = handler.GetType().GetInterfaces()
+            var interfaces = subscriber.GetType().GetInterfaces()
                 .Where(x => typeof(ISubscriber).IsAssignableFrom(x) && x.IsGenericType);
             foreach (var @interface in interfaces)
             {
@@ -28,21 +41,48 @@ namespace AvalonAssets.Algorithm.Event
             }
         }
 
+        /// <summary>
+        ///     <para>
+        ///         Checks if the object still available.
+        ///     </para>
+        /// </summary>
+        /// <returns>True if object is not GC.</returns>
         public bool Alive
         {
             get { return _weakReference.Target != null; }
         }
 
+        /// <summary>
+        ///     <para>
+        ///         Gets All the <see cref="Type" /> that can handle by <see cref="IEventHandler" />.
+        ///     </para>
+        /// </summary>
+        /// <returns>All type the <see cref="IEventHandler" /> that can handle.</returns>
         public IEnumerable<Type> Types
         {
             get { return _supportedHandlers.Keys; }
         }
 
+        /// <summary>
+        ///     <para>
+        ///         Check if <paramref name="instance" /> equals to its reference object.
+        ///     </para>
+        /// </summary>
+        /// <param name="instance">Object.</param>
+        /// <returns>True if this handler is wraping <paramref name="instance" />.</returns>
         public bool Matches(object instance)
         {
             return _weakReference.Target == instance;
         }
 
+        /// <summary>
+        ///     <para>
+        ///         Handles <paramref name="message" /> of type <paramref name="messageType" />.
+        ///     </para>
+        /// </summary>
+        /// <param name="messageType">Message type.</param>
+        /// <param name="message">Message to be handle.</param>
+        /// <returns>True if the object is alive.</returns>
         public bool Handle(Type messageType, object message)
         {
             if (!Alive)

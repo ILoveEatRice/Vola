@@ -16,7 +16,7 @@ namespace AvalonAssetsTests.Algorithm.Event
         public void Initialize()
         {
             _container = new Container();
-            var factoryMethod = MethodUtils.GetMethodInfo(() => EventAggregators.Default());
+            var factoryMethod = MethodUtils.GetMethodInfo(() => EventAggregators.Default(null));
             _container.RegisterType<IEventAggregator>(Constructors.StaticFactory(factoryMethod));
             _value = 0;
         }

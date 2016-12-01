@@ -3,29 +3,45 @@ using System.Collections.Generic;
 
 namespace AvalonAssets.Algorithm.Event
 {
-    internal interface IEventHandler
+    /// <summary>
+    ///     <para>
+    ///         <see cref="IEventHandler" /> handles the reference between the object and the <see cref="Type" />.
+    ///         It is used for <see cref="IEventAggregator" />.
+    ///     </para>
+    /// </summary>
+    public interface IEventHandler
     {
         /// <summary>
-        ///     Returns true if object is not GC.
+        ///     <para>
+        ///         Checks if the object still available.
+        ///     </para>
         /// </summary>
+        /// <returns>True if object is not GC.</returns>
         bool Alive { get; }
 
         /// <summary>
-        ///     Returns all type the handler that can handle.
+        ///     <para>
+        ///         Gets All the <see cref="Type" /> that can handle by <see cref="IEventHandler" />.
+        ///     </para>
         /// </summary>
+        /// <returns>All type the <see cref="IEventHandler" /> that can handle.</returns>
         IEnumerable<Type> Types { get; }
 
         /// <summary>
-        ///     Returns true if this handler is wraping <paramref name="instance" />.
+        ///     <para>
+        ///         Check if <paramref name="instance" /> equals to its reference object.
+        ///     </para>
         /// </summary>
         /// <param name="instance">Object.</param>
         /// <returns>True if this handler is wraping <paramref name="instance" />.</returns>
         bool Matches(object instance);
 
         /// <summary>
-        ///     Handles <paramref name="message" /> of type <paramref name="messageType" />.
+        ///     <para>
+        ///         Handles <paramref name="message" /> of type <paramref name="messageType" />.
+        ///     </para>
         /// </summary>
-        /// <param name="messageType"></param>
+        /// <param name="messageType">Message type.</param>
         /// <param name="message">Message to be handle.</param>
         /// <returns>True if the object is alive.</returns>
         bool Handle(Type messageType, object message);
