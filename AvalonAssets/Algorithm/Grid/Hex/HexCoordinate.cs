@@ -105,7 +105,7 @@ namespace AvalonAssets.Algorithm.Grid.Hex
         }
 
         /// <summary>
-        ///     Create from cube coordinates.
+        ///     Initializes a new instance from cube coordinates.
         /// </summary>
         /// <param name="x">X coordinate.</param>
         /// <param name="y">Y coordinate.</param>
@@ -116,7 +116,7 @@ namespace AvalonAssets.Algorithm.Grid.Hex
         }
 
         /// <summary>
-        ///     Create from axial coordinates.
+        ///     Initializes a new instance from axial coordinates.
         /// </summary>
         /// <param name="q">Q coordinate.</param>
         /// <param name="r">R coordinate.</param>
@@ -150,7 +150,7 @@ namespace AvalonAssets.Algorithm.Grid.Hex
         }
 
         /// <summary>
-        ///     Create a new <see cref="HexCoordinate" /> from current position with given <paramref name="direction" />.
+        ///     Initializes a new <see cref="HexCoordinate" /> from current position with given <paramref name="direction" />.
         /// </summary>
         /// <param name="direction">Direction of the new <see cref="HexCoordinate" /> from current position.</param>
         /// <param name="radius">Radius. 0 returns itself.</param>
@@ -195,7 +195,7 @@ namespace AvalonAssets.Algorithm.Grid.Hex
         }
 
         /// <summary>
-        ///     Create a new <see cref="HexCoordinate" /> from current position with given <paramref name="direction" />.
+        ///     Initializes a new <see cref="HexCoordinate" /> from current position with given <paramref name="direction" />.
         ///     Diagonal of <see cref="Direction.A" /> is the other neighbor of <see cref="Direction.A" /> and
         ///     <see cref="Direction.B" />.
         /// </summary>

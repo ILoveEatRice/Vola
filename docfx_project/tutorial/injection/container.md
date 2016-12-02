@@ -27,8 +27,9 @@ However, this is not the usage. As you apply dependency injection, the dependenc
 
 ```csharp
 // Before
-var svc = new ShippingService(new ProductLocator(), new PricingService(), new InventoryService(), 
-   new TrackingRepository(new ConfigProvider()), new Logger(new EmailLogger(new ConfigProvider())));
+var svc = new ShippingService(new ProductLocator(), new PricingService(), 
+        new InventoryService(), new TrackingRepository(new ConfigProvider()), 
+        new Logger(new EmailLogger(new ConfigProvider())));
 // After
 var svc = container<IShippingService>();
 ```
@@ -45,3 +46,24 @@ It registers the following interfaces:
 * IEventHandlerFactory
 
 ## Precise Registration
+Although IoC Container resolve the type for you, but you may want control on using which constructor or method, the value of parameters. By default, IoC Container try every constructors before it throws an exception. If the constructor needs parameters, it looks for the given parameters, tries to resolve it, or uses the default value.
+
+There are several registration types. Different registration types allows you to initialize instances more flexible.
+
+### Type
+This is the most common way to register. Using `IContainer.RegisterType` to register a concrete type for the interface. To custom how to initialize, you need (constructor)[#constructor].
+
+### Instance
+`IContainer.RegisterInstance` allows you to use the same instance every time some objects ask for resolve.
+
+### Name
+Naming allows multiple registration to the same request type. And it can also resolve by name. Naming is supported in both type and instance registration.
+
+```csharp
+container.RegisterType<ICustomInterface, CustomConcreteClass>();
+container.RegisterType<ICustomInterface, CustomConcreteClass2>("2");
+var obj1 = container.Resolve<ICustomInterface>(); // CustomConcreteClass
+var obj2 = container.Resolve<ICustomInterface>("2"); // CustomConcreteClass2
+```
+
+For more details, please read [constructor](constructor.md) and [parameter](parameter.md)

@@ -52,6 +52,7 @@ graph.PutEdge(nodeF, nodeG);
 ```
 
 Then, you can use the path finding.
+
 ```csharp
 var path = graph.BreadthFirstSearch(nodeA, nodeG);
 ```

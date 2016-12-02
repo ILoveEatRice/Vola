@@ -14,7 +14,7 @@ Event aggregator centralizes the event publishing. Publishers and subscribers ne
 After understanding the reasons to use event aggregator, let's get started. 
 
 
-To use event aggregator, add `ISubscriber<T>` to the subscriber class where `T` is the event type you want to observe. You have to implement `void Receive(T)` to handle the event you received. It is recommend to implement it **explicitly** to avoid name conflict and calling it directly.
+To use event aggregator, add `ISubscriber<T>` to the subscriber class where `T` is the event type you want to observe. You have to implement `ISubscriber<T>.Receive` to handle the event you received. It is recommend to implement it **explicitly** to avoid name conflict and calling it directly.
 
 > `ISubscriber<T>` receives all events of type T and its super class.
 
@@ -47,7 +47,7 @@ eventAggregator.Subscribe(subscriber);
 ```
 
 ### Publish
-After that whenever the `eventAggregator` is called by `void Publish(int)`, `subscriber` will receive the event. To publish a event,
+After that whenever the `eventAggregator` is called by `IEventAggregator.Publish`, `subscriber` will receive the event. To publish a event,
 
 ```csharp
 eventAggregator.Publish(3);

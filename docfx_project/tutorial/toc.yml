@@ -8,7 +8,11 @@
   items:
   - name: Path Finding
     href: graphic/path_finding.md
-- name: Injection
+- name: Dependency Injection
   items:
   - name: IoC Container
     href: injection/container.md
+  - name: Constructor
+    href: injection/constructor.md
+  - name: Parameter
+    href: injection/parameter.md
