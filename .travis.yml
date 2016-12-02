@@ -2,8 +2,8 @@ language: csharp
 solution: AvalonAssets.sln
 notifications:
   email:
-    on_success: change
-    on_failure: change
+    on_success: never
+    on_failure: always
     on_pull_requests: false
 install:
   - nuget restore AvalonAssets.sln

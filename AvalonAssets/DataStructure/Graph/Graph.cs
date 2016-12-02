@@ -66,17 +66,17 @@ namespace AvalonAssets.DataStructure.Graph
 
         public IEnumerable<TNode> Neighbors(TNode node)
         {
-            return Connections.ContainsKey(node) ? new List<TNode>() : Connections[node].Neighbors();
+            return !Connections.ContainsKey(node) ? new List<TNode>() : Connections[node].Neighbors();
         }
 
         public IEnumerable<TNode> Predecessors(TNode node)
         {
-            return Connections.ContainsKey(node) ? new List<TNode>() : Connections[node].Predecessors();
+            return !Connections.ContainsKey(node) ? new List<TNode>() : Connections[node].Predecessors();
         }
 
         public IEnumerable<TNode> Successors(TNode node)
         {
-            return Connections.ContainsKey(node) ? new List<TNode>() : Connections[node].Successors();
+            return !Connections.ContainsKey(node) ? new List<TNode>() : Connections[node].Successors();
         }
 
         public virtual bool AddNode(TNode node)
