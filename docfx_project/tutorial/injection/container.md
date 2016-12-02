@@ -11,7 +11,7 @@ For simple IoC container allows you to configure which concrete class to be used
 
 First, you have to register it to the container.
 
-> If the concrete class has more than one constructor, container will try all of them until it can resolve it. See [precise registeration](#precise-registeration) for more information.
+> If the concrete class has more than one constructor, container will try all of them until it can resolve it. See [precise registration](#precise-registration) for more information.
 
 ```csharp
 container.RegisterType<ICustomInterface, CustomConcreteClass>();
@@ -44,4 +44,4 @@ It registers the following interfaces:
 * IEventAggregator
 * IEventHandlerFactory
 
-## Precise registeration
+## Precise Registration
