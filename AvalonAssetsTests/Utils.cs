@@ -17,5 +17,13 @@ namespace AvalonAssetsTests
             }
             return nodes;
         }
+
+        public static Queue<int> UniqueNumberQueue(this Random rand, int count = 10)
+        {
+            var nodes = new Queue<int>();
+            foreach (var num in UniqueNumberList(rand, count))
+                nodes.Enqueue(num);
+            return nodes;
+        }
     }
 }

@@ -60,6 +60,8 @@ namespace AvalonAssets.Algorithm.Graph
         /// </returns>
         public static IEnumerable<T> DijkstraAlgorithm<T>(this IValueGraph<T, int> graph, T start, T goal)
         {
+            if(graph.InDegree(goal) == 0 || graph.OutDegree(start) == 0)
+                return new List<T>();
             var frontiers = new PriorityQueue<T>();
             frontiers.Enqueue(0, start);
             var from = new Dictionary<T, T> {{start, default(T)}};
@@ -98,6 +100,8 @@ namespace AvalonAssets.Algorithm.Graph
         public static IEnumerable<T> AStarAlgorithm<T>(this IValueGraph<T, int> graph, T start, T goal,
             Heuristic<T> heuristic)
         {
+            if (graph.InDegree(goal) == 0 || graph.OutDegree(start) == 0)
+                return new List<T>();
             var frontiers = new PriorityQueue<T>();
             frontiers.Enqueue(0, start);
             var from = new Dictionary<T, T> {{start, default(T)}};
@@ -137,6 +141,8 @@ namespace AvalonAssets.Algorithm.Graph
         /// </returns>
         public static IEnumerable<T> BreadthFirstSearch<T>(this IGraph<T> graph, T start, T goal)
         {
+            if (graph.InDegree(goal) == 0 || graph.OutDegree(start) == 0)
+                return new List<T>();
             var frontiers = new Queue<T>();
             frontiers.Enqueue(start);
             var from = new Dictionary<T, T>();
@@ -172,6 +178,8 @@ namespace AvalonAssets.Algorithm.Graph
         /// <seealso cref="Heuristic{T}" />
         public static IEnumerable<T> HeuristicSearch<T>(this IGraph<T> graph, T start, T goal, Heuristic<T> heuristic)
         {
+            if (graph.InDegree(goal) == 0 || graph.OutDegree(start) == 0)
+                return new List<T>();
             var frontiers = new PriorityQueue<T>();
             frontiers.Enqueue(0, start);
             var from = new Dictionary<T, T> {{start, default(T)}};

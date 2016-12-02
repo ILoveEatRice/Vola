@@ -36,6 +36,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="nunit.framework, Version=3.5.0.0, Culture=neutral, PublicKeyToken=2638cd05610744eb, processorArchitecture=MSIL">
       <HintPath>..\packages\NUnit.3.5.0\lib\net45\nunit.framework.dll</HintPath>
       <Private>True</Private>
@@ -58,6 +59,7 @@
     <Compile Include="DataStructure\Graph\EndPointPairTests.cs" />
     <Compile Include="DataStructure\Graph\GraphConnectionTests.cs" />
     <Compile Include="DataStructure\Graph\GraphTests.cs" />
+    <Compile Include="DataStructure\Grid\HexGridTests.cs" />
     <Compile Include="DataStructure\Heap\BinaryHeapTests.cs" />
     <Compile Include="DataStructure\Heap\BinomialHeapTests.cs" />
     <Compile Include="DataStructure\Heap\FibonacciHeapTests.cs" />
