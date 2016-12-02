@@ -6,16 +6,16 @@ using AvalonAssets.DataStructure.Graph;
 
 namespace AvalonAssets.DataStructure.Grid
 {
-    public class HexGrid<T> : IGraph<HexCoordinate>, IEnumerable<KeyValuePair<HexCoordinate, T>>
+    public class HexGrid<T> : IGraph<IHexCoordinate>, IEnumerable<KeyValuePair<IHexCoordinate, T>>
     {
-        private readonly Dictionary<HexCoordinate, T> _grid;
+        private readonly Dictionary<IHexCoordinate, T> _grid;
 
         public HexGrid()
         {
-            _grid = new Dictionary<HexCoordinate, T>();
+            _grid = new Dictionary<IHexCoordinate, T>();
         }
 
-        public T this[HexCoordinate coordinate]
+        public T this[IHexCoordinate coordinate]
         {
             get { return _grid[coordinate]; }
             set { _grid[coordinate] = value; }
@@ -26,27 +26,27 @@ namespace AvalonAssets.DataStructure.Grid
             get { return _grid.Count; }
         }
 
-        public Dictionary<HexCoordinate, T>.KeyCollection Keys
+        public Dictionary<IHexCoordinate, T>.KeyCollection Keys
         {
             get { return _grid.Keys; }
         }
 
-        public Dictionary<HexCoordinate, T>.ValueCollection Values
+        public Dictionary<IHexCoordinate, T>.ValueCollection Values
         {
             get { return _grid.Values; }
         }
 
-        public void Add(HexCoordinate coordinate, T value)
+        public void Add(IHexCoordinate coordinate, T value)
         {
             _grid.Add(coordinate, value);
         }
 
-        public bool TryGetValue(HexCoordinate coordinate, out T value)
+        public bool TryGetValue(IHexCoordinate coordinate, out T value)
         {
             return _grid.TryGetValue(coordinate, out value);
         }
 
-        public bool ContainsKey(HexCoordinate coordinate)
+        public bool ContainsKey(IHexCoordinate coordinate)
         {
             return _grid.ContainsKey(coordinate);
         }
@@ -58,22 +58,22 @@ namespace AvalonAssets.DataStructure.Grid
 
         #region IGraph
 
-        bool IGraph<HexCoordinate>.AllowSelfLoops
+        bool IGraph<IHexCoordinate>.AllowSelfLoops
         {
             get { return true; }
         }
 
-        IEnumerable<EndPointPair<HexCoordinate>> IGraph<HexCoordinate>.Edges
+        IEnumerable<EndPointPair<IHexCoordinate>> IGraph<IHexCoordinate>.Edges
         {
             get
             {
-                var returnSet = new HashSet<EndPointPair<HexCoordinate>>();
+                var returnSet = new HashSet<EndPointPair<IHexCoordinate>>();
                 foreach (var node in _grid.Keys)
                 {
                     var negihbors = node.AllNeighbors().Where(n => _grid.ContainsKey(n)).ToList();
                     foreach (var negihbor in negihbors)
                     {
-                        var pair = EndPointPair<HexCoordinate>.Undirected(node, negihbor);
+                        var pair = EndPointPair<IHexCoordinate>.Undirected(node, negihbor);
                         if (returnSet.Contains(pair)) continue;
                         returnSet.Add(pair);
                         yield return pair;
@@ -82,42 +82,42 @@ namespace AvalonAssets.DataStructure.Grid
             }
         }
 
-        bool IGraph<HexCoordinate>.IsDirected
+        bool IGraph<IHexCoordinate>.IsDirected
         {
             get { return false; }
         }
 
-        IEnumerable<HexCoordinate> IGraph<HexCoordinate>.Nodes
+        IEnumerable<IHexCoordinate> IGraph<IHexCoordinate>.Nodes
         {
             get { return _grid.Keys; }
         }
 
-        IEnumerable<HexCoordinate> IGraph<HexCoordinate>.Neighbors(HexCoordinate node)
+        IEnumerable<IHexCoordinate> IGraph<IHexCoordinate>.Neighbors(IHexCoordinate node)
         {
             return node.AllNeighbors().Where(n => _grid.ContainsKey(n));
         }
 
-        int IGraph<HexCoordinate>.Degree(HexCoordinate node)
+        int IGraph<IHexCoordinate>.Degree(IHexCoordinate node)
         {
             return node.AllNeighbors().Count(n => _grid.ContainsKey(n));
         }
 
-        int IGraph<HexCoordinate>.InDegree(HexCoordinate node)
+        int IGraph<IHexCoordinate>.InDegree(IHexCoordinate node)
         {
             return node.AllNeighbors().Count(n => _grid.ContainsKey(n));
         }
 
-        int IGraph<HexCoordinate>.OutDegree(HexCoordinate node)
+        int IGraph<IHexCoordinate>.OutDegree(IHexCoordinate node)
         {
             return node.AllNeighbors().Count(n => _grid.ContainsKey(n));
         }
 
-        IEnumerable<HexCoordinate> IGraph<HexCoordinate>.Predecessors(HexCoordinate node)
+        IEnumerable<IHexCoordinate> IGraph<IHexCoordinate>.Predecessors(IHexCoordinate node)
         {
             return node.AllNeighbors().Where(n => _grid.ContainsKey(n));
         }
 
-        IEnumerable<HexCoordinate> IGraph<HexCoordinate>.Successors(HexCoordinate node)
+        IEnumerable<IHexCoordinate> IGraph<IHexCoordinate>.Successors(IHexCoordinate node)
         {
             return node.AllNeighbors().Where(n => _grid.ContainsKey(n));
         }
@@ -126,7 +126,7 @@ namespace AvalonAssets.DataStructure.Grid
 
         #region IEnumerable
 
-        public IEnumerator<KeyValuePair<HexCoordinate, T>> GetEnumerator()
+        public IEnumerator<KeyValuePair<IHexCoordinate, T>> GetEnumerator()
         {
             return _grid.GetEnumerator();
         }

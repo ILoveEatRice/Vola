@@ -52,6 +52,17 @@
     <Compile Include="Algorithm\Event\ISubscriber.cs" />
     <Compile Include="Algorithm\Event\WeakEventHandler.cs" />
     <Compile Include="Algorithm\Event\WeakEventHandlerFactory.cs" />
+    <Compile Include="Algorithm\Grid\Hex\HexCoordinateExtensions.cs" />
+    <Compile Include="Algorithm\Grid\Hex\HexCoordinates.cs" />
+    <Compile Include="Algorithm\Grid\Hex\HexDirection.cs" />
+    <Compile Include="Algorithm\Grid\Hex\IHexCoordinate.cs" />
+    <Compile Include="Algorithm\Grid\Hex\IRingHexCoordinate.cs" />
+    <Compile Include="Algorithm\Grid\Hex\HexCoordinate.cs" />
+    <Compile Include="Algorithm\Grid\Hex\RingHexCoordinate.cs" />
+    <Compile Include="Algorithm\Grid\IAxialCoordinate.cs" />
+    <Compile Include="Algorithm\Grid\ICoordinate.cs" />
+    <Compile Include="Algorithm\Grid\ICubeCoordinate.cs" />
+    <Compile Include="Algorithm\Grid\IRingCoordinate.cs" />
     <Compile Include="Algorithm\Injection\Constructor\Constructors.cs" />
     <Compile Include="Algorithm\Injection\Container.cs" />
     <Compile Include="Algorithm\Injection\ContainerExtensions.cs" />
@@ -85,9 +96,7 @@
     <Compile Include="DataStructure\Grid\HexGrid.cs" />
     <Compile Include="DataStructure\Heap\Heaps.cs" />
     <Compile Include="DataStructure\NullableDictionary.cs" />
-    <Compile Include="Algorithm\Grid\Hex\HexCoordinate.cs" />
     <Compile Include="Algorithm\Grid\Hex\Region.cs" />
-    <Compile Include="Algorithm\Grid\Hex\RingCoordinate.cs" />
     <Compile Include="DataStructure\Graph\IGraph.cs" />
     <Compile Include="Algorithm\Geometry\ShadowCast.cs" />
     <Compile Include="DataStructure\Heap\BinaryHeap.cs" />
@@ -104,6 +113,7 @@
     <Compile Include="Utility\DoubleUtils.cs" />
     <Compile Include="Utility\EnumUtils.cs" />
     <Compile Include="Utility\HashUtils.cs" />
+    <Compile Include="Utility\IConvertible.cs" />
     <Compile Include="Utility\MethodUtils.cs" />
   </ItemGroup>
   <ItemGroup>
