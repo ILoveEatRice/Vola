@@ -13,6 +13,7 @@ namespace AvalonAssets.Algorithm.Injection.Constructor
         /// </summary>
         /// <param name="value">Object instance.</param>
         /// <returns>Constructor for injection.</returns>
+        /// <remarks>You should use <see cref="IContainer.RegisterInstance" /> instead.</remarks>
         public static IConstructor Instance(object value)
         {
             return new InstanceConstructor(value);
@@ -33,6 +34,7 @@ namespace AvalonAssets.Algorithm.Injection.Constructor
         /// </summary>
         /// <param name="type">Type.</param>
         /// <returns>Constructor for injection.</returns>
+        /// <remarks>You should use <see cref="IContainer.RegisterType" /> instead.</remarks>
         public static IConstructor Type(Type type)
         {
             return new TypeConstructor(type);

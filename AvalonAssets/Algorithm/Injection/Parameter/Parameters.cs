@@ -14,7 +14,7 @@ namespace AvalonAssets.Algorithm.Injection.Parameter
         /// <param name="resolveName">Resolve name.</param>
         /// <returns><see cref="IParameter" /> for injection.</returns>
         /// <seealso cref="Resolve{T}" />
-        public static IParameter Resolve(Type type, string name = null, string resolveName = null)
+        public static IParameter Resolve(Type type, string name, string resolveName = null)
         {
             return new ResolveParameter(type, name, resolveName);
         }
@@ -27,7 +27,7 @@ namespace AvalonAssets.Algorithm.Injection.Parameter
         /// <param name="resolveName">Resolve name.</param>
         /// <returns><see cref="IParameter" /> for injection.</returns>
         /// <seealso cref="Resolve{T}" />
-        public static IParameter Resolve<T>(string name = null, string resolveName = null)
+        public static IParameter Resolve<T>(string name, string resolveName = null)
         {
             return Resolve(typeof(T), name, resolveName);
         }
@@ -38,7 +38,7 @@ namespace AvalonAssets.Algorithm.Injection.Parameter
         /// <param name="value">Value of the parameter.</param>
         /// <param name="name">Field name.</param>
         /// <returns><see cref="IParameter" /> for injection.</returns>
-        public static IParameter Value(object value, string name = null)
+        public static IParameter Value(object value, string name)
         {
             return new ValueParameter(name, value);
         }
@@ -59,7 +59,7 @@ namespace AvalonAssets.Algorithm.Injection.Parameter
         /// </summary>
         /// <param name="name">Field name.</param>
         /// <returns><see cref="IParameter" /> for injection.</returns>
-        public static IParameter Default(string name = null)
+        public static IParameter Default(string name)
         {
             return new ValueParameter(name, Type.Missing);
         }
