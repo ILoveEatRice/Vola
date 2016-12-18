@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using JetBrains.Annotations;
 
 namespace AvalonAssets.DataStructure.Graph
 {
@@ -67,20 +66,17 @@ namespace AvalonAssets.DataStructure.Graph
 
         public IEnumerable<TNode> Neighbors(TNode node)
         {
-            CheckNodeExists(node);
-            return Connections[node].Neighbors();
+            return !Connections.ContainsKey(node) ? new List<TNode>() : Connections[node].Neighbors();
         }
 
         public IEnumerable<TNode> Predecessors(TNode node)
         {
-            CheckNodeExists(node);
-            return Connections[node].Predecessors();
+            return !Connections.ContainsKey(node) ? new List<TNode>() : Connections[node].Predecessors();
         }
 
         public IEnumerable<TNode> Successors(TNode node)
         {
-            CheckNodeExists(node);
-            return Connections[node].Successors();
+            return !Connections.ContainsKey(node) ? new List<TNode>() : Connections[node].Successors();
         }
 
         public virtual bool AddNode(TNode node)
@@ -155,14 +151,7 @@ namespace AvalonAssets.DataStructure.Graph
             return string.Format("Graph[IsDirected:{0}, AllowSelfLoops:{1}, Nodes:{2}, Edges:{3}]",
                 IsDirected, AllowSelfLoops, Nodes, Edges);
         }
-
-        [AssertionMethod]
-        private void CheckNodeExists(TNode node)
-        {
-            if (!Connections.ContainsKey(node))
-                throw new ArgumentException("Node does not exists.");
-        }
-
+        
         protected virtual EndPointPair<TNode> Pair(TNode nodeU, TNode nodeV)
         {
             return IsDirected

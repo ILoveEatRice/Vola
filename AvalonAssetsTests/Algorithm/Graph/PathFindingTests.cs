@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using AvalonAssets.Algorithm;
+using AvalonAssets.Algorithm.Graph;
 using AvalonAssets.DataStructure.Graph;
 using NUnit.Framework;
 
-namespace AvalonAssetsTests.Algorithm
+namespace AvalonAssetsTests.Algorithm.Graph
 {
     [TestFixture]
     public class PathFindingTests
@@ -47,7 +47,7 @@ namespace AvalonAssetsTests.Algorithm
             valueGraph.PutEdge(nodeF, nodeC, 1);
             valueGraph.PutEdge(nodeF, nodeG, 1);
             PathFinding.Heuristic<int> method = (a, b) => 1;
-            var path = PathFinding.AStarAlgorithm(valueGraph, nodeA, nodeG, method).ToList();
+            var path = valueGraph.AStarAlgorithm(nodeA, nodeG, method).ToList();
             Console.WriteLine(string.Join(",", path));
             var result = new List<int> {nodeA, nodeC, nodeF, nodeG};
             Console.WriteLine(string.Join(",", result));
@@ -90,7 +90,7 @@ namespace AvalonAssetsTests.Algorithm
             graph.PutEdge(nodeF, nodeE);
             graph.PutEdge(nodeF, nodeC);
             graph.PutEdge(nodeF, nodeG);
-            var path = PathFinding.BreadthFirstSearch(graph, nodeA, nodeG).ToList();
+            var path = graph.BreadthFirstSearch(nodeA, nodeG).ToList();
             Console.WriteLine(string.Join(",", path));
             var result = new List<int> {nodeA, nodeC, nodeF, nodeG};
             Console.WriteLine(string.Join(",", result));
@@ -133,7 +133,7 @@ namespace AvalonAssetsTests.Algorithm
             valueGraph.PutEdge(nodeF, nodeE, 1);
             valueGraph.PutEdge(nodeF, nodeC, 1);
             valueGraph.PutEdge(nodeF, nodeG, 1);
-            var path = PathFinding.DijkstraAlgorithm(valueGraph, nodeA, nodeG).ToList();
+            var path = valueGraph.DijkstraAlgorithm(nodeA, nodeG).ToList();
             Console.WriteLine(string.Join(",", path));
             var result = new List<int> {nodeA, nodeC, nodeF, nodeG};
             Console.WriteLine(string.Join(",", result));
@@ -198,7 +198,7 @@ namespace AvalonAssetsTests.Algorithm
                         return -1;
                 }
             };
-            var path = PathFinding.HeuristicSearch(graph, nodeA, nodeG, method).ToList();
+            var path = graph.HeuristicSearch(nodeA, nodeG, method).ToList();
             Console.WriteLine(string.Join(",", path));
             var result = new List<int> {nodeA, nodeC, nodeF, nodeG};
             Console.WriteLine(string.Join(",", result));

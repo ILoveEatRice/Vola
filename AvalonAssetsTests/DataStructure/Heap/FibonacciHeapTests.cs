@@ -1,4 +1,5 @@
-﻿using AvalonAssets.DataStructure.Heap;
+﻿using AvalonAssets.Algorithm.Injection;
+using AvalonAssets.DataStructure.Heap;
 using NUnit.Framework;
 
 namespace AvalonAssetsTests.DataStructure.Heap
@@ -6,9 +7,11 @@ namespace AvalonAssetsTests.DataStructure.Heap
     [TestFixture]
     public class FibonacciHeapTests : HeapTest
     {
-        public override IHeap<int> CreateHeap(bool isMin)
+        [OneTimeSetUp]
+        public override void Initialize()
         {
-            return new FibonacciHeap<int>(GetComparer(isMin));
+            base.Initialize();
+            Container.RegisterType<IHeap<int>, FibonacciHeap<int>>();
         }
     }
 }

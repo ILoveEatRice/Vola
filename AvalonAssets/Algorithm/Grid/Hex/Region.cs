@@ -5,21 +5,21 @@ namespace AvalonAssets.Algorithm.Grid.Hex
 {
     public class Region
     {
-        public readonly HexCoordinate Center;
+        public readonly IHexCoordinate Center;
         public readonly int Radius;
 
-        public Region(HexCoordinate center, int radius)
+        public Region(IHexCoordinate center, int radius)
         {
             Center = center;
             Radius = radius;
         }
 
         /// <summary>
-        ///     Returns all the intersect <see cref="HexCoordinate" /> with other <see cref="Region" />.
+        ///     Returns all the intersect <see cref="IHexCoordinate" /> with other <see cref="Region" />.
         /// </summary>
         /// <param name="regions"></param>
-        /// <returns>Intersect <see cref="HexCoordinate" /></returns>
-        public IEnumerable<HexCoordinate> Intersection(params Region[] regions)
+        /// <returns>Intersect <see cref="IHexCoordinate" /></returns>
+        public IEnumerable<IHexCoordinate> Intersection(params Region[] regions)
         {
             if (Radius < 0)
                 throw new ArgumentOutOfRangeException();
@@ -40,14 +40,14 @@ namespace AvalonAssets.Algorithm.Grid.Hex
             }
             for (var x = minX; x <= maxX; x++)
                 for (var y = Math.Max(minY, -x - maxZ); y <= Math.Min(maxY, -x - minZ); y++)
-                    yield return HexCoordinate.FromCube(x, y, -x - y);
+                    yield return HexCoordinates.Cube(x, y, -x - y);
         }
 
         /// <summary>
-        ///     Returns all <see cref="HexCoordinate" /> within the region.
+        ///     Returns all <see cref="IHexCoordinate" /> within the region.
         /// </summary>
-        /// <returns><see cref="HexCoordinate" /> inside the region.</returns>
-        public IEnumerable<HexCoordinate> All()
+        /// <returns><see cref="IHexCoordinate" /> inside the region.</returns>
+        public IEnumerable<IHexCoordinate> All()
         {
             return Center.Range(Radius);
         }
@@ -56,7 +56,7 @@ namespace AvalonAssets.Algorithm.Grid.Hex
         {
             if (Radius == 0)
             {
-                var coord = obj as HexCoordinate;
+                var coord = obj as IHexCoordinate;
                 if (coord != null)
                     return Center.Equals(coord);
             }

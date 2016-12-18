@@ -3,17 +3,18 @@ using System.Collections.Generic;
 using System.Linq;
 using AvalonAssets.Algorithm.Injection.Exception;
 
-namespace AvalonAssets.Algorithm.Injection
+namespace AvalonAssets.Algorithm.Injection.Constructor
 {
     /// <summary>
-    ///     <see cref="IInjectionConstructor" /> using given type.
+    ///     <see cref="IConstructor" /> using given type.
     /// </summary>
-    public class TypeConstructor : IInjectionConstructor
+    internal class TypeConstructor : IConstructor
     {
         private readonly Type _type;
 
         /// <summary>
-        ///     Creates a <see cref="IInjectionConstructor" /> using given type.
+        ///     Creates a <see cref="IConstructor" /> using given type.
+        ///     Uses <see cref="Constructors.Type{T}" /> instead.
         /// </summary>
         /// <param name="type">Type.</param>
         public TypeConstructor(Type type)
@@ -31,7 +32,7 @@ namespace AvalonAssets.Algorithm.Injection
                     continue; // Prevents self loop.
                 try
                 {
-                    var injectionConstructor = new InjectionConstructor(constructor);
+                    var injectionConstructor = Constructors.Injection(constructor);
                     return injectionConstructor.NewInstance(container, parameters);
                 }
                 catch (TypeNotRegisteredException)

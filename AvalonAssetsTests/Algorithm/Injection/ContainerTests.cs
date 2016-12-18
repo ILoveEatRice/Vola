@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using AvalonAssets.Algorithm.Injection;
+using AvalonAssets.Algorithm.Injection.Parameter;
 using AvalonAssets.DataStructure.Heap;
 using NUnit.Framework;
 
@@ -24,6 +25,9 @@ namespace AvalonAssetsTests.Algorithm.Injection
             Assert.False(_container.IsRegistered<IHeap<int>>());
             _container.RegisterType<IHeap<int>, BinomialHeap<int>>();
             Assert.True(_container.IsRegistered<IHeap<int>>());
+            _container.RegisterType<IHeap<int>, BinaryHeap<int>>()
+                .RegisterInstance<IComparer<int>>(Comparer<int>.Default);
+            _container.Resolve<IHeap<int>>(Parameters.Default("elements"));
         }
 
         [Test]
@@ -46,7 +50,7 @@ namespace AvalonAssetsTests.Algorithm.Injection
         {
             _container.RegisterInstance<IComparer<int>>(Comparer<int>.Default);
             _container.RegisterType<IHeap<int>, BinomialHeap<int>>();
-            _container.RegisterType<IHeap<int>, BinaryHeap<int>>(name: "2");
+            _container.RegisterType<IHeap<int>, BinaryHeap<int>>("2");
             var excepted = new List<Type>
             {
                 typeof(BinomialHeap<int>),

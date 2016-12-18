@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using JetBrains.Annotations;
+using System.Diagnostics.CodeAnalysis;
 
 namespace AvalonAssets.DataStructure
 {
@@ -54,7 +54,7 @@ namespace AvalonAssets.DataStructure
 
         public void Remove(object key)
         {
-            throw new NotImplementedException();
+            Remove((TKey) key);
         }
 
         object IDictionary.this[object key]
@@ -63,19 +63,19 @@ namespace AvalonAssets.DataStructure
             set { this[(TKey) key] = (TValue) value; }
         }
 
-        public bool Contains(object key)
+        bool IDictionary.Contains(object key)
         {
-            throw new NotImplementedException();
+            return ContainsKey((TKey) key);
         }
 
-        public void Add(object key, object value)
+        void IDictionary.Add(object key, object value)
         {
-            throw new NotImplementedException();
+            Add((TKey) key, (TValue) value);
         }
 
         IDictionaryEnumerator IDictionary.GetEnumerator()
         {
-            throw new NotImplementedException();
+            return _dictionary.GetEnumerator();
         }
 
         void ICollection.CopyTo(Array array, int index)
@@ -128,7 +128,10 @@ namespace AvalonAssets.DataStructure
             return true;
         }
 
-        public bool TryGetValue([CanBeNull] TKey key, out TValue value)
+        // Key can be null
+        [SuppressMessage("ReSharper", "HeuristicUnreachableCode")]
+        [SuppressMessage("ReSharper", "ConditionIsAlwaysTrueOrFalse")]
+        public bool TryGetValue(TKey key, out TValue value)
         {
             if (key != null) return _dictionary.TryGetValue(key, out value);
             if (_hasNullValue)
